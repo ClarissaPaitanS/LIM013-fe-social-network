@@ -1,12 +1,14 @@
 import Login from './login.js';
-import SignIn from './sign-in.js';
+import SignUp from './sign-up.js';
 import Different from './404.js';
+import Profile from './profile.js';
 
 
 const elements = {
   login: Login,
-  signIn: SignIn,
+  signUp: SignUp,
   different: Different,
+  profile: Profile,
 };
 
 

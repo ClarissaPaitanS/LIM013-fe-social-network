@@ -64,27 +64,27 @@ section {
 } 
 
 /* Signin */
-.signin-user {
+.signUp-user {
     width: 320px;
     display: flex;
     flex-direction: column;
     font-size: 16px;
 }
 
-.signin-form {
+.signUp-form {
     display: flex;
     flex-direction: column;
     align-items:center;
 }
 
-.signin-form-input {
+.signUp-form-input {
     border-radius: 14px;
     margin:10px;
     padding:8px;
     width:220px;
 }
 
-.signin-form-btn {
+.signUp-form-btn {
     border-radius: 18px;
     margin-top:10px;
     margin-bottom: 30px;

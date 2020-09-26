@@ -10,7 +10,7 @@ export const changeView = (hash) => {
     case '#':
     case '#/':
     { return sectionMain.appendChild(elements.login()); }
-    case '#/signIn':
+    case '#/signUp':
     { return sectionMain.appendChild(elements[id]()); }
     default:
       return sectionMain.appendChild(elements.different());
