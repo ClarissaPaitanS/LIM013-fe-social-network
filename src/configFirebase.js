@@ -1,17 +1,29 @@
-const firebaseConfig = {
-  apiKey: 'AIzaSyBjYDLI01FdoVMRqOpCyMXoSn1k0FdthKM',
-  authDomain: 'red-social-c4cc8.firebaseapp.com',
-  databaseURL: 'https://red-social-c4cc8.firebaseio.com',
-  projectId: 'red-social-c4cc8',
-  storageBucket: 'red-social-c4cc8.appspot.com',
-  messagingSenderId: '1098463923360',
-  appId: '1:1098463923360:web:166c9409f028efa686cdc5',
-};
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
 
 // export const storage = firebase.storage();
 // export const store = firebase.store();
-export const auth = firebase.auth();
-//export const store = firebase.store();
+// export const auth = firebase.auth();
+// export const store = firebase.store();
+
+// SignUp User:
+export const signupUser = (email, password) => (
+  firebase.auth().createUserWithEmailAndPassword(email, password)
+);
+
+// Login User:
+export const loginUser = (email, password) => (
+  firebase.auth().signInWithEmailAndPassword(email, password)
+);
+
+// Crea una instancia del objeto del proveedor de Google.
+export const googleLogin = () => (
+  firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider())
+);
+
+// Crea una instancia del objeto del proveedor de Facebook.
+export const facebookLogin = () => (
+  firebase.auth().signInWithPopup(new firebase.auth.FacebookAuthProvider())
+);
+
+// Cerrar Sesion.
+export const closeSesion = () => firebase.auth().signOut();

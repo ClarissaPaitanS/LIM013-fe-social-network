@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 
-import { auth } from '../configFirebase.js';
+import { signupUser, googleLogin, facebookLogin } from '../configFirebase.js';
 
 export default () => {
   const viewSignUp = `
@@ -38,20 +38,26 @@ export default () => {
     e.preventDefault();
     const password = divElemt.querySelector('#password-signUp');
     const email = divElemt.querySelector('#email-signUp');
-    auth
-      .createUserWithEmailAndPassword(email.value, password.value)
+
+    signupUser(email.value, password.value)
       .then((userCredential) => {
+        window.location.hash = '#/profile';
         console.log('singUp');
+      })
+      .catch((err) => {
+        console.log(err);
       });
   });
 
   //  Google SignUp
   const googleBtn = divElemt.querySelector('#googleSignUp');
   googleBtn.addEventListener('click', () => {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider)
+    // const provider = new firebase.auth.GoogleAuthProvider();
+    // auth.signInWithPopup(provider)
+    googleLogin()
       .then((result) => {
         // console.log(result);
+        window.location.hash = '#/profile';
         console.log('google sign in');
       })
       .catch((err) => {
@@ -62,10 +68,12 @@ export default () => {
 
   const facebookBtn = divElemt.querySelector('#facebookSignUp');
   facebookBtn.addEventListener('click', () => {
-    const provider = new firebase.auth.FacebookAuthProvider();
-    auth.signInWithPopup(provider)
+    // const provider = new firebase.auth.FacebookAuthProvider();
+    // auth.signInWithPopup(provider)
+    facebookLogin()
       .then((result) => {
         // console.log(result);
+        window.location.hash = '#/profile';
         console.log('facebook sign in');
       })
       .catch((err) => {
