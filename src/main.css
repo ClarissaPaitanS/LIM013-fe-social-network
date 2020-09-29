@@ -77,6 +77,10 @@ section {
     align-items:center;
 }
 
+.error-login {
+    color: rgb(211, 49, 49);
+    font-size: 14px;
+}
 .signUp-form-input {
     border-radius: 14px;
     margin:10px;
@@ -91,3 +95,54 @@ section {
     padding:8px;
     width: 140px;
 }
+
+@media (min-width: 700px) {
+    * {
+        height: auto;
+    }
+
+    .mindfulness {
+        width: 180%;
+        margin:auto;
+        min-width:200px;
+    }
+
+    #container {
+        height: 100%;
+    }
+
+    .div-view {
+        display: flex;
+        justify-content: center;
+        height: auto;
+    }
+
+    .login-user {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        margin-left: 10%;
+        margin-top:20%;
+        margin-right:10%;
+    }
+
+    #login-form {
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    }
+
+    .login-user-form{
+        margin-left:40%;
+        margin-right:10%;
+        background-color:#e7f9ff;
+        padding:20px;
+        border-radius:20px;
+    }
+
+    h1{
+
+    font-size:30px;
+    }
+} 

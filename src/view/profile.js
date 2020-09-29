@@ -1,12 +1,28 @@
-// import { store } from '../configFirebase.js';
+import { closeSesion } from '../configFirebase.js';
 
 export default () => {
-  const hello = `
+  const viewProfile = `
         <div class = container>
+        <button id="close-btn">Cerrar Sesion</button>
+        <p>Perfil</p>
         </div>
     `;
 
   const divElemt = document.createElement('div');
-  divElemt.innerHTML = hello;
+  divElemt.innerHTML = viewProfile;
+
+  const closeBtn = divElemt.querySelector('#close-btn');
+
+  closeBtn.addEventListener('click', () => {
+    closeSesion()
+      .then(() => {
+        window.location.hash = '#/';
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });
+
+
   return divElemt;
 };
