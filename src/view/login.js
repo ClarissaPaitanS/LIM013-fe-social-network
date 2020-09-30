@@ -12,7 +12,7 @@ export default () => {
   <section class = "login-user-form">
   <h1>NutriFitness</h1>
   <p>¡Bienvenidx!</p>
-      <form id="login-form" >
+      <form id="login-form" class="login-form" >
         <input class="login-form-input" type="email" id="email-login" placeholder="Email">
         <input class="login-form-input" type="password" id="password-login" placeholder="Password">
         <p class = "error-login"></p>
