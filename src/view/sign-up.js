@@ -7,10 +7,12 @@ export default () => {
 <section class="signUp-user">
 <header>
       <img class="mindfulness" src="imagenes/undraw_relaxing_at_home_9tyc.svg">
-      <h1>NutriFitness</h1>
-      <p>¡Registrarse es fácil y rápido!</p>
+
 </header>
-<form id="signUp-form">
+<section class= "signUp-user-form">
+<h1>NutriFitness</h1>
+<p>¡Registrarse es fácil y rápido!</p>
+<form class="signUp-form">
     <input class="signUp-form-input" type="text" id="name-signUp" placeholder="Usuario">
     <input class="signUp-form-input" type="email" id="email-signUp" placeholder="Email">
     <input class="signUp-form-input" type="password" id="password-signUp" placeholder="Password">
@@ -27,13 +29,15 @@ export default () => {
 
     <p>¿Ya tienes una cuenta?</p> <a href="#">Iniciar sesión</a>
 </section>
+</section>
 
 
 `;
   const divElemt = document.createElement('div');
+  divElemt.classList.add('div-view');
   divElemt.innerHTML = viewSignUp;
 
-  const signUpBtn = divElemt.querySelector('#signUp-form');
+  const signUpBtn = divElemt.querySelector('.signUp-form');
   signUpBtn.addEventListener('submit', (e) => {
     e.preventDefault();
     const password = divElemt.querySelector('#password-signUp');

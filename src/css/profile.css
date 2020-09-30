@@ -1,0 +1,149 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.body{
+    width:100%;
+}
+.div-view{
+  display: flex;
+  justify-content: center;
+  height: auto;
+}
+
+.profile-user{
+  width: 100%;
+}
+.header-profile{
+    background-color: #bae9f9;
+    display:inline-block;
+    justify-content:center;
+    width:100%;
+    padding:5px;
+}
+
+nav{
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    align-items: center;
+}
+
+li{
+    list-style: none;
+}
+
+.menu-item-nutrifitness{
+    width: 50px;
+    height: 50px;
+    border-radius:100px;
+    padding: 5px;
+}
+
+
+.icon-user-min{
+    width: 50px;
+    height: 50px;
+    border-radius:100px;
+}
+
+.hamburguer-menu-img{
+    width: 30px;
+    margin-right:10px;
+}
+
+.hamburguer-menu{
+    display: none;
+}
+
+.close-btn-img{
+    padding-top: 16px;
+    width: 30px;
+}
+
+main {
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    margin: auto;
+}
+
+.info-user-profile-img img {
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+    margin-left: 16px;
+    margin-right: 20px
+}
+
+.info-user-profile {
+    display: flex;
+    align-items: center;
+    
+}
+
+.info-user-profile-name {
+    font-size: 18px;
+    padding: 20px;
+}
+
+.post-user-publish {
+  margin-bottom: 10%;
+}
+
+textarea {
+    margin: 10px;
+    width: 90%;
+    padding: 20px;
+    
+}
+
+.post-text {
+  text-align: center;
+}
+
+.post-user{
+  margin: 5%;
+}
+
+.post-user-wall{
+    /*background-color:#e7f9ff;*/
+    background-color:#ffffff;
+    padding:16px;
+    border-radius: 12px;
+    box-shadow: 4px 4px 10px #888888;
+}
+
+  
+.post{
+    margin: 10px;
+    width: 90%;
+}
+  
+.post-header{
+    background-color:#bae9f9;
+    padding:5px;
+}
+  
+.post-body{
+    background-color:#ffffff;
+   padding:10px;
+}
+  
+.post-footer{
+    background-color:#e7f9ff;
+    padding:5px;
+}
+
+.post-user-image {
+  text-align: left;
+  margin-left: 5%;
+}
+.post-user-image img {
+  width: 32px;
+  height: 32px;
+}

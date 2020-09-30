@@ -6,7 +6,10 @@
 //     expect(typeof myFunction).toBe('function');
 //   });
 // });
-import { loginUser, googleLogin } from '../src/configFirebase.js';
+
+import {
+  loginUser, googleLogin, signupUser, facebookLogin, closeSesion,
+} from '../src/configFirebase.js';
 
 const firebasemock = require('firebase-mock');
 
@@ -23,7 +26,22 @@ global.firebase = firebasemock.MockFirebaseSdk(
 );
 
 // iniciando tests
+describe('Registro de usuario', () => {
+  it('debería ser una funcion', () => {
+    expect(typeof signupUser).toBe('function');
+  });
+  it('Debería poder registrarse el usuario', () => {
+    signupUser('clarissapaitan@mail.com', '1234567890')
+      .then((user) => {
+        expect(user.email).toBe('clarissapaitan@mail.com');
+      });
+  });
+});
+
 describe('login de usuario', () => {
+  it('Debería ser una función', () => {
+    expect(typeof loginUser).toBe('function');
+  });
   it('Debería poder iniciar sesion', () => {
     loginUser('clarissapaitan@mail.com', '1234567890')
       .then((user) => {
@@ -35,5 +53,31 @@ describe('login de usuario', () => {
 describe('googleLogin', () => {
   it('debería ser una funcion', () => {
     expect(typeof googleLogin).toBe('function');
+  });
+  it('Deberia poder iniciar sesión con Google', () => googleLogin()
+    .then((data) => {
+      // console.log(data);
+      const provider = data.providerData[0];
+      console.log(provider);
+      expect(provider.providerId).toBe('google.com');
+    }));
+});
+
+describe('facebookLogin', () => {
+  it('debería ser una funcion', () => {
+    expect(typeof facebookLogin).toBe('function');
+  });
+
+  it('Debería poder iniciar sesion con facebook', () => facebookLogin()
+    .then((user) => {
+      // console.log(user);
+      const provider = user.providerData[0];
+      expect(provider.providerId).toBe('facebook.com');
+    }));
+});
+
+describe('closeSesion', () => {
+  it('debería ser una funcion', () => {
+    expect(typeof closeSesion).toBe('function');
   });
 });
