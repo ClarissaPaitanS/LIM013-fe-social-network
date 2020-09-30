@@ -5,11 +5,12 @@
     font-family: sans-serif;
 }
 
-.login-user {
+.login-user, .signUp-user{
     width: 320px;
     display: flex;
     flex-direction: column;
     font-size: 16px;
+    margin: auto;
 }
 
 h1 {
@@ -95,14 +96,72 @@ section {
     padding:8px;
     width: 140px;
 }
+.login-user-form, .signUp-user-form{
+    margin-left:5%;
+    margin-right:5%;
+    background-color:#e7f9ff;
+    padding:20px;
+    border-radius:20px;
+}
+
 
 @media (min-width: 700px) {
+* {
+    height: auto;
+}
+
+.mindfulness {
+    width: 180%;
+    margin:auto;
+    min-width:200px;
+}
+
+#container {
+    height: 100%;
+}
+
+.div-view {
+    display: flex;
+    justify-content: center;
+    height: auto;
+}
+
+.login-user, .signUp-user{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    margin-left: 10%;
+    margin-top:15%;
+    margin-right:10%;
+}
+
+.login-form, .signUp-form {
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+}
+
+.login-user-form, .signUp-user-form {
+    margin-left:40%;
+    margin-right:10%;
+    background-color:#e7f9ff;
+    padding:20px;
+    border-radius:20px;
+}
+
+h1{
+        font-size:30px;
+    }
+} 
+
+@media (min-width: 1100px) {
     * {
         height: auto;
     }
 
     .mindfulness {
-        width: 180%;
+        width: 220%;
         margin:auto;
         min-width:200px;
     }
@@ -117,32 +176,49 @@ section {
         height: auto;
     }
 
-    .login-user {
+    .login-user, .signUp-user{
         display: flex;
         flex-direction: row;
         align-items: center;
         width: 100%;
         margin-left: 10%;
-        margin-top:20%;
+        margin-top:10%;
         margin-right:10%;
     }
 
-    #login-form {
-    display: flex;
-    flex-direction: column;
-    align-items:center;
+    .login-form, .signUp-form {
+        display: flex;
+        flex-direction: column;
+        align-items:center;
     }
 
-    .login-user-form{
-        margin-left:40%;
+    .login-user-form, .signUp-user-form{
+        margin-left:45%;
         margin-right:10%;
         background-color:#e7f9ff;
-        padding:20px;
+        padding:40px;
         border-radius:20px;
     }
 
     h1{
 
-    font-size:30px;
+    font-size:50px;
+    }
+
+    .login-form-input, .signUp-form-input {
+        border-radius: 16px;
+        margin:10px;
+        padding:8px;
+        width:260px;
+        font-size: 16px;
+    }
+    
+    .login-form-btn, .signUp-form-btn {
+        border-radius: 18px;
+        margin-top:10px;
+        margin-bottom: 30px;
+        padding:8px;
+        width: 160px;
+        font-size: 16px;
     }
 } 
