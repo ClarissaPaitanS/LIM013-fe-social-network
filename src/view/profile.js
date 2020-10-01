@@ -36,7 +36,6 @@ export default () => {
     </nav>
   </header>
   <main>
-    <section>
       <section class="info-user">
         <div class="front-page">
           <img src="">
@@ -53,7 +52,7 @@ export default () => {
           <div class="post-text">
             <textarea type="text">
               
-          </textarea>       
+            </textarea>       
           </div>
           <div>
             <a href="#/profile">
@@ -80,13 +79,13 @@ export default () => {
           
         </section>
       </section>
-    </section>
+    
   </main>
   </section>
     `;
 
   const divElemt = document.createElement('div');
-  divElemt.classList.add('div-view');
+  divElemt.classList.add('div-view-profile');
   divElemt.innerHTML = viewProfile;
 
   // const menu = divElemt.querySelector('.hamburguer-menu');

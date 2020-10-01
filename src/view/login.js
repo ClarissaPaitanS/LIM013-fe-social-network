@@ -4,14 +4,20 @@ import { loginUser, googleLogin, facebookLogin } from '../configFirebase.js';
 
 export default () => {
   const viewLogin = `
+  <section class='title-hide'> 
+    <h1> Bio Thani</h1> 
+  </section>
   <section class="login-user">
-    <header>
-      <img class="mindfulness" src="imagenes/undraw_mindfulness_scgo.svg" alt="mujer-yoga">
+  <section class="login-user-header">
+      <img class="mindfulness" src="imagenes/img-login.jpg">
+  </section>
 
-    </header>
-  <section class = "login-user-form">
-  <h1>NutriFitness</h1>
-  <p>¡Bienvenidx!</p>
+  <section class="login-user-container">
+    <section class="login-user-title">
+      <h1> Bio Thani</h1>
+    </section>
+    <section class = "login-user-form">
+      <p class="welcome">¡Bienvenidx!</p>
       <form id="login-form" class="login-form" >
         <input class="login-form-input" type="email" id="email-login" placeholder="Email">
         <input class="login-form-input" type="password" id="password-login" placeholder="Password">
@@ -19,13 +25,16 @@ export default () => {
 
         <button type="submit" class="login-form-btn" id="login-btn">Inicia sesión</button>       
       </form>
-    <p class="">O bien ingresa con...</p>
+    <p class="or">O bien ingresa con...</p>
     <section class="social">  
-      <a id="facebookLogin"><img class="social-btn" src="imagenes/fb-logo.jpeg" alt="Facebook"></img></a>
-      <a id="googleLogin"><img class="social-btn" src="imagenes/google-logo.jpg" alt="Google"></img></a>
+      <a id="facebookLogin"><img class="social-btn" src="imagenes/facebook-logo.png" alt="Facebook"></img></a>
+      <a id="googleLogin"><img class="social-btn" src="imagenes/google-logo.png" alt="Google"></img></a>
     </section> 
     <p>¿No tienes una cuenta?</p> <a href="#/signUp">Regístrate</a>
   </section>
+
+  </section>
+
   </section>`;
 
   const divElemt = document.createElement('div');
