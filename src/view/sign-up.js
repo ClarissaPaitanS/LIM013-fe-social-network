@@ -4,14 +4,19 @@ import { signupUser, googleLogin, facebookLogin } from '../configFirebase.js';
 
 export default () => {
   const viewSignUp = `
+  <section class='title-hide'> 
+    <h1 > Bio Thani</h1> 
+  </section>
 <section class="signUp-user">
-<header>
-      <img class="mindfulness" src="imagenes/undraw_relaxing_at_home_9tyc.svg">
-
-</header>
+<section class="signUp-user-header">
+      <img class="mindfulness" src="imagenes/undraw_register.svg">
+      </section>
+<section class="signUp-user-container">
+<section class="signUp-user-title">
+<h1>Bio Thani</h1>
+</section>
 <section class= "signUp-user-form">
-<h1>NutriFitness</h1>
-<p>¡Registrarse es fácil y rápido!</p>
+<p class="welcome">¡Registrarse es fácil y rápido!</p>
 <form class="signUp-form">
     <input class="signUp-form-input" type="text" id="name-signUp" placeholder="Usuario">
     <input class="signUp-form-input" type="email" id="email-signUp" placeholder="Email">
@@ -20,15 +25,18 @@ export default () => {
     <button type="submit" id="signUp-btn" class="signUp-form-btn">Regístrate</button>
     </form>
 
-    <p class="">O bien ingresa con...</p>
+    <p class="or">O bien ingresa con...</p>
   <section class="social"> 
-    <a id="facebookSignUp"><img class="social-btn" src="imagenes/fb-logo.jpeg" alt="Facebook"></img></a>
-    <a id="googleSignUp"><img class="social-btn" src="imagenes/google-logo.jpg" alt="Google"></img></a>
+    <a id="facebookSignUp"><img class="social-btn" src="imagenes/facebook-logo.png" alt="Facebook"></img></a>
+    <a id="googleSignUp"><img class="social-btn" src="imagenes/google-logo.png" alt="Google"></img></a>
   </section>
 
 
     <p>¿Ya tienes una cuenta?</p> <a href="#">Iniciar sesión</a>
 </section>
+
+</section>
+
 </section>
 
 
