@@ -1,6 +1,7 @@
 
 import { closeSesion } from '../configFirebase.js';
 
+
 export default () => {
   const viewProfile = `
   <section class="profile-user">
@@ -14,7 +15,7 @@ export default () => {
         <a href="#/profile">
           <div>
             <img class="icon-user-min"src="https://i.pinimg.com/originals/26/65/36/266536f20fd7cd00af576698d4bf1610.jpg">
-            <p>Sheldon Cooper</p>
+            <p id="profileName">Sheldon Coopus</p>
           </div>
         </a>
       </li> -->
@@ -104,8 +105,12 @@ export default () => {
       .catch((error) => {
         console.log(error);
       });
+      
   });
+
+ 
 
 
   return divElemt;
 };
+

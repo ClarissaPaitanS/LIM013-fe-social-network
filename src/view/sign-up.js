@@ -22,7 +22,7 @@ export default () => {
     <input class="signUp-form-input" type="email" id="email-signUp" placeholder="Email">
     <input class="signUp-form-input" type="password" id="password-signUp" placeholder="Password">
 
-    <button type="submit" id="signUp-btn" class="signUp-form-btn">Regístrate</button>
+    <button type="submit" id="" class="signUp-form-btn">Regístrate</button>
     </form>
 
     <p class="or">O bien ingresa con...</p>
@@ -41,11 +41,14 @@ export default () => {
 
 
 `;
+
+
   const divElemt = document.createElement('div');
   divElemt.classList.add('div-view');
   divElemt.innerHTML = viewSignUp;
-
   const signUpBtn = divElemt.querySelector('.signUp-form');
+  
+  
   signUpBtn.addEventListener('submit', (e) => {
     e.preventDefault();
     const password = divElemt.querySelector('#password-signUp');
@@ -93,6 +96,45 @@ export default () => {
       });
   });
 
+  const firestore = firebase.firestore();
+  // const docRef = firestore.collection('user'); // firestore.collection('user').doc('info');
+  const profileName = divElemt.querySelector('#profileName');
+  const docRef = firestore.collection('user'); 
+  const nameSignUp = divElemt.querySelector('#name-signUp');
+  
+  signUpBtn.addEventListener('submit', function() {
+  const nameSave = nameSignUp.value;
+  console.log(nameSave);
+  
+  docRef.add({
+    name : nameSave,
+  }).then(function() { console.log('data-guardada'); console.log(docRef.user.id);
+  }).catch(function(error) {
+    console.log('error',error);
+  });
 
-  return divElemt;
+  
+
+  // function getData() {
+  //   docRef.get().then(function() {
+  //     console.log(doc);
+  //     if (doc.exists) {
+  //         console.log("Document data:", doc.data()
+  //         );
+  //     } else {
+  //         // doc.data() will be undefined in this case
+  //         console.log("No such document!");
+  //     }
+  // }).catch(function(error) {
+  //     console.log("Error getting document:", error);
+  // });
+  // }
+
+  // getData();
+
+})
+  
+return divElemt;
+
 };
+
