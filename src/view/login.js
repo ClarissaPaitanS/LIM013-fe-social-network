@@ -5,7 +5,7 @@ import { loginUser, googleLogin, facebookLogin } from '../configFirebase.js';
 export default () => {
   const viewLogin = `
   <section class='title-hide'> 
-    <h1> Bio Thani</h1> 
+    <img class="bio-thani" src="imagenes/logo-long-bio.png">
   </section>
   <section class="login-user">
   <section class="login-user-header">
@@ -73,8 +73,13 @@ export default () => {
     googleLogin()
       .then((result) => {
         // console.log(result);
-        window.location.hash = '#/profile';
+        // window.location.hash = '#/profile';
+        
         console.log('google sign in');
+        const user = firebase.auth().currentUser.providerData[0].uid;
+        console.log(firebase.auth());
+        console.log('Google ID:',user);
+        registrarUsuariosGmail(user);
       })
       .catch((err) => {
         console.log(err);
@@ -88,12 +93,69 @@ export default () => {
     facebookLogin()
       .then((result) => {
         // console.log(result);
-        window.location.hash = '#/profile';
+        const user = firebase.auth().currentUser.providerData[0].uid;
+        console.log(firebase.auth());
+        console.log('Facebook ID:',user);
+        registerUserFacebook(user);
+        // window.location.hash = '#/profile';
         console.log('facebook sign in');
       })
       .catch((err) => {
         console.log(err);
       });
   });
+
+  function registrarUsuariosGmail(id){
+    const firestore = firebase.firestore();
+    const docRef = firestore.collection('user').doc(id);
+    const nameGoogle = firebase.auth().currentUser.providerData[0].displayName;
+    const photoGoogle = firebase.auth().currentUser.providerData[0].photoURL; 
+    const emailGoogle = firebase.auth().currentUser.providerData[0].email;
+    console.log(docRef);
+    console.log(nameGoogle);
+    console.log(emailGoogle);
+    console.log(photoGoogle);
+    docRef.set({
+      name: nameGoogle,
+      email: emailGoogle,
+      photo: photoGoogle,
+  })
+  .then(function() {
+      console.log("datos guardados");
+      window.location.hash = '#/profile';
+  })
+  .catch(function(error) {
+      console.error("Error: ", error);
+  });
+  
+  }
+
+  function registerUserFacebook(id) {
+    const firestore = firebase.firestore();
+    const docRef = firestore.collection('user').doc(id);
+    const nameFacebook = firebase.auth().currentUser.providerData[0].displayName;
+    const photoFacebook = firebase.auth().currentUser.providerData[0].photoURL;
+    const emailFacebook = firebase.auth().currentUser.providerData[0].email;
+    console.log(docRef);
+    console.log(nameFacebook);
+    console.log(photoFacebook);
+    console.log(emailFacebook);
+
+    docRef.set({
+      name: nameFacebook,
+      email: emailFacebook,
+      photo: photoFacebook,
+  })
+  .then(function() {
+    console.log("datos guardados");
+    window.location.hash = '#/profile';
+})
+.catch(function(error) {
+    console.error("Error: ", error);
+});
+
+  }
+
+  
   return divElemt;
 };

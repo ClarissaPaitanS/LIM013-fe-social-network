@@ -1,5 +1,5 @@
 
-import { closeSesion } from '../configFirebase.js';
+import { closeSesion, signupUser } from '../configFirebase.js';
 
 
 export default () => {
@@ -8,14 +8,14 @@ export default () => {
   <header class="header-profile">
     <nav>
       <li class="menu-item">
-        <img class="menu-item-nutrifitness" src="imagenes/nutrifitness-icon.png" alt="">
-        <!--<p>Nutrifitness</p>-->
+        <img class="menu-logo-bio" src="imagenes/logo-bio.png" alt="">
+        <!--<p>Bio Thani</p>-->
       </li>
       <!-- <li class="menu-item">
         <a href="#/profile">
           <div>
-            <img class="icon-user-min"src="https://i.pinimg.com/originals/26/65/36/266536f20fd7cd00af576698d4bf1610.jpg">
-            <p id="profileName">Sheldon Coopus</p>
+            <img class="icon-user-min"src="imagenes/logo-bio.png">
+            <p id="profileName"></p>
           </div>
         </a>
       </li> -->
@@ -43,9 +43,12 @@ export default () => {
         </div>
         <div class="info-user-profile">
           <div class="info-user-profile-img">
-            <img src="https://i.pinimg.com/originals/26/65/36/266536f20fd7cd00af576698d4bf1610.jpg">
-          </div class="info-user-profile-name">
-            <p>Sheldon Cooper</p>
+          <p id = "photoUser"> <img  src="imagenes/user-perfil.jpg"></p>
+          </div>
+          <div class="info-user-profile-name">
+            <p id="profileName"></p>
+            <p id="profileEmail"></p>
+          </div>
         </div>
       </section>
       <section class="post-user">
@@ -108,7 +111,65 @@ export default () => {
       
   });
 
- 
+function mostrarDatos() {
+  const firestore=firebase.firestore();
+  const user = firebase.auth().currentUser.uid;
+  const docRef=firestore.collection('user').doc(user);
+
+  docRef.get().then(function(doc) {
+    if (doc.exists) {
+        console.log("Document data:", doc.data());
+        console.log(doc.data().name);
+        const nameUserProfile = doc.data().name;
+        const emailUserProfile = doc.data().email;
+        const profileName = divElemt.querySelector("#profileName");
+        profileName.innerHTML = `${nameUserProfile}`;
+        const profileEmail = divElemt.querySelector("#profileEmail");
+        profileEmail.innerHTML = `${emailUserProfile}`;
+
+
+    } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+    }
+}).catch(function(error) {
+    console.log("Error getting document:", error);
+});
+
+}
+
+mostrarDatos();
+
+function mostrarDatosProvider() {
+  const firestore=firebase.firestore();
+  const user = firebase.auth().currentUser.providerData[0].uid;
+  const docRef=firestore.collection('user').doc(user);
+
+  docRef.get().then(function(doc) {
+    if (doc.exists) {
+        console.log("Document data:", doc.data());
+        console.log(doc.data().name);
+        const nameUserProfile = doc.data().name;
+        const emailUserProfile = doc.data().email;
+        const photoUserProfile = doc.data().photo;
+        const profileName = divElemt.querySelector("#profileName");
+        profileName.innerHTML = `${nameUserProfile}`;
+        const profileEmail = divElemt.querySelector("#profileEmail");
+        profileEmail.innerHTML = `${emailUserProfile}`;
+        const photoUser = divElemt.querySelector("#photoUser");
+        photoUser.innerHTML = `<img  src='${photoUserProfile }'>`;
+    } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+    }
+}).catch(function(error) {
+    console.log("Error getting document:", error);
+});
+
+}
+
+mostrarDatosProvider();
+
 
 
   return divElemt;
