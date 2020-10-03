@@ -25,11 +25,11 @@ export default () => {
     <button type="submit" id="" class="signUp-form-btn">Regístrate</button>
     </form>
 
-    <p class="or">O bien ingresa con...</p>
+  <!-- <p class="or">O bien ingresa con...</p>
   <section class="social"> 
     <a id="facebookSignUp"><img class="social-btn" src="imagenes/facebook-logo.png" alt="Facebook"></img></a>
     <a id="googleSignUp"><img class="social-btn" src="imagenes/google-logo.png" alt="Google"></img></a>
-  </section>
+  </section>-->
 
 
     <p>¿Ya tienes una cuenta?</p> <a href="#">Iniciar sesión</a>
@@ -56,62 +56,74 @@ export default () => {
 
     signupUser(email.value, password.value)
       .then((userCredential) => {
-        window.location.hash = '#/profile';
+      
+      // window.location.hash = '#/profile';
         console.log('singUp');
+
+        const user = firebase.auth().currentUser.uid;
+        console.log(user);
+
+        registrarUsuarios(user);
       })
       .catch((err) => {
         console.log(err);
       });
+      
   });
 
   //  Google SignUp
-  const googleBtn = divElemt.querySelector('#googleSignUp');
-  googleBtn.addEventListener('click', () => {
-    // const provider = new firebase.auth.GoogleAuthProvider();
-    // auth.signInWithPopup(provider)
-    googleLogin()
-      .then((result) => {
-        // console.log(result);
-        window.location.hash = '#/profile';
-        console.log('google sign in');
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
+  // const googleBtn = divElemt.querySelector('#googleSignUp');
+  // googleBtn.addEventListener('click', () => {
+  //   // const provider = new firebase.auth.GoogleAuthProvider();
+  //   // auth.signInWithPopup(provider)
+  //   googleLogin()
+  //     .then((result) => {
+  //       // console.log(result);
+      
+  //       // console.log('google sign in');
+  //       // const user = firebase.auth().currentUser.providerData[0].uid;
+  //       // console.log(firebase.auth().currentUser.providerData);
+  //       // console.log('Google ID:',user);
+  //       // registrarUsuariosGmail(user);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // });
 
 
-  const facebookBtn = divElemt.querySelector('#facebookSignUp');
-  facebookBtn.addEventListener('click', () => {
-    // const provider = new firebase.auth.FacebookAuthProvider();
-    // auth.signInWithPopup(provider)
-    facebookLogin()
-      .then((result) => {
-        // console.log(result);
-        window.location.hash = '#/profile';
-        console.log('facebook sign in');
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
-
-  const firestore = firebase.firestore();
-  // const docRef = firestore.collection('user'); // firestore.collection('user').doc('info');
-  const profileName = divElemt.querySelector('#profileName');
-  const docRef = firestore.collection('user'); 
-  const nameSignUp = divElemt.querySelector('#name-signUp');
+  // const facebookBtn = divElemt.querySelector('#facebookSignUp');
+  // facebookBtn.addEventListener('click', () => {
+  //   // const provider = new firebase.auth.FacebookAuthProvider();
+  //   // auth.signInWithPopup(provider)
+  //   facebookLogin()
+  //     .then((result) => {
+  //       // console.log(result);
+  //       window.location.hash = '#/profile';
+  //       console.log('facebook sign in');
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // });
   
-  signUpBtn.addEventListener('submit', function() {
-  const nameSave = nameSignUp.value;
-  console.log(nameSave);
+
+  // const firestore = firebase.firestore();
+  // // const docRef = firestore.collection('user'); // 
+  // const profileName = divElemt.querySelector('#profileName');
+  // const docRef = firestore.collection('user'); 
+  // const nameSignUp = divElemt.querySelector('#name-signUp');
   
-  docRef.add({
-    name : nameSave,
-  }).then(function() { console.log('data-guardada'); console.log(docRef.user.id);
-  }).catch(function(error) {
-    console.log('error',error);
-  });
+  // signUpBtn.addEventListener('submit', function() {
+  // const nameSave = nameSignUp.value;
+  // console.log(nameSave);
+  
+  // docRef.add({
+  //   name : nameSave,
+  // }).then(function() { console.log('data-guardada'); console.log(docRef.user.id);
+  // }).catch(function(error) {
+  //   console.log('error',error);
+  // });
 
   
 
@@ -132,8 +144,49 @@ export default () => {
 
   // getData();
 
-})
+// })
+
+function registrarUsuarios(id) {
+  const firestore=firebase.firestore();
+  const docRef=firestore.collection('user').doc(id);
   
+  const nameSignUp = divElemt.querySelector('#name-signUp');
+  const emailSignUp = divElemt.querySelector('#email-signUp');
+  const nameSave = nameSignUp.value;
+  const emailSave = emailSignUp.value;
+  console.log(docRef);
+
+  docRef.set({
+    name: nameSave,
+    email: emailSave,
+})
+.then(function() {
+    console.log("datos guardados");
+    window.location.hash = '#/profile';
+})
+.catch(function(error) {
+    console.error("Error: ", error);
+});
+}
+
+// function registrarUsuariosGmail(id){
+//   const firestore = firebase.firestore();
+//   const docRef = firestore.collection('user').doc(id);
+//   const nameGoogle = firebase.auth().currentUser.providerData[0].displayName; 
+  
+//   console.log(docRef);
+//   docRef.set({
+//     name: nameGoogle,
+// })
+// .then(function() {
+//     console.log("datos guardados");
+//     window.location.hash = '#/profile';
+// })
+// .catch(function(error) {
+//     console.error("Error: ", error);
+// });
+
+// }
 return divElemt;
 
 };
