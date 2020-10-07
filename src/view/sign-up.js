@@ -5,7 +5,7 @@ import { signupUser, googleLogin, facebookLogin } from '../configFirebase.js';
 export default () => {
   const viewSignUp = `
   <section class='title-hide'> 
-    <h1 > Bio Thani</h1> 
+  <img class="bio-thani" src="imagenes/logo-long-bio.png">
   </section>
 <section class="signUp-user">
 <section class="signUp-user-header">
@@ -13,7 +13,7 @@ export default () => {
       </section>
 <section class="signUp-user-container">
 <section class="signUp-user-title">
-<h1>Bio Thani</h1>
+<h1> <img class="bio-thani" src="imagenes/logo-long-bio.png"></h1>
 </section>
 <section class= "signUp-user-form">
 <p class="welcome">¡Registrarse es fácil y rápido!</p>
@@ -23,7 +23,7 @@ export default () => {
     <input class="signUp-form-input" type="password" id="password-signUp" placeholder="Password">
 
     <button type="submit" id="" class="signUp-form-btn">Regístrate</button>
-    </form>
+</form>
 
   <!-- <p class="or">O bien ingresa con...</p>
   <section class="social"> 
@@ -41,25 +41,42 @@ export default () => {
 
 
 `;
-
-
   const divElemt = document.createElement('div');
   divElemt.classList.add('div-view');
   divElemt.innerHTML = viewSignUp;
+
+  function registrarUsuarios(id) {
+    const firestore = firebase.firestore();
+    const docRef = firestore.collection('user').doc(id);
+    const nameSignUp = divElemt.querySelector('#name-signUp');
+    const emailSignUp = divElemt.querySelector('#email-signUp');
+    const nameSave = nameSignUp.value;
+    const emailSave = emailSignUp.value;
+    console.log(docRef);
+
+    docRef.set({
+      name: nameSave,
+      email: emailSave,
+      photo: 'imagenes/user-perfil.jpg',
+    })
+      .then(() => {
+        console.log('datos guardados');
+        window.location.hash = '#/profile';
+      })
+      .catch((error) => {
+        console.error('Error: ', error);
+      });
+  }
+
   const signUpBtn = divElemt.querySelector('.signUp-form');
-  
-  
   signUpBtn.addEventListener('submit', (e) => {
     e.preventDefault();
     const password = divElemt.querySelector('#password-signUp');
     const email = divElemt.querySelector('#email-signUp');
-
     signupUser(email.value, password.value)
       .then((userCredential) => {
-      
       // window.location.hash = '#/profile';
         console.log('singUp');
-
         const user = firebase.auth().currentUser.uid;
         console.log(user);
 
@@ -68,126 +85,28 @@ export default () => {
       .catch((err) => {
         console.log(err);
       });
-      
   });
 
-  //  Google SignUp
-  // const googleBtn = divElemt.querySelector('#googleSignUp');
-  // googleBtn.addEventListener('click', () => {
-  //   // const provider = new firebase.auth.GoogleAuthProvider();
-  //   // auth.signInWithPopup(provider)
-  //   googleLogin()
-  //     .then((result) => {
-  //       // console.log(result);
-      
-  //       // console.log('google sign in');
-  //       // const user = firebase.auth().currentUser.providerData[0].uid;
-  //       // console.log(firebase.auth().currentUser.providerData);
-  //       // console.log('Google ID:',user);
-  //       // registrarUsuariosGmail(user);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // });
+  //   function registrarUsuarios(id) {
+  //     const firestore=firebase.firestore();
+  //     const docRef=firestore.collection('user').doc(id);
+  //     const nameSignUp = divElemt.querySelector('#name-signUp');
+  //     const emailSignUp = divElemt.querySelector('#email-signUp');
+  //     const nameSave = nameSignUp.value;
+  //     const emailSave = emailSignUp.value;
+  //     console.log(docRef);
 
-
-  // const facebookBtn = divElemt.querySelector('#facebookSignUp');
-  // facebookBtn.addEventListener('click', () => {
-  //   // const provider = new firebase.auth.FacebookAuthProvider();
-  //   // auth.signInWithPopup(provider)
-  //   facebookLogin()
-  //     .then((result) => {
-  //       // console.log(result);
-  //       window.location.hash = '#/profile';
-  //       console.log('facebook sign in');
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // });
-  
-
-  // const firestore = firebase.firestore();
-  // // const docRef = firestore.collection('user'); // 
-  // const profileName = divElemt.querySelector('#profileName');
-  // const docRef = firestore.collection('user'); 
-  // const nameSignUp = divElemt.querySelector('#name-signUp');
-  
-  // signUpBtn.addEventListener('submit', function() {
-  // const nameSave = nameSignUp.value;
-  // console.log(nameSave);
-  
-  // docRef.add({
-  //   name : nameSave,
-  // }).then(function() { console.log('data-guardada'); console.log(docRef.user.id);
-  // }).catch(function(error) {
-  //   console.log('error',error);
-  // });
-
-  
-
-  // function getData() {
-  //   docRef.get().then(function() {
-  //     console.log(doc);
-  //     if (doc.exists) {
-  //         console.log("Document data:", doc.data()
-  //         );
-  //     } else {
-  //         // doc.data() will be undefined in this case
-  //         console.log("No such document!");
-  //     }
-  // }).catch(function(error) {
-  //     console.log("Error getting document:", error);
+  //     docRef.set({
+  //       name: nameSave,
+  //       email: emailSave,
+  // })
+  //   .then(() => {
+  //     console.log('datos guardados');
+  //     window.location.hash = '#/profile';
+  // })
+  //   .catch((error) => {
+  //     console.error('Error: ', error);
   // });
   // }
-
-  // getData();
-
-// })
-
-function registrarUsuarios(id) {
-  const firestore=firebase.firestore();
-  const docRef=firestore.collection('user').doc(id);
-  
-  const nameSignUp = divElemt.querySelector('#name-signUp');
-  const emailSignUp = divElemt.querySelector('#email-signUp');
-  const nameSave = nameSignUp.value;
-  const emailSave = emailSignUp.value;
-  console.log(docRef);
-
-  docRef.set({
-    name: nameSave,
-    email: emailSave,
-})
-.then(function() {
-    console.log("datos guardados");
-    window.location.hash = '#/profile';
-})
-.catch(function(error) {
-    console.error("Error: ", error);
-});
-}
-
-// function registrarUsuariosGmail(id){
-//   const firestore = firebase.firestore();
-//   const docRef = firestore.collection('user').doc(id);
-//   const nameGoogle = firebase.auth().currentUser.providerData[0].displayName; 
-  
-//   console.log(docRef);
-//   docRef.set({
-//     name: nameGoogle,
-// })
-// .then(function() {
-//     console.log("datos guardados");
-//     window.location.hash = '#/profile';
-// })
-// .catch(function(error) {
-//     console.error("Error: ", error);
-// });
-
-// }
-return divElemt;
-
+  return divElemt;
 };
-

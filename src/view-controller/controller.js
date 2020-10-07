@@ -28,6 +28,11 @@ export const changeView = (hash) => {
 
       return profilePage;
     }
+    
+    case '#/edit':
+    {
+      return sectionMain.appendChild(elements.edit());
+    }
 
     default:
       return sectionMain.appendChild(elements.different());

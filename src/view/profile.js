@@ -1,5 +1,5 @@
 
-import { closeSesion, signupUser } from '../configFirebase.js';
+import { closeSesion } from '../configFirebase.js';
 
 
 export default () => {
@@ -32,6 +32,9 @@ export default () => {
           <div id="close-btn" class="close-btn">
             <p>Cerrar sesión</p>
           </div>
+          <div id="edit-btn" class="edit-btn">
+          <p>Editar perfil</p>
+        </div>
         <!--</div>-->
       </li>
     </nav>
@@ -108,70 +111,42 @@ export default () => {
       .catch((error) => {
         console.log(error);
       });
-      
   });
 
-function mostrarDatos() {
-  const firestore=firebase.firestore();
-  const user = firebase.auth().currentUser.uid;
-  const docRef=firestore.collection('user').doc(user);
+  const editBtn = divElemt.querySelector('#edit-btn');
 
-  docRef.get().then(function(doc) {
-    if (doc.exists) {
-        console.log("Document data:", doc.data());
-        console.log(doc.data().name);
-        const nameUserProfile = doc.data().name;
-        const emailUserProfile = doc.data().email;
-        const profileName = divElemt.querySelector("#profileName");
-        profileName.innerHTML = `${nameUserProfile}`;
-        const profileEmail = divElemt.querySelector("#profileEmail");
-        profileEmail.innerHTML = `${emailUserProfile}`;
+  editBtn.addEventListener('click', () => {
+    window.location.hash = '#/edit';
+  });
 
+  function mostrarDatosProvider() {
+    const firestore = firebase.firestore();
+    const user = firebase.auth().currentUser.uid;
+    const docRef = firestore.collection('user').doc(user);
 
-    } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!");
-    }
-}).catch(function(error) {
-    console.log("Error getting document:", error);
-});
-
-}
-
-mostrarDatos();
-
-function mostrarDatosProvider() {
-  const firestore=firebase.firestore();
-  const user = firebase.auth().currentUser.providerData[0].uid;
-  const docRef=firestore.collection('user').doc(user);
-
-  docRef.get().then(function(doc) {
-    if (doc.exists) {
-        console.log("Document data:", doc.data());
+    docRef.get().then((doc) => {
+      if (doc.exists) {
+        console.log('Document data:', doc.data());
         console.log(doc.data().name);
         const nameUserProfile = doc.data().name;
         const emailUserProfile = doc.data().email;
         const photoUserProfile = doc.data().photo;
-        const profileName = divElemt.querySelector("#profileName");
+        const profileName = divElemt.querySelector('#profileName');
         profileName.innerHTML = `${nameUserProfile}`;
-        const profileEmail = divElemt.querySelector("#profileEmail");
+        const profileEmail = divElemt.querySelector('#profileEmail');
         profileEmail.innerHTML = `${emailUserProfile}`;
-        const photoUser = divElemt.querySelector("#photoUser");
-        photoUser.innerHTML = `<img  src='${photoUserProfile }'>`;
-    } else {
+        const photoUser = divElemt.querySelector('#photoUser');
+        photoUser.innerHTML = `<img  src='${photoUserProfile}'>`;
+      } else {
         // doc.data() will be undefined in this case
-        console.log("No such document!");
-    }
-}).catch(function(error) {
-    console.log("Error getting document:", error);
-});
+        console.log('No such document!');
+      }
+    }).catch((error) => {
+      console.log('Error getting document:', error);
+    });
+  }
 
-}
-
-mostrarDatosProvider();
-
-
+  mostrarDatosProvider();
 
   return divElemt;
 };
-

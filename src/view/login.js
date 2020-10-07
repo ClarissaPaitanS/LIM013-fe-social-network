@@ -14,7 +14,7 @@ export default () => {
 
   <section class="login-user-container">
     <section class="login-user-title">
-      <h1> Bio Thani</h1>
+      <h1> <img class="bio-thani" src="imagenes/logo-long-bio.png"></h1>
     </section>
     <section class = "login-user-form">
       <p class="welcome">¡Bienvenidx!</p>
@@ -40,7 +40,6 @@ export default () => {
   const divElemt = document.createElement('div');
   divElemt.classList.add('div-view');
   divElemt.innerHTML = viewLogin;
-
   const loginBtn = divElemt.querySelector('#login-form');
   loginBtn.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -65,51 +64,11 @@ export default () => {
       });
   });
 
-  //  Google Login
-  const googleBtn = divElemt.querySelector('#googleLogin');
-  googleBtn.addEventListener('click', () => {
-    // const provider = new firebase.auth.GoogleAuthProvider();
-    // auth.signInWithPopup(provider)
-    googleLogin()
-      .then((result) => {
-        // console.log(result);
-        // window.location.hash = '#/profile';
-        
-        console.log('google sign in');
-        const user = firebase.auth().currentUser.providerData[0].uid;
-        console.log(firebase.auth());
-        console.log('Google ID:',user);
-        registrarUsuariosGmail(user);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
-
-  const facebookBtn = divElemt.querySelector('#facebookLogin');
-  facebookBtn.addEventListener('click', () => {
-    // const provider = new firebase.auth.FacebookAuthProvider();
-    // auth.signInWithPopup(provider)
-    facebookLogin()
-      .then((result) => {
-        // console.log(result);
-        const user = firebase.auth().currentUser.providerData[0].uid;
-        console.log(firebase.auth());
-        console.log('Facebook ID:',user);
-        registerUserFacebook(user);
-        // window.location.hash = '#/profile';
-        console.log('facebook sign in');
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  });
-
-  function registrarUsuariosGmail(id){
+  function registrarUsuariosGmail(id) {
     const firestore = firebase.firestore();
     const docRef = firestore.collection('user').doc(id);
     const nameGoogle = firebase.auth().currentUser.providerData[0].displayName;
-    const photoGoogle = firebase.auth().currentUser.providerData[0].photoURL; 
+    const photoGoogle = firebase.auth().currentUser.providerData[0].photoURL;
     const emailGoogle = firebase.auth().currentUser.providerData[0].email;
     console.log(docRef);
     console.log(nameGoogle);
@@ -119,43 +78,88 @@ export default () => {
       name: nameGoogle,
       email: emailGoogle,
       photo: photoGoogle,
-  })
-  .then(function() {
-      console.log("datos guardados");
-      window.location.hash = '#/profile';
-  })
-  .catch(function(error) {
-      console.error("Error: ", error);
-  });
-  
+    })
+      .then(() => {
+        console.log('datos guardados');
+        window.location.hash = '#/profile';
+      })
+      .catch((error) => {
+        console.error('Error: ', error);
+      });
   }
 
-  function registerUserFacebook(id) {
+  //  Google Login
+  const googleBtn = divElemt.querySelector('#googleLogin');
+  googleBtn.addEventListener('click', () => {
+    // const provider = new firebase.auth.GoogleAuthProvider();
+    // auth.signInWithPopup(provider)
+    googleLogin()
+      .then((result) => {
+        // console.log(result);
+        // window.location.hash = '#/profile';
+        console.log('google sign in');
+        const user = firebase.auth().currentUser.uid;
+        console.log(user);
+        console.log(firebase.auth());
+        console.log('Google ID:', user);
+
+        registrarUsuariosGmail(user);
+        // if (user !== '') {
+        //   window.location.hash = '#/profile';
+        // } else {
+        //   registrarUsuariosGmail(user);
+        // }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+
+  function registerUserFacebook(userData, photoData) {
     const firestore = firebase.firestore();
-    const docRef = firestore.collection('user').doc(id);
-    const nameFacebook = firebase.auth().currentUser.providerData[0].displayName;
-    const photoFacebook = firebase.auth().currentUser.providerData[0].photoURL;
-    const emailFacebook = firebase.auth().currentUser.providerData[0].email;
+    const docRef = firestore.collection('user').doc(userData.uid);
+    const nameFacebook = userData.displayName;
+    // const photoFacebook = userData.photoURL;
+    const emailFacebook = userData.email;
     console.log(docRef);
     console.log(nameFacebook);
-    console.log(photoFacebook);
+    // console.log(photoFacebook);
     console.log(emailFacebook);
-
     docRef.set({
       name: nameFacebook,
       email: emailFacebook,
-      photo: photoFacebook,
-  })
-  .then(function() {
-    console.log("datos guardados");
-    window.location.hash = '#/profile';
-})
-.catch(function(error) {
-    console.error("Error: ", error);
-});
-
+      photo: photoData,
+    })
+      .then(() => {
+        console.log('datos guardados');
+        window.location.hash = '#/profile';
+      })
+      .catch((error) => {
+        console.error('Error: ', error);
+      });
   }
 
-  
+  const facebookBtn = divElemt.querySelector('#facebookLogin');
+  facebookBtn.addEventListener('click', () => {
+    // const provider = new firebase.auth.FacebookAuthProvider();
+    // auth.signInWithPopup(provider)
+    facebookLogin()
+      .then((result) => {
+        console.log(result);
+        const user = result.user;
+        console.log(result.additionalUserInfo.profile.picture.data.url);
+        const photo = result.additionalUserInfo.profile.picture.data.url;
+        // const user = firebase.auth().currentUser.uid;
+        // console.log(firebase.auth());
+        // console.log('Facebook ID:', user);
+        registerUserFacebook(user, photo);
+        // window.location.hash = '#/profile';
+        console.log('facebook sign in');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+
   return divElemt;
 };
