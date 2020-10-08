@@ -16,6 +16,11 @@ body{
 
 .header-profile {
     background-image: linear-gradient(-225deg, #B7F8DB 0%, #50A7C2 100%);
+    background-color: #bae9f9;
+    display:inline-block;
+    justify-content:center;
+    width:100%;
+    padding:5px;
 }
 
 .div-view-profile{
@@ -29,13 +34,14 @@ body{
     width: 100%;
 
 }
-.header-profile{
+
+/* .header-profile{
     background-color: #bae9f9;
     display:inline-block;
     justify-content:center;
     width:100%;
     padding:5px;
-}
+} */
 
 nav{
     display:flex;
@@ -135,7 +141,6 @@ textarea {
 
 .post-user{
     margin: 5%;
-
 }
 
 .post-user-wall{

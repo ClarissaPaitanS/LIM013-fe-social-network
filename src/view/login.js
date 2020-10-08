@@ -59,7 +59,7 @@ export default () => {
         if (err.code === 'auth/wrong-password') {
           divElemt.querySelector('.error-login').innerHTML = 'La contraseña es inválida';
         } else {
-          divElemt.querySelector('.error-login').innerHTML = 'El correo no esta registrado';
+          divElemt.querySelector('.error-login').innerHTML = 'El correo no está registrado';
         }
       });
   });
@@ -70,7 +70,7 @@ export default () => {
     const nameGoogle = firebase.auth().currentUser.providerData[0].displayName;
     const photoGoogle = firebase.auth().currentUser.providerData[0].photoURL;
     const emailGoogle = firebase.auth().currentUser.providerData[0].email;
-    console.log(docRef);
+    console.log('docref', docRef.id);
     console.log(nameGoogle);
     console.log(emailGoogle);
     console.log(photoGoogle);
@@ -103,7 +103,24 @@ export default () => {
         console.log(firebase.auth());
         console.log('Google ID:', user);
 
-        registrarUsuariosGmail(user);
+        const firestore = firebase.firestore();
+        const docRef = firestore.collection('user').doc(user);
+
+        docRef.get().then((doc) => {
+          if (doc.exists) {
+            window.location.hash = '#/profile';
+            console.log('Document data:', doc.data());
+          } else {
+            registrarUsuariosGmail(user);
+            // doc.data() will be undefined in this case
+            console.log('No such document!');
+          }
+        })
+          .catch((error) => {
+            console.log('Error getting document:', error);
+          });
+
+
         // if (user !== '') {
         //   window.location.hash = '#/profile';
         // } else {
@@ -147,12 +164,28 @@ export default () => {
       .then((result) => {
         console.log(result);
         const user = result.user;
+        console.log(user);
         console.log(result.additionalUserInfo.profile.picture.data.url);
         const photo = result.additionalUserInfo.profile.picture.data.url;
         // const user = firebase.auth().currentUser.uid;
         // console.log(firebase.auth());
         // console.log('Facebook ID:', user);
-        registerUserFacebook(user, photo);
+        const firestore = firebase.firestore();
+        const docRef = firestore.collection('user').doc(user.uid);
+        console.log('Yo soy doc ref', docRef);
+        docRef.get().then((doc) => {
+          if (doc.exists) {
+            window.location.hash = '#/profile';
+            console.log('Document data:', doc.data());
+          } else {
+            registerUserFacebook(user.uid, photo);
+            // doc.data() will be undefined in this case
+            console.log('No such document!');
+          }
+        })
+          .catch((error) => {
+            console.log('Error getting document:', error);
+          });
         // window.location.hash = '#/profile';
         console.log('facebook sign in');
       })

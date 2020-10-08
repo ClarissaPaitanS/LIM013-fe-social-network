@@ -77,7 +77,7 @@ export default () => {
     const firestore = firebase.firestore();
     const user = firebase.auth().currentUser.uid;
     const docRef = firestore.collection('user').doc(user);
-    const editPasword = divElemt.querySelector('#password-edit').value;
+    // const editPasword = divElemt.querySelector('#password-edit').value;
 
     console.log(user);
     console.log(docRef);
@@ -93,7 +93,7 @@ export default () => {
         console.log('An error happened', error);
       });
 
-    console.log(editPasword);
+    // console.log(editPasword);
 
 
     firebase.auth().currentUser.updateEmail(emailEdit.value).then(() => {
