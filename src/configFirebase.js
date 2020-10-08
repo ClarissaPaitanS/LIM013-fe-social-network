@@ -20,12 +20,9 @@ export const googleLogin = () => (
 );
 
 // Crea una instancia del objeto del proveedor de Facebook.
-export const facebookLogin = () => {
-  const facebookProvider = new firebase.auth.FacebookAuthProvider();
-  // facebookProvider.additionalUserInfo('photo_URL');
-  return firebase.auth().signInWithPopup(facebookProvider);
-};
-
+export const facebookLogin = () => (
+  firebase.auth().signInWithPopup(new firebase.auth.FacebookAuthProvider())
+);
 // Cerrar Sesion.
 export const closeSesion = () => firebase.auth().signOut();
 
