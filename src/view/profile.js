@@ -61,14 +61,23 @@ export default () => {
               
             </textarea>       
           </div>
-          <div>
-            <a href="#/profile">
+
+          <div class="post-user-options">
+
               <div class="post-user-image">
-                <img src="https://img.icons8.com/color/48/000000/image.png">
-                <!-- <input type="file" name="post-images" accept=".jpg,.png"> -->
+                <label for="file-input">
+                <img src="https://img.icons8.com/color/48/000000/image.png"/>
+                </label>
+                <input type="file" id="file-input"/>
               </div>
-            </a>
+
+
+              <div class="post-user-btn">
+                <img src="https://img.icons8.com/color/2x/plus--v1.png"/>
+              </div>
+
           </div>
+
         </section>
         <section class="post-user-wall">
           <div class="post">

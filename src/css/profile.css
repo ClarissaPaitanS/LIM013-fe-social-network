@@ -153,7 +153,7 @@ textarea {
 
 .post {
     margin: 10px;
-    width: 90%;
+    /* width: 90%; */
 }
 
 .post-header{
@@ -170,7 +170,9 @@ textarea {
     background-color:#e7f9ff;
     padding:5px;
 }
-
+.post-user-options{
+    display: flex;
+}
 .post-user-image {
     text-align: left;
     margin-left: 5%;
@@ -178,8 +180,23 @@ textarea {
 .post-user-image img {
     width: 32px;
     height: 32px;
+    cursor: pointer;
 }
 
+.post-user-image > input
+{
+    display: none;
+}
+
+.post-user-btn {
+    text-align: right;
+    margin-left: 5%;
+}
+.post-user-btn img {
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+}
 /* ---------------- 700 px------------------- */
 @media (min-width: 450px) {
     * {

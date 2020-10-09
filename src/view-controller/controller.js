@@ -18,10 +18,11 @@ export const changeView = (hash) => {
 
     {
       firebase.auth().onAuthStateChanged((user) => {
+        console.log('Hola', user);
         if (user) {
           profilePage = sectionMain.appendChild(elements.profile());
         } else {
-          profilePage = sectionMain.appendChild(elements.login());
+          // profilePage = sectionMain.appendChild(elements.login());
           window.location.hash = '#/';
         }
       });

@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 
 import { signupUser, googleLogin, facebookLogin } from '../configFirebase.js';
+import { addUser } from '../configFirestore.js';
 
 export default () => {
   const viewSignUp = `
@@ -45,29 +46,6 @@ export default () => {
   divElemt.classList.add('div-view');
   divElemt.innerHTML = viewSignUp;
 
-  function registrarUsuarios(id) {
-    const firestore = firebase.firestore();
-    const docRef = firestore.collection('user').doc(id);
-    const nameSignUp = divElemt.querySelector('#name-signUp');
-    const emailSignUp = divElemt.querySelector('#email-signUp');
-    const nameSave = nameSignUp.value;
-    const emailSave = emailSignUp.value;
-    console.log(docRef);
-
-    docRef.set({
-      name: nameSave,
-      email: emailSave,
-      photo: 'imagenes/user-perfil.jpg',
-    })
-      .then(() => {
-        console.log('datos guardados');
-        window.location.hash = '#/profile';
-      })
-      .catch((error) => {
-        console.error('Error: ', error);
-      });
-  }
-
   const signUpBtn = divElemt.querySelector('.signUp-form');
   signUpBtn.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -80,33 +58,24 @@ export default () => {
         const user = firebase.auth().currentUser.uid;
         console.log(user);
 
-        registrarUsuarios(user);
+        const nameSignUp = divElemt.querySelector('#name-signUp');
+        const emailSignUp = divElemt.querySelector('#email-signUp');
+        const nameSave = nameSignUp.value;
+        const emailSave = emailSignUp.value;
+
+        addUser(user, nameSave, emailSave)
+          .then(() => {
+            console.log('datos guardados');
+            window.location.hash = '#/profile';
+          })
+          .catch((error) => {
+            console.error('Error: ', error);
+          });
       })
       .catch((err) => {
         console.log(err);
       });
   });
 
-  //   function registrarUsuarios(id) {
-  //     const firestore=firebase.firestore();
-  //     const docRef=firestore.collection('user').doc(id);
-  //     const nameSignUp = divElemt.querySelector('#name-signUp');
-  //     const emailSignUp = divElemt.querySelector('#email-signUp');
-  //     const nameSave = nameSignUp.value;
-  //     const emailSave = emailSignUp.value;
-  //     console.log(docRef);
-
-  //     docRef.set({
-  //       name: nameSave,
-  //       email: emailSave,
-  // })
-  //   .then(() => {
-  //     console.log('datos guardados');
-  //     window.location.hash = '#/profile';
-  // })
-  //   .catch((error) => {
-  //     console.error('Error: ', error);
-  // });
-  // }
   return divElemt;
 };

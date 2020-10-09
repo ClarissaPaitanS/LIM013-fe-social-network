@@ -25,20 +25,3 @@ export const facebookLogin = () => (
 );
 // Cerrar Sesion.
 export const closeSesion = () => firebase.auth().signOut();
-
-// Editar
-
-// -----------------------------Firestore Database ---------------------------
-
-/*
-const firestore = firebase.firestore();
-const docRef = firestore.doc("user/info");
-const profileName = divElemt.querySelector("#profileName");
-const nameSignUp = divElemt.querySelector('#name-signUp');
-const signUpBtn = divElemt.querySelector('signUp-btn');
-
-signUpBtn.addEventListener('click', () => {
-const nameSave = nameSignUp.value;
-console.log(nameSave);
-})
-*/
