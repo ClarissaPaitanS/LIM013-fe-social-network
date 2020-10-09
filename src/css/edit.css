@@ -1,0 +1,8 @@
+.photo-upload > input {
+    display:none;
+}
+
+.photo-upload img {
+    width: 50px;
+    cursor: pointer;
+}

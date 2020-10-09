@@ -22,10 +22,16 @@ export default () => {
   </header>
   <main>
     <section class="form-edit">
+      <div class = "photo-upload"> 
+          <label for = "photo-up">
+            <p id = "photo-edit"> <img  src="imagenes/user-perfil.jpg"  alt ="Click aquí para subir tu foto" title ="Click aquí para subir tu foto"></p>
+          </label>
+          <input class = "edit-form-input" value = "" type="file" id = "photo-up">
+      </div>
       <form class="edit-form">
         <input class="edit-form-input" value= "" type="text" id="name-edit"  >
-        <input class="edit-form-input" value= "" type="email" id="email-edit" >
-        <!--<input class="edit-form-input" value= "" type="password" id="password-edit"> -->
+        <!-- <input class="edit-form-input" value= "" type="email" id="email-edit" > -->
+        <input class="edit-form-input" value= "" type="password" id="password-edit">
         <button type="submit" id="" class="edit-form-btn">Actualizar</button>
       </form>
     </section>
@@ -48,11 +54,14 @@ export default () => {
         console.log('Document data:', doc.data());
         console.log(doc.data().name);
         const nameUserProfile = doc.data().name;
-        const emailUserProfile = doc.data().email;
+        // const emailUserProfile = doc.data().email;
+        const photoUserProfile = doc.data().photo;
         const profileName = divElemt.querySelector('#name-edit');
-        const profileEmail = divElemt.querySelector('#email-edit');
+        // const profileEmail = divElemt.querySelector('#email-edit');
+        const photoUser = divElemt.querySelector('#photo-edit');
+        photoUser.innerHTML = `<img  src='${photoUserProfile}'>`;
         profileName.value = nameUserProfile;
-        profileEmail.value = emailUserProfile;
+        // profileEmail.value = emailUserProfile;
       } else {
         // doc.data() will be undefined in this case
         console.log('No such document!');
@@ -65,7 +74,7 @@ export default () => {
   mostrarDatosProvider();
 
   const nameEdit = divElemt.querySelector('#name-edit');
-  const emailEdit = divElemt.querySelector('#email-edit');
+  // const emailEdit = divElemt.querySelector('#email-edit');
   const editFormBtn = divElemt.querySelector('.edit-form-btn');
   const homeBtn = divElemt.querySelector('#profile-btn');
   homeBtn.addEventListener('click', () => { window.location.hash = '#/profile'; });
@@ -84,7 +93,7 @@ export default () => {
 
     docRef.update({
       name: nameEdit.value,
-      email: emailEdit.value,
+      // email: emailEdit.value,
       // photoURL: "https://example.com/jane-q-user/profile.jpg"
     }).then(() => {
       console.log('Update');
@@ -96,18 +105,39 @@ export default () => {
     // console.log(editPasword);
 
 
-    firebase.auth().currentUser.updateEmail(emailEdit.value).then(() => {
-      console.log('Update correo successful');
-    }).catch((error) => {
-      console.log('Error email');
-    });
-
-    // firebase.auth().currentUser.updatePassword('12345678').then(() => {
-    //   console.log('Update successful');
-    // }).catch((err) => {
-    //   console.log('Error password');
+    // firebase.auth().currentUser.updateEmail(emailEdit.value).then(() => {
+    //   console.log('Update correo successful');
+    // }).catch((error) => {
+    //   console.log('Error email');
     // });
+
+    firebase.auth().currentUser.updatePassword('12345678').then(() => {
+      console.log('Update successful');
+    }).catch((err) => {
+      console.log('Error password');
+    });
   });
 
+  const photoUp = divElemt.querySelector('#photo-up');
+  // const photoUser = divElemt.querySelector('#photo-edit');
+  console.log(photoUp);
+  const photoUser = divElemt.querySelector('#photo-edit');
+  photoUp.addEventListener('change', (e) => {
+    console.log(photoUp.files[0]);
+
+    const reader = new FileReader();
+
+    reader.onload = function () {
+      // const preview = document.getElementById('preview');
+      const image = document.createElement('img');
+
+      image.src = reader.result;
+
+      photoUser.innerHTML = '';
+      photoUser.append(image);
+    };
+
+    reader.readAsDataURL(photoUp.files[0]);
+  });
   return divElemt;
 };
