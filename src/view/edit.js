@@ -2,6 +2,7 @@
 
 // import {editUser} from '../configFirebase.js';
 
+
 export default () => {
   const viewEdit = `
   <section class="profile-user">
@@ -30,8 +31,10 @@ export default () => {
       </div>
       <form class="edit-form">
         <input class="edit-form-input" value= "" type="text" id="name-edit"  >
-        <!-- <input class="edit-form-input" value= "" type="email" id="email-edit" > -->
+        <p id = "update-message-name"></p>
+        <p id="email-edit"> </p>
         <input class="edit-form-input" value= "" type="password" id="password-edit">
+        <p id = "update-message-password"></p>
         <button type="submit" id="" class="edit-form-btn">Actualizar</button>
       </form>
     </section>
@@ -54,14 +57,14 @@ export default () => {
         console.log('Document data:', doc.data());
         console.log(doc.data().name);
         const nameUserProfile = doc.data().name;
-        // const emailUserProfile = doc.data().email;
+        const emailUserProfile = doc.data().email;
         const photoUserProfile = doc.data().photo;
         const profileName = divElemt.querySelector('#name-edit');
-        // const profileEmail = divElemt.querySelector('#email-edit');
+        const profileEmail = divElemt.querySelector('#email-edit');
         const photoUser = divElemt.querySelector('#photo-edit');
         photoUser.innerHTML = `<img  src='${photoUserProfile}'>`;
         profileName.value = nameUserProfile;
-        // profileEmail.value = emailUserProfile;
+        profileEmail.innerHTML = `${emailUserProfile}`;
       } else {
         // doc.data() will be undefined in this case
         console.log('No such document!');
@@ -86,58 +89,104 @@ export default () => {
     const firestore = firebase.firestore();
     const user = firebase.auth().currentUser.uid;
     const docRef = firestore.collection('user').doc(user);
-    // const editPasword = divElemt.querySelector('#password-edit').value;
-
+    const editPasword = divElemt.querySelector('#password-edit').value;
+    const updateMessageName = divElemt.querySelector('#update-message-name');
     console.log(user);
     console.log(docRef);
-
-    docRef.update({
-      name: nameEdit.value,
+    if (nameEdit.value !== '') {
+      docRef.update({
+        name: nameEdit.value,
       // email: emailEdit.value,
-      // photoURL: "https://example.com/jane-q-user/profile.jpg"
-    }).then(() => {
-      console.log('Update');
-    })
-      .catch((error) => {
-        console.log('An error happened', error);
-      });
-
-    // console.log(editPasword);
-
-
+      }).then(() => {
+        console.log('Update name');
+        updateMessageName.innerHTML = 'Nombre actualizado';
+      })
+        .catch((error) => {
+          console.log('An error happened', error);
+          updateMessageName.innerHTML = 'Ingrese un nombre válido';
+        });
+    }
     // firebase.auth().currentUser.updateEmail(emailEdit.value).then(() => {
     //   console.log('Update correo successful');
     // }).catch((error) => {
     //   console.log('Error email');
     // });
 
-    firebase.auth().currentUser.updatePassword('12345678').then(() => {
-      console.log('Update successful');
-    }).catch((err) => {
-      console.log('Error password');
-    });
+    if (editPasword !== '') {
+      const updateMessagePassword = divElemt.querySelector('#update-message-password');
+      firebase.auth().currentUser.updatePassword(editPasword).then(() => {
+        console.log('Update successful password');
+        updateMessagePassword.innerHTML = 'Contraseña actualizada';
+      }).catch((err) => {
+        console.log('Error password', err);
+        updateMessagePassword.innerHTML = 'Ingrese una contraseña válida';
+      });
+    }
   });
 
   const photoUp = divElemt.querySelector('#photo-up');
-  // const photoUser = divElemt.querySelector('#photo-edit');
-  console.log(photoUp);
   const photoUser = divElemt.querySelector('#photo-edit');
+  console.log(photoUp);
+  const firestore = firebase.firestore();
+  const user = firebase.auth().currentUser.uid;
+  const docRef = firestore.collection('user').doc(user);
   photoUp.addEventListener('change', (e) => {
+    const storage = firebase.storage();
     console.log(photoUp.files[0]);
 
-    const reader = new FileReader();
+    const uploadProfileImg = () => {
+      const filePhoto = photoUp.files[0];
+      // const storageRef = storage.ref(`/userProfileImgs/${filePhoto.name}`);
 
-    reader.onload = function () {
-      // const preview = document.getElementById('preview');
-      const image = document.createElement('img');
+      const reader = new FileReader();
+      // eslint-disable-next-line func-names
+      reader.onload = function () {
+        const image = document.createElement('img');
+        image.src = reader.result;
+        photoUser.innerHTML = '';
+        photoUser.append(image);
+      };
+      reader.readAsDataURL(filePhoto);
+      // eslint-disable-next-line no-empty
+      if (!filePhoto) {
+      } else {
+        const storageRef = storage.ref(`/userProfileImgs/${filePhoto.name}`);
+        const uploadTask = storageRef.put(filePhoto);
+        console.log(storageRef);
+        console.log(uploadTask);
+        uploadTask.on('state_changed', (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log(`Upload is ${progress}% done`);
+          // eslint-disable-next-line default-case
+          switch (snapshot.state) {
+            case firebase.storage.TaskState.PAUSED:
+              console.log('Upload is paused');
+              break;
+            case firebase.storage.TaskState.RUNNING:
+              console.log('Upload is running');
+              break;
+          }
+        }, (error) => {
+          console.log(error);
+        }, () => {
+          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+            console.log('Imagen Subida a Firebase', downloadURL);
+            const photoURL = downloadURL;
 
-      image.src = reader.result;
-
-      photoUser.innerHTML = '';
-      photoUser.append(image);
+            docRef.update({
+              photo: photoURL,
+            }).then(() => {
+              console.log('Update');
+            })
+              .catch((error) => {
+                console.log('An error happened', error);
+              });
+          });
+        });
+      }
     };
-
-    reader.readAsDataURL(photoUp.files[0]);
+    uploadProfileImg();
   });
+
   return divElemt;
 };

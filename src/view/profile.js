@@ -57,7 +57,7 @@ export default () => {
       <section class="post-user">
         <section class="post-user-publish">        
           <div class="post-text">
-            <textarea type="text">
+            <textarea class = "content-post-text" type="text">
               
             </textarea>       
           </div>
@@ -156,6 +156,29 @@ export default () => {
   }
 
   mostrarDatosProvider();
-
+  const btnAddPost = divElemt.querySelector('.post-user-btn');
+  btnAddPost.addEventListener('click', () => {
+    const user = firebase.auth().currentUser.uid;
+    const firestore = firebase.firestore();
+    const idPost = user + Math.floor(Math.random() * 10000);
+    console.log(idPost);
+    const docRef = firestore.collection('post').doc(idPost);
+    console.log('DocRef post', docRef);
+    console.log('Me hiciste clic jijij');
+    const contentPostText = divElemt.querySelector('.content-post-text').value;
+    console.log('Post:', contentPostText);
+    const datePost = new Date();
+    console.log(datePost);
+    docRef.set({
+      id: idPost,
+      idUser: user,
+      contentPost: contentPostText,
+      date: datePost,
+    }).then(() => {
+      console.log('Post exitoso');
+    }).catch((error) => {
+      console.log('Error:', error);
+    });
+  });
   return divElemt;
 };
