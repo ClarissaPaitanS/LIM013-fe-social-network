@@ -5,8 +5,8 @@
 
 export default () => {
   const viewEdit = `
-  <section class="profile-user">
-  <header class="header-profile">
+  <section class="profile-user-edit">
+  <header class="header-profile-edit">
     <nav>
       <li class="menu-item">
         <img class="menu-logo-bio" src="imagenes/logo-bio.png" alt="">
@@ -23,16 +23,29 @@ export default () => {
   </header>
   <main>
     <section class="form-edit">
-      <div class = "photo-upload"> 
-          <label for = "photo-up">
-            <p id = "photo-edit"> <img  src="imagenes/user-perfil.jpg"  alt ="Click aquí para subir tu foto" title ="Click aquí para subir tu foto"></p>
+
+      <div class = "photo-cover">
+        <div class = "cover-upload">
+          <label for = "cover-up">
+            <p id = "cover-edit"> <img  src="imagenes/user-cover.jpg"  alt ="Click aquí para cambiar tu foto de portada" title ="Click aquí para cambiar tu foto de portada"></p>
           </label>
-          <input class = "edit-form-input" value = "" type="file" id = "photo-up">
+          <input class = "edit-form-input" value = "" type="file" id = "cover-up">
+  
+
+        </div>
+        <div class = "photo-upload"> 
+        <label for = "photo-up">
+          <p id = "photo-edit"> <img  src="imagenes/user-perfil.jpg"  alt ="Click aquí para subir tu foto" title ="Click aquí para subir tu foto"></p>
+        </label>
+        <input class = "edit-form-input" value = "" type="file" id = "photo-up">
       </div>
+    </div>
+
       <form class="edit-form">
         <input class="edit-form-input" value= "" type="text" id="name-edit"  >
         <p id = "update-message-name"></p>
-        <p id="email-edit"> </p>
+        <!--<input id="email-edit" disabled> -->
+        <div id="email-edit"> </div> 
         <input class="edit-form-input" value= "" type="password" id="password-edit">
         <p id = "update-message-password"></p>
         <button type="submit" id="" class="edit-form-btn">Actualizar</button>
@@ -44,7 +57,7 @@ export default () => {
 `;
 
   const divElemt = document.createElement('div');
-  divElemt.classList.add('div-view');
+  divElemt.classList.add('div-view-edit');
   divElemt.innerHTML = viewEdit;
 
   function mostrarDatosProvider() {
@@ -64,7 +77,8 @@ export default () => {
         const photoUser = divElemt.querySelector('#photo-edit');
         photoUser.innerHTML = `<img  src='${photoUserProfile}'>`;
         profileName.value = nameUserProfile;
-        profileEmail.innerHTML = `${emailUserProfile}`;
+        // profileEmail.innerHTML = `${emailUserProfile}`;
+        profileEmail.innerHTML = `<input class='edit-form-input'value='${emailUserProfile}' disabled>`;
       } else {
         // doc.data() will be undefined in this case
         console.log('No such document!');
