@@ -80,7 +80,8 @@ export default () => {
 
         </section>
         <section class="post-user-wall">
-          <div class="post">
+          <!-- <div class=
+          ">
             <div class="post-header">
               <p>Publicado por Sheldon</p>
             </div>
@@ -91,7 +92,7 @@ export default () => {
             <img src="">
             <img src="">
             </div> 
-          </div>
+          </div> -->
           
         </section>
       </section>
@@ -176,6 +177,21 @@ export default () => {
       date: datePost,
     }).then(() => {
       console.log('Post exitoso');
+      const wall = divElemt.querySelector('.post-user-wall');
+      const post = document.createElement('div');
+      post.classList.add('post');
+      post.innerHTML = `
+      <div class="post-header">
+        <p>Publicado por Sheldon</p>
+      </div>
+      <div class="post-body">
+        <p>Bazinga!!!!!!!<br>Harry Potter es el mejor</p>
+      </div>
+      <div class="post-footer">
+        <img src="">
+        <img src="">
+      </div>`;
+      wall.appendChild(post);
     }).catch((error) => {
       console.log('Error:', error);
     });

@@ -2,6 +2,7 @@ import { elements } from '../view/all.js';
 
 export const changeView = (hash) => {
   let profilePage = '';
+  let editPage = '';
   //  const id = hash.split('/')[1];
   const sectionMain = document.getElementById('container');
   sectionMain.innerHTML = '';
@@ -31,7 +32,17 @@ export const changeView = (hash) => {
     }
     case '#/edit':
     {
-      return sectionMain.appendChild(elements.edit());
+      firebase.auth().onAuthStateChanged((user) => {
+        console.log('Hola Edit', user);
+        if (user) {
+          editPage = sectionMain.appendChild(elements.edit());
+        } else {
+          window.location.hash = '#/';
+        }
+      });
+
+      return editPage;
+      // return sectionMain.appendChild(elements.edit());
     }
 
     default:
