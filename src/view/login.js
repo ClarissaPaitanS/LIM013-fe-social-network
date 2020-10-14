@@ -78,6 +78,7 @@ export default () => {
       name: nameGoogle,
       email: emailGoogle,
       photo: photoGoogle,
+      photoCover: 'imagenes/user-cover.jpg',
     })
       .then(() => {
         console.log('datos guardados');
@@ -146,6 +147,7 @@ export default () => {
       name: nameFacebook,
       email: emailFacebook,
       photo: photoData,
+      photoCover: 'imagenes/user-cover.jpg',
     })
       .then(() => {
         console.log('datos guardados');

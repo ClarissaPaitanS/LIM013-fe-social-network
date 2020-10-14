@@ -11,6 +11,10 @@ import {
   loginUser, googleLogin, signupUser, facebookLogin, closeSesion,
 } from '../src/configFirebase.js';
 
+import {
+  addUser,
+} from '../src/configFirestore';
+
 const firebasemock = require('firebase-mock');
 
 const mockauth = new firebasemock.MockFirebase();
@@ -79,5 +83,11 @@ describe('facebookLogin', () => {
 describe('closeSesion', () => {
   it('debería ser una funcion', () => {
     expect(typeof closeSesion).toBe('function');
+  });
+});
+
+describe('addUser', () => {
+  it('debería ser una funcion', () => {
+    expect(typeof addUser).toBe('function');
   });
 });
