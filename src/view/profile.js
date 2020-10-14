@@ -132,8 +132,29 @@ export default () => {
   }
 
   mostrarDatosProvider();
+
+  const getPost = () => firebase.firestore().collection('post')
+    .orderBy('date', 'desc').onSnapshot((querySnapshot) => {
+      const data = [];
+      console.log('entra');
+      querySnapshot.docs.forEach((post) => {
+        // console.log(post);
+        data.push({
+          id: post.data().id,
+          idUser: post.data().idUser,
+          contentPost: post.data().contentPost,
+          date: post.data().date,
+        });
+      });
+      console.log(data);
+      return data;
+    });
+
+  console.log(getPost());
+
   const btnAddPost = divElemt.querySelector('.post-user-btn');
   btnAddPost.addEventListener('click', () => {
+    // const {uid , name} =  firebase.auth().currentUser; si se desear llamar  solo se coloca uid
     const user = firebase.auth().currentUser.uid;
     const firestore = firebase.firestore();
     const idPost = user + Math.floor(Math.random() * 10000);
@@ -158,7 +179,7 @@ export default () => {
       post.innerHTML = `
       <section class="post-user-wall"> 
       <div class="post-header">
-      <p>Publicado por Sheldon</p>
+      <p>Publicado por </p>
     </div>
     <div class="post-body">
       <p>Bazinga!!!!!!!<br>Harry Potter es el mejor</p>
@@ -170,6 +191,7 @@ export default () => {
       </section>
 
 `;
+
       wall.appendChild(post);
     }).catch((error) => {
       console.log('Error:', error);
