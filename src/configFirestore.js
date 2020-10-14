@@ -2,4 +2,5 @@ export const addUser = (uid, nameUser, emailUser) => firebase.firestore().collec
   name: nameUser,
   email: emailUser,
   photo: 'imagenes/user-perfil.jpg',
+  photoCover: 'imagenes/user-cover.jpg',
 });

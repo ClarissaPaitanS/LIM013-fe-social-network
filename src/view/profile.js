@@ -5,95 +5,70 @@ import { closeSesion } from '../configFirebase.js';
 export default () => {
   const viewProfile = `
   <section class="profile-user">
-  <header class="header-profile">
-    <nav>
-      <li class="menu-item">
-        <img class="menu-logo-bio" src="imagenes/logo-bio.png" alt="">
-        <!--<p>Bio Thani</p>-->
-      </li>
-      <!-- <li class="menu-item">
-        <a href="#/profile">
-          <div>
-            <img class="icon-user-min"src="imagenes/logo-bio.png">
-            <p id="profileName"></p>
-          </div>
-        </a>
-      </li> -->
-      <li class="menu-item">
-      <!-- <div class="hamburguer-menu-container">
-          <img class="hamburguer-menu-img" src="imagenes/hamburguer-menu.png">
-        </div>
-        <div class="hamburguer-menu" style="display:none" >
+    <header class="header-profile">
+     <nav>
+       <li class="menu-item">
+          <img class="menu-logo-bio" src="imagenes/logo-bio.png" alt="">
+        </li>
+        <!-- <li class="menu-item">
           <a href="#/profile">
             <div>
-              <p>Editar perfil</p>
+             <img class="icon-user-min"src="imagenes/logo-bio.png">
+              <p id="profileName"></p>
             </div>
-            </a> -->        
-          <div id="close-btn" class="close-btn">
-            <p>Cerrar sesión</p>
+          </a>
+        </li> -->
+        <li class="menu-item">
+        <!-- <div class="hamburguer-menu-container">
+            <img class="hamburguer-menu-img" src="imagenes/hamburguer-menu.png">
           </div>
-          <div id="edit-btn" class="edit-btn">
-          <p>Editar perfil</p>
-        </div>
-        <!--</div>-->
-      </li>
-    </nav>
-  </header>
-  <main>
-      <section class="info-user">
-        <div class="front-page">
-          <img src="">
-        </div>
-        <div class="info-user-profile">
-          <div class="info-user-profile-img">
-          <p id = "photoUser"> <img  src="imagenes/user-perfil.jpg"></p>
+          <div class="hamburguer-menu" style="display:none" >
+            <a href="#/profile">
+              <div>
+                <p>Editar perfil</p>
+              </div>
+              </a> -->        
+            <div id="close-btn" class="close-btn">
+              <p>Cerrar sesión</p>
+            </div>
+            <div id="edit-btn" class="edit-btn">
+            <p>Editar perfil</p>
           </div>
-          <div class="info-user-profile-name">
-            <p id="profileName"></p>
-            <p id="profileEmail"></p>
+        </li>
+      </nav>
+    </header>
+    <main>
+       <section class="info-user">
+        <div class="photo-cover">
+          <div class="cover-upload">
+              <p id="photoCover"><img src="imagenes/user-cover.jpg"></p>
           </div>
-        </div>
+          <div class="photo-icon-profile"> 
+            <p id="photoUser"><img src="imagenes/user-perfil.jpg"></p>
+          </div>
+       </div>
+       <p id="profileName" class="profileName">Monster Cook</p>
       </section>
       <section class="post-user">
         <section class="post-user-publish">        
           <div class="post-text">
-            <textarea class = "content-post-text" type="text">
-              
+            <textarea class="content-post-text" type="text">              
             </textarea>       
           </div>
-
           <div class="post-user-options">
-
               <div class="post-user-image">
                 <label for="file-input">
-                <img src="https://img.icons8.com/color/48/000000/image.png"/>
+                <img src="https://img.icons8.com/color/48/000000/image.png">
                 </label>
-                <input type="file" id="file-input"/>
+                <input type="file" id="file-input">
               </div>
-
-
               <div class="post-user-btn">
-                <img src="https://img.icons8.com/color/2x/plus--v1.png"/>
+                <img src="https://img.icons8.com/color/2x/plus--v1.png">
               </div>
-
           </div>
 
         </section>
-        <section class="post-user-wall">
-          <!-- <div class=
-          ">
-            <div class="post-header">
-              <p>Publicado por Sheldon</p>
-            </div>
-            <div class="post-body">
-              <p>Bazinga!!!!!!!<br>Harry Potter es el mejor</p>
-            </div>
-            <div class="post-footer">
-            <img src="">
-            <img src="">
-            </div> 
-          </div> -->
-          
+        <section class="post-profile-wall">          
         </section>
       </section>
     
@@ -139,14 +114,14 @@ export default () => {
         console.log('Document data:', doc.data());
         console.log(doc.data().name);
         const nameUserProfile = doc.data().name;
-        const emailUserProfile = doc.data().email;
         const photoUserProfile = doc.data().photo;
+        const coverUserProfile = doc.data().photoCover;
         const profileName = divElemt.querySelector('#profileName');
         profileName.innerHTML = `${nameUserProfile}`;
-        const profileEmail = divElemt.querySelector('#profileEmail');
-        profileEmail.innerHTML = `${emailUserProfile}`;
         const photoUser = divElemt.querySelector('#photoUser');
         photoUser.innerHTML = `<img  src='${photoUserProfile}'>`;
+        const photoCover = divElemt.querySelector('#photoCover');
+        photoCover.innerHTML = `<img  src='${coverUserProfile}'>`;
       } else {
         // doc.data() will be undefined in this case
         console.log('No such document!');
@@ -177,20 +152,24 @@ export default () => {
       date: datePost,
     }).then(() => {
       console.log('Post exitoso');
-      const wall = divElemt.querySelector('.post-user-wall');
+      const wall = divElemt.querySelector('.post-profile-wall');
       const post = document.createElement('div');
       post.classList.add('post');
       post.innerHTML = `
+      <section class="post-user-wall"> 
       <div class="post-header">
-        <p>Publicado por Sheldon</p>
-      </div>
-      <div class="post-body">
-        <p>Bazinga!!!!!!!<br>Harry Potter es el mejor</p>
-      </div>
-      <div class="post-footer">
-        <img src="">
-        <img src="">
-      </div>`;
+      <p>Publicado por Sheldon</p>
+    </div>
+    <div class="post-body">
+      <p>Bazinga!!!!!!!<br>Harry Potter es el mejor</p>
+    </div>
+    <div class="post-footer">
+      <img src="">
+      <img src="">
+    </div>         
+      </section>
+
+`;
       wall.appendChild(post);
     }).catch((error) => {
       console.log('Error:', error);
