@@ -4,3 +4,26 @@ export const addUser = (uid, nameUser, emailUser) => firebase.firestore().collec
   photo: 'imagenes/user-perfil.jpg',
   photoCover: 'imagenes/user-cover.jpg',
 });
+
+export const showData = uid => firebase.firestore().collection('user').doc(uid).get();
+
+export const addPost = (uid, idPost, contentPostText, datePost) => firebase.firestore().collection('post').doc(idPost).set({
+  id: idPost,
+  idUser: uid,
+  contentPost: contentPostText,
+  date: datePost,
+});
+
+export const updateName = (uid, nameUser) => firebase.firestore().collection('user').doc(uid).update({
+  name: nameUser,
+});
+
+export const updatePassword = password => firebase.auth().currentUser.updatePassword(password);
+
+export const updatePhoto = (uid, photoURL) => firebase.firestore().collection('user').doc(uid).update({
+  photo: photoURL,
+});
+
+export const updateCover = (user, photoURL) => firebase.firestore().collection('user').doc(user).update({
+  photoCover: photoURL,
+});
