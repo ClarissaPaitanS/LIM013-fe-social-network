@@ -1,6 +1,10 @@
+/* eslint-disable no-unused-vars */
 
 import { closeSesion } from '../configFirebase.js';
 
+import { showDataProfile, addPostProfile } from '../view-controller/controllerProfile.js';
+
+import { showData } from '../configFirestore.js';
 
 export default () => {
   const viewProfile = `
@@ -47,7 +51,7 @@ export default () => {
             <p id="photoUser"><img src="imagenes/user-perfil.jpg"></p>
           </div>
        </div>
-       <p id="profileName" class="profileName">Monster Cook</p>
+       <p id="profileName" class="profileName"></p>
       </section>
       <section class="post-user">
         <section class="post-user-publish">        
@@ -104,98 +108,133 @@ export default () => {
     window.location.hash = '#/edit';
   });
 
-  function mostrarDatosProvider() {
-    const firestore = firebase.firestore();
-    const user = firebase.auth().currentUser.uid;
-    const docRef = firestore.collection('user').doc(user);
+  const profileName = divElemt.querySelector('#profileName');
+  const photoUser = divElemt.querySelector('#photoUser');
+  const photoCover = divElemt.querySelector('#photoCover');
 
-    docRef.get().then((doc) => {
-      if (doc.exists) {
-        console.log('Document data:', doc.data());
-        console.log(doc.data().name);
-        const nameUserProfile = doc.data().name;
-        const photoUserProfile = doc.data().photo;
-        const coverUserProfile = doc.data().photoCover;
-        const profileName = divElemt.querySelector('#profileName');
-        profileName.innerHTML = `${nameUserProfile}`;
-        const photoUser = divElemt.querySelector('#photoUser');
-        photoUser.innerHTML = `<img  src='${photoUserProfile}'>`;
-        const photoCover = divElemt.querySelector('#photoCover');
-        photoCover.innerHTML = `<img  src='${coverUserProfile}'>`;
-      } else {
-        // doc.data() will be undefined in this case
-        console.log('No such document!');
-      }
-    }).catch((error) => {
-      console.log('Error getting document:', error);
-    });
-  }
+  showDataProfile(profileName, photoUser, photoCover);
 
-  mostrarDatosProvider();
+  // const getPost = () => firebase.firestore().collection('post')
+  //   .orderBy('date', 'desc').onSnapshot((querySnapshot) => {
+  //     const data = [];
+  //     console.log('entra');
+  //     querySnapshot.docs.forEach((post) => {
+  //       data.push({
+  //         id: post.data().id,
+  //         idUser: post.data().idUser,
+  //         contentPost: post.data().contentPost,
+  //         date: post.data().date,
+  //       });
+  //     });
+  //     console.log(data);
+  //     return data;
+  //   });
 
-  const getPost = () => firebase.firestore().collection('post')
-    .orderBy('date', 'desc').onSnapshot((querySnapshot) => {
-      const data = [];
-      console.log('entra');
-      querySnapshot.docs.forEach((post) => {
-        // console.log(post);
-        data.push({
+  // console.log(getPost());
+  const wall = divElemt.querySelector('.post-profile-wall');
+
+  firebase.firestore().collection('post').orderBy('date', 'desc')
+    .onSnapshot((querySnapshot) => {
+      wall.innerHTML = '';
+      divElemt.querySelector('.content-post-text').value = '';
+      const postData = [];
+      querySnapshot.forEach((post) => {
+        postData.push({
           id: post.data().id,
           idUser: post.data().idUser,
           contentPost: post.data().contentPost,
           date: post.data().date,
         });
       });
-      console.log(data);
-      return data;
+      console.log('Posts: ', postData);
+
+      postData.forEach((element) => {
+        showData(element.idUser).then((doc) => {
+          if (doc.exists) {
+            const nameUserPost = doc.data().name;
+            const photoUserPost = doc.data().photo;
+            const post = document.createElement('div');
+            post.classList.add('post');
+            post.innerHTML = `
+                <section class="post-user-wall">
+                  <div class="post-header">
+                    <div class = "post-header-photo">
+                    <img class="photo-user-post" src='${photoUserPost}'> 
+                    </div>
+                    <div class="post-header-info">
+                      <p class="post-name"> ${nameUserPost}  </p>
+                      <p class="post-date"> El ${element.date} </p>
+                    </div>
+                  </div>
+              <div class="post-body">
+                <p class="post-content"> ${element.contentPost}</p>
+              </div>
+              <div class="post-footer">
+                <img src="">
+                <img src="">
+              </div>
+                </section>
+          `;
+
+            wall.appendChild(post);
+          }
+        }).catch((error) => {
+          console.log('Error getting document:', error);
+        });
+      });
     });
 
-  console.log(getPost());
+  //   const btnAddPost = divElemt.querySelector('.post-user-btn');
+  //   btnAddPost.addEventListener('click', () => {
+  //     const {uid , name} =  firebase.auth().currentUser; si se desear llamar  solo se coloca uid
+  //     const user = firebase.auth().currentUser.uid;
+  //     const firestore = firebase.firestore();
+  //     const idPost = user + Math.floor(Math.random() * 10000);
+  //     console.log(idPost);
+  //     const docRef = firestore.collection('post').doc(idPost);
+  //     console.log('DocRef post', docRef);
+  //     console.log('Me hiciste clic jijij');
+  //     const contentPostText = divElemt.querySelector('.content-post-text').value;
+  //     console.log('Post:', contentPostText);
+  //     const datePost = new Date();
+  //     console.log(datePost);
+  //     docRef.set({
+  //       id: idPost,
+  //       idUser: user,
+  //       contentPost: contentPostText,
+  //       date: datePost,
+  //     }).then(() => {
+  //       console.log('Post exitoso');
+  //       const wall = divElemt.querySelector('.post-profile-wall');
+  //       const post = document.createElement('div');
+  //       post.classList.add('post');
+  //       post.innerHTML = `
+  //       <section class="post-user-wall">
+  //       <div class="post-header">
+  //       <p>Publicado por </p>
+  //     </div>
+  //     <div class="post-body">
+  //       <p>Bazinga!!!!!!!<br>Harry Potter es el mejor</p>
+  //     </div>
+  //     <div class="post-footer">
+  //       <img src="">
+  //       <img src="">
+  //     </div>
+  //       </section>
+
+  // `;
+
+  //       wall.appendChild(post);
+  //     }).catch((error) => {
+  //       console.log('Error:', error);
+  //     });
+  //   });
 
   const btnAddPost = divElemt.querySelector('.post-user-btn');
   btnAddPost.addEventListener('click', () => {
-    // const {uid , name} =  firebase.auth().currentUser; si se desear llamar  solo se coloca uid
-    const user = firebase.auth().currentUser.uid;
-    const firestore = firebase.firestore();
-    const idPost = user + Math.floor(Math.random() * 10000);
-    console.log(idPost);
-    const docRef = firestore.collection('post').doc(idPost);
-    console.log('DocRef post', docRef);
-    console.log('Me hiciste clic jijij');
+    // wall.innerHTML = '';
     const contentPostText = divElemt.querySelector('.content-post-text').value;
-    console.log('Post:', contentPostText);
-    const datePost = new Date();
-    console.log(datePost);
-    docRef.set({
-      id: idPost,
-      idUser: user,
-      contentPost: contentPostText,
-      date: datePost,
-    }).then(() => {
-      console.log('Post exitoso');
-      const wall = divElemt.querySelector('.post-profile-wall');
-      const post = document.createElement('div');
-      post.classList.add('post');
-      post.innerHTML = `
-      <section class="post-user-wall"> 
-      <div class="post-header">
-      <p>Publicado por </p>
-    </div>
-    <div class="post-body">
-      <p>Bazinga!!!!!!!<br>Harry Potter es el mejor</p>
-    </div>
-    <div class="post-footer">
-      <img src="">
-      <img src="">
-    </div>         
-      </section>
-
-`;
-
-      wall.appendChild(post);
-    }).catch((error) => {
-      console.log('Error:', error);
-    });
+    addPostProfile(contentPostText);
   });
   return divElemt;
 };
