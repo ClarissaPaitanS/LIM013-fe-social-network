@@ -166,6 +166,23 @@ textarea {
     display: none;
 }
 
+.post-user-video {
+    text-align: left;
+    margin-left: 5%;
+}
+.post-user-video img {
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+}
+
+.post-user-video > input
+{
+    display: none;
+}
+
+
+
 .post-user-btn {
     text-align: right;
     margin-left: 5%;
@@ -292,6 +309,11 @@ textarea {
 .photo-icon-profile img {
     margin-left: 40%;
 }
+
+.post-user-video {
+    text-align: left;
+    margin-left: 5%;
+}
 }
 
 
@@ -349,6 +371,11 @@ textarea {
         margin-left: 5%;
     }
 
+    .post-user-video {
+        text-align: left;
+        margin-left: 5%;
+    }
+    
     .photo-icon-profile img {
         margin-left: 44%;
     }

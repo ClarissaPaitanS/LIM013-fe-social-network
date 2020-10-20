@@ -27,3 +27,19 @@ export const updatePhoto = (uid, photoURL) => firebase.firestore().collection('u
 export const updateCover = (user, photoURL) => firebase.firestore().collection('user').doc(user).update({
   photoCover: photoURL,
 });
+
+export const uploadPhotoPost = (uid, idPost, photopostURL, contentPostText, datePostUser) => firebase.firestore().collection('post').doc(idPost).set({
+  id: idPost,
+  idUser: uid,
+  photoPost: photopostURL,
+  contentPost: contentPostText,
+  date: datePostUser,
+});
+
+export const uploadVideoPost = (uid, idPost, videopostURL, contentPostText, datePostUser) => firebase.firestore().collection('post').doc(idPost).set({
+  id: idPost,
+  idUser: uid,
+  videoPost: videopostURL,
+  contentPost: contentPostText,
+  date: datePostUser,
+});

@@ -55,6 +55,7 @@ export const updateDataPassword = (editPassword, updateMessagePassword) => {
 
 export const uploadProfileImg = (photoUp, photoUser) => {
   const filePhoto = photoUp.files[0];
+  console.log(filePhoto);
   const reader = new FileReader();
   // eslint-disable-next-line func-names
   reader.onload = function () {
