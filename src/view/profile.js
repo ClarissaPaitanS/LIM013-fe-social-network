@@ -2,7 +2,9 @@
 
 import { closeSesion } from '../configFirebase.js';
 
-import { showDataProfile, addPostProfile } from '../view-controller/controllerProfile.js';
+import {
+  showDataProfile, addPostProfile, uploadProfilePost,
+} from '../view-controller/controllerProfile.js';
 
 import { showData } from '../configFirestore.js';
 
@@ -57,14 +59,25 @@ export default () => {
         <section class="post-user-publish">        
           <div class="post-text">
             <textarea class="content-post-text" type="text">              
-            </textarea>       
+            </textarea>  
+            <div id="preview-post-img">
+            </div>
+            <div id="preview-post-video">
+            </div>     
           </div>
+ 
           <div class="post-user-options">
               <div class="post-user-image">
-                <label for="file-input">
+                <label for="post-image-input">
                 <img src="https://img.icons8.com/color/48/000000/image.png">
                 </label>
-                <input type="file" id="file-input">
+                <input type="file" id="post-image-input">
+              </div>
+              <div class="post-user-video">
+                <label for="post-video-input">
+                  <img src="https://img.icons8.com/fluent/344/video.png"> 
+                </label>
+                <input type="file" id="post-video-input">
               </div>
               <div class="post-user-btn">
                 <img src="https://img.icons8.com/color/2x/plus--v1.png">
@@ -114,28 +127,15 @@ export default () => {
 
   showDataProfile(profileName, photoUser, photoCover);
 
-  // const getPost = () => firebase.firestore().collection('post')
-  //   .orderBy('date', 'desc').onSnapshot((querySnapshot) => {
-  //     const data = [];
-  //     console.log('entra');
-  //     querySnapshot.docs.forEach((post) => {
-  //       data.push({
-  //         id: post.data().id,
-  //         idUser: post.data().idUser,
-  //         contentPost: post.data().contentPost,
-  //         date: post.data().date,
-  //       });
-  //     });
-  //     console.log(data);
-  //     return data;
-  //   });
-
-  // console.log(getPost());
   const wall = divElemt.querySelector('.post-profile-wall');
+  const previewPostImg = divElemt.querySelector('#preview-post-img');
+  const previewPostVideo = divElemt.querySelector('#preview-post-video');
 
   firebase.firestore().collection('post').orderBy('date', 'desc')
     .onSnapshot((querySnapshot) => {
       wall.innerHTML = '';
+      previewPostImg.innerHTML = '';
+      previewPostVideo.innerHTML = '';
       divElemt.querySelector('.content-post-text').value = '';
       const postData = [];
       querySnapshot.forEach((post) => {
@@ -144,6 +144,7 @@ export default () => {
           idUser: post.data().idUser,
           contentPost: post.data().contentPost,
           date: post.data().date,
+          imgPost: post.data().photoPost,
         });
       });
       console.log('Posts: ', postData);
@@ -155,6 +156,12 @@ export default () => {
             const photoUserPost = doc.data().photo;
             const post = document.createElement('div');
             post.classList.add('post');
+            let postShowImg = '';
+            if (element.imgPost === undefined) {
+              postShowImg = '';
+            } else {
+              postShowImg = element.imgPost;
+            }
             post.innerHTML = `
                 <section class="post-user-wall">
                   <div class="post-header">
@@ -168,6 +175,7 @@ export default () => {
                   </div>
               <div class="post-body">
                 <p class="post-content"> ${element.contentPost}</p>
+                <img class="photo-post-img" src='${postShowImg}'>
               </div>
               <div class="post-footer">
                 <img src="">
@@ -184,57 +192,28 @@ export default () => {
       });
     });
 
-  //   const btnAddPost = divElemt.querySelector('.post-user-btn');
-  //   btnAddPost.addEventListener('click', () => {
-  //     const {uid , name} =  firebase.auth().currentUser; si se desear llamar  solo se coloca uid
-  //     const user = firebase.auth().currentUser.uid;
-  //     const firestore = firebase.firestore();
-  //     const idPost = user + Math.floor(Math.random() * 10000);
-  //     console.log(idPost);
-  //     const docRef = firestore.collection('post').doc(idPost);
-  //     console.log('DocRef post', docRef);
-  //     console.log('Me hiciste clic jijij');
-  //     const contentPostText = divElemt.querySelector('.content-post-text').value;
-  //     console.log('Post:', contentPostText);
-  //     const datePost = new Date();
-  //     console.log(datePost);
-  //     docRef.set({
-  //       id: idPost,
-  //       idUser: user,
-  //       contentPost: contentPostText,
-  //       date: datePost,
-  //     }).then(() => {
-  //       console.log('Post exitoso');
-  //       const wall = divElemt.querySelector('.post-profile-wall');
-  //       const post = document.createElement('div');
-  //       post.classList.add('post');
-  //       post.innerHTML = `
-  //       <section class="post-user-wall">
-  //       <div class="post-header">
-  //       <p>Publicado por </p>
-  //     </div>
-  //     <div class="post-body">
-  //       <p>Bazinga!!!!!!!<br>Harry Potter es el mejor</p>
-  //     </div>
-  //     <div class="post-footer">
-  //       <img src="">
-  //       <img src="">
-  //     </div>
-  //       </section>
-
-  // `;
-
-  //       wall.appendChild(post);
-  //     }).catch((error) => {
-  //       console.log('Error:', error);
-  //     });
-  //   });
 
   const btnAddPost = divElemt.querySelector('.post-user-btn');
   btnAddPost.addEventListener('click', () => {
     // wall.innerHTML = '';
     const contentPostText = divElemt.querySelector('.content-post-text').value;
-    addPostProfile(contentPostText);
+    const contentPostImg = divElemt.querySelector('#post-image-input').files[0];
+    const contentPostVideo = divElemt.querySelector('#post-video-input').files[0];
+    console.log(contentPostImg);
+    addPostProfile(contentPostText, contentPostImg, contentPostVideo);
   });
+
+
+  const postImageInput = divElemt.querySelector('#post-image-input');
+  postImageInput.addEventListener('change', (e) => {
+    uploadProfilePost(postImageInput, previewPostImg);
+  });
+
+  const postVideoInput = divElemt.querySelector('#post-video-input');
+  postVideoInput.addEventListener('change', (e) => {
+    uploadProfileVideoPost(postVideoInput, previewPostVideo);
+  });
+
+
   return divElemt;
 };

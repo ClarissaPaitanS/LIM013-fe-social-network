@@ -44,7 +44,7 @@ export default () => {
           <p id = "update-message-name"></p>
           <!--<input id="email-edit" disabled> -->
           <div id="email-edit"> </div> 
-          <input class="edit-form-input" value= "" type="password" id="password-edit">
+          <input class="edit-form-input" placeholder= "Contraseña" value= "" type="password" id="password-edit">
           <p id = "update-message-password"></p>
           <button type="submit" id="" class="edit-form-btn">Actualizar</button>
         </form>
