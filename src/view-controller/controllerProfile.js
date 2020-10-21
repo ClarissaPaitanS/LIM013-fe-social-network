@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import {
-  showData, addPost, uploadPhotoPost,
+  showData, addPost, uploadPhotoPost, updatePost, updatePostImg,
 } from '../configFirestore.js';
 import { filePhotoPost } from '../configStorage.js';
 
@@ -143,4 +143,66 @@ export const addPostProfile = (contentPost, postImg) => {
   //     });
   //   });
   // }
+};
+
+export const updatePostText = (idPost, editPostText) => {
+  const post = idPost;
+  console.log(post);
+  updatePost(post, editPostText).then(() => {
+    console.log('idPost', post);
+    console.log('EditPost', editPostText);
+    console.log('Update content');
+  })
+    .catch((error) => {
+      console.log('An error happened', error);
+    });
+};
+// photoUp, photoUser
+export const uploadPostImg = (idPost, postImgUp, imgPostEdit) => {
+  const filePhoto = postImgUp.files[0];
+  const post = idPost;
+  console.log(filePhoto);
+  const reader = new FileReader();
+  // eslint-disable-next-line func-names
+  reader.onload = function () {
+    const image = document.createElement('img');
+    image.src = reader.result;
+    imgPostEdit.innerHTML = '';
+    imgPostEdit.append(image);
+  };
+  reader.readAsDataURL(filePhoto);
+  // eslint-disable-next-line no-empty
+  if (!filePhoto) {
+  } else {
+    // filePhotoUser
+    const filePhotoRef = filePhotoPost(filePhoto);
+    filePhotoRef.on('state_changed', (snapshot) => {
+      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      console.log(`Upload is ${progress}% done`);
+      // eslint-disable-next-line default-case
+      switch (snapshot.state) {
+        case firebase.storage.TaskState.PAUSED:
+          console.log('Upload is paused');
+          break;
+        case firebase.storage.TaskState.RUNNING:
+          console.log('Upload is running');
+          break;
+      }
+    }, (error) => {
+      console.log(error);
+    }, () => {
+      filePhotoRef.snapshot.ref.getDownloadURL().then((downloadURL) => {
+        console.log('Imagen Subida a Firebase', downloadURL);
+        const photoURL = downloadURL;
+        // const user = firebase.auth().currentUser.uid;
+        // updatePhoto
+        updatePostImg(post, photoURL).then(() => {
+          console.log('Update');
+        })
+          .catch((error) => {
+            console.log('An error happened', error);
+          });
+      });
+    });
+  }
 };
