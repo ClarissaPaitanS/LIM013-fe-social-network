@@ -73,7 +73,7 @@ export default () => {
                 </label>
                 <input type="file" id="post-image-input">
               </div>
-              <!--
+            <!--
               <div class="post-user-video">
                 <label for="post-video-input">
                   <img src="https://img.icons8.com/fluent/344/video.png"> 
@@ -132,13 +132,13 @@ export default () => {
 
   const wall = divElemt.querySelector('.post-profile-wall');
   const previewPostImg = divElemt.querySelector('#preview-post-img');
-  const previewPostVideo = divElemt.querySelector('#preview-post-video');
+  // const previewPostVideo = divElemt.querySelector('#preview-post-video');
   firebase.firestore().collection('post').orderBy('date', 'desc')
     .onSnapshot((querySnapshot) => {
       wall.innerHTML = '';
       previewPostImg.innerHTML = '';
-      previewPostVideo.innerHTML = '';
-      divElemt.querySelector('.content-post-text').value = '';
+      // previewPostVideo.innerHTML = '';
+      // divElemt.querySelector('.content-post-text').value = '';
       const postData = [];
       querySnapshot.forEach((post) => {
         postData.push({
@@ -147,6 +147,7 @@ export default () => {
           contentPost: post.data().contentPost,
           date: post.data().date,
           imgPost: post.data().photoPost,
+          // videoPost: post.data().videoPost,
         });
       });
       console.log('Posts: ', postData);
@@ -157,16 +158,26 @@ export default () => {
             console.log('doc', doc.data());
             const idPost = element.id;
             const postImg = element.imgPost;
+            // const postVideo = element.videoPost;
             const nameUserPost = doc.data().name;
             const photoUserPost = doc.data().photo;
             const post = document.createElement('div');
             post.classList.add('post');
             let postShowImg = '';
+            // let postShowVideo = '';
             if (postImg === undefined) {
               postShowImg = '';
             } else {
               postShowImg = postImg;
             }
+
+            // if (postVideo === undefined) {
+            //   postShowVideo = '';
+            //   console.log(postShowVideo);
+            // } else {
+            //   postShowVideo = postVideo;
+            //   console.log(postShowVideo);
+            // }
             post.innerHTML = `
                 <section class="post-user-wall">
                   <div class="post-header">
@@ -194,10 +205,19 @@ export default () => {
             </label>
             <div class="img-input-file"></div>
             </div>
-
-              <!-- <img class="photo-post-img" src='${postShowImg}'>-->
                 <p class="post-btn-saveimg."></p>
               </div>
+<!--
+              <div class = "video-post-upload">
+            <label for = "video-post-update">
+              // <p id = "video-post-edit">  <video class="photo-post-video" src=  controls autoplay loop></p>
+            </label>
+            <div class="video-input-file"></div>
+            </div>
+                <p class="post-btn-savevideo."></p>
+              </div>
+-->
+
               <div class="post-footer">
                 <img src="">
                 <img src="">
@@ -272,6 +292,7 @@ export default () => {
     // const contentPostVideo = divElemt.querySelector('#post-video-input').files[0];
     console.log(contentPostImg);
     addPostProfile(contentPostText, contentPostImg);
+    divElemt.querySelector('.content-post-text').value = '';
     e.preventDefault();
   });
 

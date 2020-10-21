@@ -4,4 +4,5 @@ export const filePhotoCover = fileCover => firebase.storage().ref(`/userProfileC
 
 export const filePhotoPost = file => firebase.storage().ref(`/userProfilePostImg/${file.name}`).put(file);
 
-export const fileVideoPost = file => firebase.storage().ref(`/userProfilePostVideo/${file.name}`).put(file);
+// eslint-disable-next-line max-len
+// export const fileVideoPost = file => firebase.storage().ref(`/userProfilePostVideo/${file.name}`).put(file);
