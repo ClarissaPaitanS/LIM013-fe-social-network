@@ -43,3 +43,11 @@ export const uploadVideoPost = (uid, idPost, videopostURL, contentPostText, date
   contentPost: contentPostText,
   date: datePostUser,
 });
+
+export const updatePost = (idPost, contentPostText) => firebase.firestore().collection('post').doc(idPost).update({
+  contentPost: contentPostText,
+});
+
+export const updatePostImg = (idPost, photoURL) => firebase.firestore().collection('post').doc(idPost).update({
+  photoPost: photoURL,
+});

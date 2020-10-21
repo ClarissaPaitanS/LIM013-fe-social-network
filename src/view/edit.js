@@ -26,10 +26,12 @@ export default () => {
      <section class="form-edit">
        <div class = "photo-cover">
           <div class = "cover-upload">
+
             <label for = "cover-up">
               <p id = "cover-edit"> <img  src="imagenes/user-cover.jpg"  alt ="Click aquí para cambiar tu foto de portada" title ="Click aquí para cambiar tu foto de portada"></p>
             </label>
             <input class = "edit-form-input" value = "" type="file" id = "cover-up">
+
           </div>
           <div class = "photo-upload"> 
           <label for = "photo-up">

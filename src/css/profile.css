@@ -233,6 +233,15 @@ textarea {
     font-size: 12px;
     text-align: left;
 }
+.post-option-btn{
+    display: flex;
+    padding-left: 60%;
+}
+.post-option-save-btn{
+    display: flex;
+    /* padding-left: 60%; */
+}
+
 
 /* ---------------- 450 px------------------- */
 @media (min-width: 450px) {

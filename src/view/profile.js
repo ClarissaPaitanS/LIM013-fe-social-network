@@ -3,7 +3,7 @@
 import { closeSesion } from '../configFirebase.js';
 
 import {
-  showDataProfile, addPostProfile, uploadProfilePost,
+  showDataProfile, addPostProfile, uploadProfilePost, updatePostText, uploadPostImg,
 } from '../view-controller/controllerProfile.js';
 
 import { showData } from '../configFirestore.js';
@@ -73,12 +73,14 @@ export default () => {
                 </label>
                 <input type="file" id="post-image-input">
               </div>
+              <!--
               <div class="post-user-video">
                 <label for="post-video-input">
                   <img src="https://img.icons8.com/fluent/344/video.png"> 
                 </label>
                 <input type="file" id="post-video-input">
               </div>
+              -->
               <div class="post-user-btn">
                 <img src="https://img.icons8.com/color/2x/plus--v1.png">
               </div>
@@ -127,10 +129,10 @@ export default () => {
 
   showDataProfile(profileName, photoUser, photoCover);
 
+
   const wall = divElemt.querySelector('.post-profile-wall');
   const previewPostImg = divElemt.querySelector('#preview-post-img');
   const previewPostVideo = divElemt.querySelector('#preview-post-video');
-
   firebase.firestore().collection('post').orderBy('date', 'desc')
     .onSnapshot((querySnapshot) => {
       wall.innerHTML = '';
@@ -148,34 +150,53 @@ export default () => {
         });
       });
       console.log('Posts: ', postData);
-
       postData.forEach((element) => {
+        console.log(element);
         showData(element.idUser).then((doc) => {
           if (doc.exists) {
+            console.log('doc', doc.data());
+            const idPost = element.id;
+            const postImg = element.imgPost;
             const nameUserPost = doc.data().name;
             const photoUserPost = doc.data().photo;
             const post = document.createElement('div');
             post.classList.add('post');
             let postShowImg = '';
-            if (element.imgPost === undefined) {
+            if (postImg === undefined) {
               postShowImg = '';
             } else {
-              postShowImg = element.imgPost;
+              postShowImg = postImg;
             }
             post.innerHTML = `
                 <section class="post-user-wall">
                   <div class="post-header">
                     <div class = "post-header-photo">
-                    <img class="photo-user-post" src='${photoUserPost}'> 
+                      <img class="photo-user-post" src='${photoUserPost}'> 
                     </div>
                     <div class="post-header-info">
                       <p class="post-name"> ${nameUserPost}  </p>
                       <p class="post-date"> El ${element.date} </p>
                     </div>
+                    <div class="post-option-btn">
+                      <p class="post-edit-btn">Editar</p>
+                      <p class="post-delete-btn">Eliminar</p>
+                    </div>
                   </div>
               <div class="post-body">
+              <div class="post-option-save-btn">
                 <p class="post-content"> ${element.contentPost}</p>
-                <img class="photo-post-img" src='${postShowImg}'>
+                <p class="post-btn-savetext"></p>
+              </div>
+
+            <div class = "img-post-upload">
+            <label for = "img-post-update">
+              <p id = "img-post-edit">  <img class="photo-post-img" src='${postShowImg}'></p>
+            </label>
+            <div class="img-input-file"></div>
+            </div>
+
+              <!-- <img class="photo-post-img" src='${postShowImg}'>-->
+                <p class="post-btn-saveimg."></p>
               </div>
               <div class="post-footer">
                 <img src="">
@@ -184,6 +205,56 @@ export default () => {
                 </section>
           `;
 
+            const editPostBtn = post.querySelector('.post-edit-btn');
+            const deletePostBtn = post.querySelector('.post-delete-btn');
+            deletePostBtn.innerHTML = '<img src= https://img.icons8.com/dusk/0.5x/delete-forever.png>';
+            editPostBtn.innerHTML = '<img src = https://img.icons8.com/dusk/0.5x/edit.png>';
+            const editPostText = post.querySelector('.post-content');
+
+            editPostBtn.addEventListener('click', () => {
+              console.log('clic en edit');
+              editPostText.setAttribute('contenteditable', 'true');
+              editPostBtn.innerHTML = '';
+              const savetextPostBtn = post.querySelector('.post-btn-savetext');
+              savetextPostBtn.innerHTML = '<img src=https://img.icons8.com/dusk/0.5x/save.png>';
+              const inputfileBtn = post.querySelector('.img-input-file');
+              inputfileBtn.innerHTML = '<input class = "img-post-edit-input" value = "" type="file" id = "img-post-update">';
+              const imgPostEditBtn = post.querySelector('#img-post-update');
+              // Cambiar texto del post
+              savetextPostBtn.addEventListener('click', (e) => {
+                console.log('Guardar! Texto!');
+                savetextPostBtn.innerHTML = '';
+                editPostText.setAttribute('contenteditable', 'false');
+                console.log(editPostText.textContent);
+                console.log('idPost', idPost);
+                editPostBtn.innerHTML = '<img src = https://img.icons8.com/dusk/0.5x/edit.png>';
+                updatePostText(idPost, editPostText.textContent);
+              });
+              // Cambiar imagen del post
+              const imgPostEdit = post.querySelector('#img-post-edit');
+              const postImgUp = post.querySelector('#img-post-update');
+              imgPostEditBtn.addEventListener('change', () => {
+                uploadPostImg(idPost, postImgUp, imgPostEdit);
+              });
+            });
+            deletePostBtn.addEventListener('click', () => {
+              console.log('delete clic');
+              firebase.firestore().collection('post').doc(idPost).delete()
+                .then(() => {
+                  console.log('Document successfully deleted!');
+                  // const desertRef = firebase.storage().ref('userProfilePostImg/genesis.jpeg');
+                  // const desertRef = firebase.storage().ref(`gs://red-social-c4cc8.appspot.com/userProfilePostImg/${postImg}`);
+                  const desertRef = firebase.storage().refFromURL(`${postImg}`);
+                  desertRef.delete().then(() => {
+                    console.log('Imagen eliminada del Storage');
+                  }).catch((error) => {
+                    console.log('error delete storage', error);
+                  });
+                })
+                .catch((error) => {
+                  console.error('Error removing document: ', error);
+                });
+            });
             wall.appendChild(post);
           }
         }).catch((error) => {
@@ -194,13 +265,14 @@ export default () => {
 
 
   const btnAddPost = divElemt.querySelector('.post-user-btn');
-  btnAddPost.addEventListener('click', () => {
+  btnAddPost.addEventListener('click', (e) => {
     // wall.innerHTML = '';
     const contentPostText = divElemt.querySelector('.content-post-text').value;
     const contentPostImg = divElemt.querySelector('#post-image-input').files[0];
-    const contentPostVideo = divElemt.querySelector('#post-video-input').files[0];
+    // const contentPostVideo = divElemt.querySelector('#post-video-input').files[0];
     console.log(contentPostImg);
-    addPostProfile(contentPostText, contentPostImg, contentPostVideo);
+    addPostProfile(contentPostText, contentPostImg);
+    e.preventDefault();
   });
 
 
@@ -209,10 +281,10 @@ export default () => {
     uploadProfilePost(postImageInput, previewPostImg);
   });
 
-  const postVideoInput = divElemt.querySelector('#post-video-input');
-  postVideoInput.addEventListener('change', (e) => {
-    uploadProfileVideoPost(postVideoInput, previewPostVideo);
-  });
+  // const postVideoInput = divElemt.querySelector('#post-video-input');
+  // postVideoInput.addEventListener('change', (e) => {
+  //   uploadProfileVideoPost(postVideoInput, previewPostVideo);
+  // });
 
 
   return divElemt;
