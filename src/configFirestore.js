@@ -36,13 +36,14 @@ export const uploadPhotoPost = (uid, idPost, photopostURL, contentPostText, date
   date: datePostUser,
 });
 
-export const uploadVideoPost = (uid, idPost, videopostURL, contentPostText, datePostUser) => firebase.firestore().collection('post').doc(idPost).set({
-  id: idPost,
-  idUser: uid,
-  videoPost: videopostURL,
-  contentPost: contentPostText,
-  date: datePostUser,
-});
+// eslint-disable-next-line max-len
+// export const uploadVideoPost = (uid, idPost, videopostURL, contentPostText, datePostUser) => firebase.firestore().collection('post').doc(idPost).set({
+//   id: idPost,
+//   idUser: uid,
+//   videoPost: videopostURL,
+//   contentPost: contentPostText,
+//   date: datePostUser,
+// });
 
 export const updatePost = (idPost, contentPostText) => firebase.firestore().collection('post').doc(idPost).update({
   contentPost: contentPostText,

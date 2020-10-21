@@ -137,6 +137,7 @@ textarea {
 .post-header{
     background-color:#bae9f9;
     padding:5px;
+    display: flex;
 }
 
 .post-body{
@@ -203,9 +204,9 @@ textarea {
     margin-left: 28%;
 }
 
-.post-header{
+/* .post-header{
     display: flex;
-}
+} */
 
 .post-header-info{
     margin-top:5px;

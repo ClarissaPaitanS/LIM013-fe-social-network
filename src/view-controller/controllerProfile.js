@@ -40,22 +40,22 @@ export const uploadProfilePost = (postImage, preview) => {
   readerPost.readAsDataURL(filePhoto);
 };
 
-export const uploadProfileVideoPost = (postVideo, preview) => {
-  const fileVideo = postVideo.files[0];
-  console.log(fileVideo);
-  console.log(preview);
-  const readerPost = new FileReader();
-  console.log(readerPost);
-  readerPost.onload = () => {
-    const videoContainer = document.createElement('div');
-    videoContainer.innerHTML = `
-    <video src= '${readerPost.result}' controls autoplay loop> 
-    `;
-    preview.appendChild(videoContainer);
-    console.log(readerPost);
-  };
-  readerPost.readAsDataURL(fileVideo);
-};
+// export const uploadProfileVideoPost = (postVideo, preview) => {
+//   const fileVideo = postVideo.files[0];
+//   console.log(fileVideo);
+//   console.log(preview);
+//   const readerPost = new FileReader();
+//   console.log(readerPost);
+//   readerPost.onload = () => {
+//     const videoContainer = document.createElement('div');
+//     videoContainer.innerHTML = `
+//     <video src= '${readerPost.result}' controls autoplay loop>
+//     `;
+//     preview.appendChild(videoContainer);
+//     console.log(readerPost);
+//   };
+//   readerPost.readAsDataURL(fileVideo);
+// };
 
 export const addPostProfile = (contentPost, postImg) => {
   const user = firebase.auth().currentUser.uid;
@@ -114,7 +114,7 @@ export const addPostProfile = (contentPost, postImg) => {
       });
     });
   }
-  // else if (!filePhoto) {
+  // else if (fileVideo) {
   //   const fileVideoRef = fileVideoPost(fileVideo);
   //   fileVideoRef.on('state_changed', (snapshot) => {
   //     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -132,7 +132,7 @@ export const addPostProfile = (contentPost, postImg) => {
   //     console.log(error);
   //   }, () => {
   //     fileVideoRef.snapshot.ref.getDownloadURL().then((downloadURL) => {
-  //       console.log('Imagen Subida a Firebase', downloadURL);
+  //       console.log('Video Subido a Firebase', downloadURL);
   //       const videopostURL = downloadURL;
   //       uploadVideoPost(user, idPost, videopostURL, contentPostText, datePostUser).then(() => {
   //         console.log('Update');
