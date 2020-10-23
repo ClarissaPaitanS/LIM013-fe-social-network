@@ -11,9 +11,9 @@ import {
   loginUser, googleLogin, signupUser, facebookLogin, closeSesion,
 } from '../src/configFirebase.js';
 
-import {
-  addUser,
-} from '../src/configFirestore';
+// import {
+//   updatePassword,
+// } from '../src/configFirebase.js';
 
 const firebasemock = require('firebase-mock');
 
@@ -84,10 +84,9 @@ describe('closeSesion', () => {
   it('debería ser una funcion', () => {
     expect(typeof closeSesion).toBe('function');
   });
-});
-
-describe('addUser', () => {
-  it('debería ser una funcion', () => {
-    expect(typeof addUser).toBe('function');
-  });
+  it('Debería poder cerrar sesión', () => closeSesion()
+    .then((user) => {
+      expect(user).toBe(undefined);
+      // expect(user).toBe(user);
+    }));
 });
