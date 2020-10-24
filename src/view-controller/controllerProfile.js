@@ -1,8 +1,10 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable max-len */
 /* eslint-disable no-param-reassign */
 import {
-  showData, addPost, uploadPhotoPost, updatePost, updatePostImg,
+  showData, addPost, uploadPhotoPost, updatePost, updatePostImg, deletePost,
 } from '../configFirestore.js';
-import { filePhotoPost } from '../configStorage.js';
+import { filePhotoPost, deleteRef } from '../configStorage.js';
 
 export const showDataProfile = (profileName, photoUser, photoCover) => {
   const user = firebase.auth().currentUser.uid;
@@ -57,7 +59,7 @@ export const uploadProfilePost = (postImage, preview) => {
 //   readerPost.readAsDataURL(fileVideo);
 // };
 
-export const addPostProfile = (contentPost, postImg) => {
+export const addPostProfile = (contentPost, postImg, postPrivacity) => {
   const user = firebase.auth().currentUser.uid;
   // const {uid , name} =  firebase.auth().currentUser; si se desear llamar  solo se coloca uid
   // const firestore = firebase.firestore();
@@ -70,17 +72,19 @@ export const addPostProfile = (contentPost, postImg) => {
   const dateDay = datePost.getDate();
   const dateHours = datePost.getHours();
   const dateMinutes = datePost.getMinutes();
-  const datePostUser = `${dateDay} de ${months[dateMonth]} del ${dateYear} a las ${dateHours}:${dateMinutes}`;
+  const dateSeconds = datePost.getSeconds();
+  const datePostUser = `${dateDay} de ${months[dateMonth]} del ${dateYear} a las ${dateHours}:${dateMinutes}:${dateSeconds}`;
   // Aqui
   const contentPostText = contentPost;
   const contentPostImg = postImg;
+  const contentPostPrivacity = postPrivacity;
   // const contentPostVideo = postVideo;
   console.log(contentPostImg);
   const filePhoto = contentPostImg;
   // const fileVideo = contentPostVideo;
   // eslint-disable-next-line no-empty
   if (!filePhoto) {
-    addPost(user, idPost, contentPostText, datePostUser).then(() => {
+    addPost(user, idPost, contentPostText, datePostUser, contentPostPrivacity).then(() => {
       console.log('Post exitoso');
     }).catch((error) => {
       console.log('Error:', error);
@@ -105,7 +109,7 @@ export const addPostProfile = (contentPost, postImg) => {
       filePhotoRef.snapshot.ref.getDownloadURL().then((downloadURL) => {
         console.log('Imagen Subida a Firebase', downloadURL);
         const photopostURL = downloadURL;
-        uploadPhotoPost(user, idPost, photopostURL, contentPostText, datePostUser).then(() => {
+        uploadPhotoPost(user, idPost, photopostURL, contentPostText, datePostUser, contentPostPrivacity).then(() => {
           console.log('Update');
         })
           .catch((error) => {
@@ -147,7 +151,6 @@ export const addPostProfile = (contentPost, postImg) => {
 
 export const updatePostText = (idPost, editPostText) => {
   const post = idPost;
-  console.log(post);
   updatePost(post, editPostText).then(() => {
     console.log('idPost', post);
     console.log('EditPost', editPostText);
@@ -205,4 +208,18 @@ export const uploadPostImg = (idPost, postImgUp, imgPostEdit) => {
       });
     });
   }
+};
+
+// Delete Post
+export const deleteAllPost = (idPost, postImg) => {
+  deletePost(idPost)
+    .then(() => {
+      deleteRef(postImg).then(() => {
+      }).catch((error) => {
+        console.log('error delete storage', error);
+      });
+    })
+    .catch((error) => {
+      console.error('Error removing document: ', error);
+    });
 };

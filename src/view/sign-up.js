@@ -66,7 +66,7 @@ export default () => {
         addUser(user, nameSave, emailSave)
           .then(() => {
             console.log('datos guardados');
-            window.location.hash = '#/profile';
+            window.location.hash = '#/home';
           })
           .catch((error) => {
             console.error('Error: ', error);

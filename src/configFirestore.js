@@ -7,11 +7,14 @@ export const addUser = (uid, nameUser, emailUser) => firebase.firestore().collec
 
 export const showData = uid => firebase.firestore().collection('user').doc(uid).get();
 
-export const addPost = (uid, idPost, contentPostText, datePost) => firebase.firestore().collection('post').doc(idPost).set({
+// export const showDataHome = uid => firebase.firestore().collection('user').doc(uid);
+
+export const addPost = (uid, idPost, contentPostText, datePost, privacity) => firebase.firestore().collection('post').doc(idPost).set({
   id: idPost,
   idUser: uid,
   contentPost: contentPostText,
   date: datePost,
+  privacyPost: privacity,
 });
 
 export const updateName = (uid, nameUser) => firebase.firestore().collection('user').doc(uid).update({
@@ -28,12 +31,13 @@ export const updateCover = (user, photoURL) => firebase.firestore().collection('
   photoCover: photoURL,
 });
 
-export const uploadPhotoPost = (uid, idPost, photopostURL, contentPostText, datePostUser) => firebase.firestore().collection('post').doc(idPost).set({
+export const uploadPhotoPost = (uid, idPost, photopostURL, contentPostText, datePostUser, privacity) => firebase.firestore().collection('post').doc(idPost).set({
   id: idPost,
   idUser: uid,
   photoPost: photopostURL,
   contentPost: contentPostText,
   date: datePostUser,
+  privacyPost: privacity,
 });
 
 // eslint-disable-next-line max-len
@@ -52,3 +56,5 @@ export const updatePost = (idPost, contentPostText) => firebase.firestore().coll
 export const updatePostImg = (idPost, photoURL) => firebase.firestore().collection('post').doc(idPost).update({
   photoPost: photoURL,
 });
+
+export const deletePost = idPost => firebase.firestore().collection('post').doc(idPost).delete();
