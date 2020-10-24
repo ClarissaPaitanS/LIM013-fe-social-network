@@ -48,7 +48,7 @@ export default () => {
 
     loginUser(emailLogin.value, passwordLogin.value)
       .then((userCredential) => {
-        window.location.hash = '#/profile';
+        window.location.hash = '#/home';
         console.log('signIn');
       })
       // .then((data) => {
@@ -82,7 +82,7 @@ export default () => {
     })
       .then(() => {
         console.log('datos guardados');
-        window.location.hash = '#/profile';
+        window.location.hash = '#/home';
       })
       .catch((error) => {
         console.error('Error: ', error);
@@ -109,7 +109,7 @@ export default () => {
 
         docRef.get().then((doc) => {
           if (doc.exists) {
-            window.location.hash = '#/profile';
+            window.location.hash = '#/home';
             console.log('Document data:', doc.data());
           } else {
             registrarUsuariosGmail(user);
@@ -151,7 +151,7 @@ export default () => {
     })
       .then(() => {
         console.log('datos guardados');
-        window.location.hash = '#/profile';
+        window.location.hash = '#/home';
       })
       .catch((error) => {
         console.error('Error: ', error);
@@ -177,7 +177,7 @@ export default () => {
         console.log('Yo soy doc ref', docRef);
         docRef.get().then((doc) => {
           if (doc.exists) {
-            window.location.hash = '#/profile';
+            window.location.hash = '#/home';
             console.log('Document data:', doc.data());
           } else {
             registerUserFacebook(user.uid, photo);

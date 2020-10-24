@@ -6,3 +6,4 @@ export const filePhotoPost = file => firebase.storage().ref(`/userProfilePostImg
 
 // eslint-disable-next-line max-len
 // export const fileVideoPost = file => firebase.storage().ref(`/userProfilePostVideo/${file.name}`).put(file);
+export const deleteRef = imgUrl => firebase.storage().refFromURL(imgUrl).delete();

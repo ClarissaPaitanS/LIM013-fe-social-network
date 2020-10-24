@@ -15,13 +15,13 @@ export const changeView = (hash) => {
     case '#/signUp':
     { return sectionMain.appendChild(elements.signUp()); }
 
-    case '#/profile':
+    case '#/home':
 
     {
       firebase.auth().onAuthStateChanged((user) => {
         console.log('Hola', user);
         if (user) {
-          profilePage = sectionMain.appendChild(elements.profile());
+          profilePage = sectionMain.appendChild(elements.home());
         } else {
           // profilePage = sectionMain.appendChild(elements.login());
           window.location.hash = '#/';
