@@ -161,7 +161,7 @@ export default () => {
         const idPost = element.id;
         const postImg = element.imgPost;
         const idUserPost = element.idUser;
-        let countComments = parseInt(element.numberComments, 0); 
+        let countComments = parseInt(element.numberComments, 0);
         console.log('idUserPost - Element: ', idUserPost);
         console.log('Element: ', element);
         console.log('countComments: ', countComments);
@@ -195,7 +195,7 @@ export default () => {
                     </div>
                     <div class="post-header-info">
                       <p class="post-name"> ${nameUserPost}  </p>
-                      <p class="post-date"> El ${element.date}</p>
+                      <p class="post-date"> ${element.date}</p>
                       <div class= "post-edit-privacy">
                         <p>🌎</p>
                       </div>
@@ -253,7 +253,7 @@ export default () => {
             if (user.uid === element.idUser) {
             // Editar post
               const editPostBtn = post.querySelector('.post-edit-btn');
-              editPostBtn.innerHTML = '<img src = https://img.icons8.com/dusk/0.5x/edit.png>';
+              editPostBtn.innerHTML = '<img src = https://img.icons8.com/dusk/0.3x/edit.png>';
               const editPostText = post.querySelector('.post-content');
 
               editPostBtn.addEventListener('click', () => {
@@ -262,7 +262,7 @@ export default () => {
                 editPostBtn.innerHTML = '';
 
                 const savetextPostBtn = post.querySelector('.post-btn-savetext');
-                savetextPostBtn.innerHTML = '<img src=https://img.icons8.com/dusk/0.5x/save.png>';
+                savetextPostBtn.innerHTML = '<img src=https://img.icons8.com/dusk/0.3x/save.png>';
                 const inputfileBtn = post.querySelector('.img-input-file');
                 inputfileBtn.innerHTML = '<input class = "img-post-edit-input" value = "" type="file" id = "img-post-update">';
                 const imgPostEditBtn = post.querySelector('#img-post-update');
@@ -270,7 +270,7 @@ export default () => {
                 savetextPostBtn.addEventListener('click', (e) => {
                   savetextPostBtn.innerHTML = '';
                   editPostText.setAttribute('contenteditable', 'false');
-                  editPostBtn.innerHTML = '<img src = https://img.icons8.com/dusk/0.5x/edit.png>';
+                  editPostBtn.innerHTML = '<img src = https://img.icons8.com/dusk/0.3x/edit.png>';
                   updatePostText(idPost, editPostText.textContent);
                 });
                 // Cambiar imagen del post
@@ -282,7 +282,7 @@ export default () => {
               });
               // Borrar post
               const deletePostBtn = post.querySelector('.post-delete-btn');
-              deletePostBtn.innerHTML = '<img src= https://img.icons8.com/dusk/0.5x/delete-forever.png>';
+              deletePostBtn.innerHTML = '<img src= https://img.icons8.com/dusk/0.3x/delete-forever.png>';
               deletePostBtn.addEventListener('click', () => {
                 console.log('delete clic');
                 deleteAllPost(idPost, postImg);
@@ -366,13 +366,14 @@ export default () => {
                           comment.innerHTML = `
                           <section class="comment-user-wall">
                             <div class="comment-header">
-                              <div class = "comment-header-photo">
-                                <img class="photo-user-comment" src='${photoUserComment}'> 
-                              </div>
-                              <div class="comment-header-info">
-                                <p class="comment-name"> ${nameUserComment}  </p>
-                                <p class="comment-date"> El ${elementComment.date}</p>
-                                
+                              <div class= "comment-header-content">
+                                <div class = "comment-header-photo">
+                                  <img class="photo-user-comment" src='${photoUserComment}'> 
+                                </div>
+                                <div class="comment-header-info">
+                                  <p class="comment-name"> ${nameUserComment}  </p>
+                                  <p class="comment-date"> El ${elementComment.date}</p>
+                                </div>
                               </div>
                               <div class="comment-option-btn">
                                 <p class="comment-edit-btn"></p>
@@ -390,7 +391,7 @@ export default () => {
                           if (user.uid === idUserComment) {
                           // Editar Comment
                             const editCommentBtn = comment.querySelector('.comment-edit-btn');
-                            editCommentBtn.innerHTML = '<img src = https://img.icons8.com/dusk/0.5x/edit.png>';
+                            editCommentBtn.innerHTML = '<img src = https://img.icons8.com/dusk/0.3x/edit.png>';
                             const editCommentText = comment.querySelector('.comment-content');
 
                             editCommentBtn.addEventListener('click', () => {
@@ -399,18 +400,18 @@ export default () => {
                               editCommentBtn.innerHTML = '';
 
                               const savetextCommentBtn = post.querySelector('.comment-btn-savetext');
-                              savetextCommentBtn.innerHTML = '<img src=https://img.icons8.com/dusk/0.5x/save.png>';
+                              savetextCommentBtn.innerHTML = '<img src=https://img.icons8.com/dusk/0.3x/save.png>';
                               // Cambiar texto del post
                               savetextCommentBtn.addEventListener('click', (e) => {
                                 savetextCommentBtn.innerHTML = '';
                                 editCommentText.setAttribute('contenteditable', 'false');
-                                editCommentBtn.innerHTML = '<img src = https://img.icons8.com/dusk/0.5x/edit.png>';
+                                editCommentBtn.innerHTML = '<img src = https://img.icons8.com/dusk/0.3x/edit.png>';
                                 updateCommentText(idComment, editCommentText.textContent);
                               });
                             });
                             // Borrar comment
                             const deleteCommentBtn = comment.querySelector('.comment-delete-btn');
-                            deleteCommentBtn.innerHTML = '<img src= https://img.icons8.com/dusk/0.5x/delete-forever.png>';
+                            deleteCommentBtn.innerHTML = '<img src= https://img.icons8.com/dusk/0.3x/delete-forever.png>';
                             deleteCommentBtn.addEventListener('click', () => {
                               console.log('delete clic');
                               deleteAllComment(idComment);
@@ -426,7 +427,6 @@ export default () => {
                   });
                 });
               // ********
-
             });
 
             wall.appendChild(post);
