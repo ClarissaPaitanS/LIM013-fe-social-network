@@ -15,6 +15,7 @@ export const addPost = (uid, idPost, contentPostText, datePost, privacity) => fi
   contentPost: contentPostText,
   date: datePost,
   privacyPost: privacity,
+  numberComments: '0',
 });
 
 export const updateName = (uid, nameUser) => firebase.firestore().collection('user').doc(uid).update({
@@ -53,8 +54,30 @@ export const updatePost = (idPost, contentPostText) => firebase.firestore().coll
   contentPost: contentPostText,
 });
 
+export const updateNumberComment = (idPost, numberCommentsPost) => firebase.firestore().collection('post').doc(idPost).update({
+  numberComments: numberCommentsPost,
+});
+
 export const updatePostImg = (idPost, photoURL) => firebase.firestore().collection('post').doc(idPost).update({
   photoPost: photoURL,
 });
 
 export const deletePost = idPost => firebase.firestore().collection('post').doc(idPost).delete();
+
+export const updatePrivacy = (idPost, privacy) => firebase.firestore().collection('post').doc(idPost).update({
+  privacyPost: privacy,
+});
+
+export const addCommentPost = (user, idPostComment, idPost, contentCommentText, dateComment) => firebase.firestore().collection('comment').doc(idPostComment).set({
+  idComment: idPostComment,
+  postId: idPost,
+  idUser: user,
+  contentComment: contentCommentText,
+  date: dateComment,
+});
+
+export const updateComment = (idComment, contentCommentText) => firebase.firestore().collection('comment').doc(idComment).update({
+  contentComment: contentCommentText,
+});
+
+export const deleteComment = idComment => firebase.firestore().collection('comment').doc(idComment).delete();

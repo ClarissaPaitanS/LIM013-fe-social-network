@@ -4,7 +4,8 @@ import { closeSesion } from '../configFirebase.js';
 
 import {
   showDataProfile, addPostProfile, uploadProfilePost, updatePostText, uploadPostImg, deleteAllPost,
-} from '../view-controller/controllerProfile.js';
+  updatePrivacyPost, showPhotoComment, addComment, updateCommentText, deleteAllComment,
+} from '../view-controller/controllerHome.js';
 
 import { showData } from '../configFirestore.js';
 
@@ -126,7 +127,7 @@ export default () => {
   const editBtn = divElemt.querySelector('#edit-btn');
 
   editBtn.addEventListener('click', () => {
-    window.location.hash = '#/edit';
+    window.location.hash = '#/profile';
   });
 
   const profileName = divElemt.querySelector('#profileName');
@@ -135,11 +136,11 @@ export default () => {
 
   showDataProfile(profileName, photoUser, photoCover);
 
-  // Mostrar post.
+  // **************************** Mostrar post ******************
   const wall = divElemt.querySelector('.post-profile-wall');
   const previewPostImg = divElemt.querySelector('#preview-post-img');
   firebase.firestore().collection('post')
-    // .where('privacyPost', '==', 'public')
+    .where('privacyPost', '==', 'public')
     .orderBy('date', 'desc')
     .onSnapshot((querySnapshot) => {
       wall.innerHTML = '';
@@ -152,6 +153,7 @@ export default () => {
           idUser: post.data().idUser,
           contentPost: post.data().contentPost,
           imgPost: post.data().photoPost,
+          numberComments: post.data().numberComments,
         });
       });
       console.log('Posts: ', postData);
@@ -159,15 +161,14 @@ export default () => {
         const idPost = element.id;
         const postImg = element.imgPost;
         const idUserPost = element.idUser;
+        let countComments = parseInt(element.numberComments, 0); 
         console.log('idUserPost - Element: ', idUserPost);
         console.log('Element: ', element);
-
-
+        console.log('countComments: ', countComments);
         // showDataHome(idUserPost)
         //   .onSnapshot((doc) => {
         //     console.log('Current data: ', doc.data());
         //   });
-
 
         showData(idUserPost).then((doc) => {
           console.log('idUserPost - ShowdataElement: ', idUserPost);
@@ -194,8 +195,10 @@ export default () => {
                     </div>
                     <div class="post-header-info">
                       <p class="post-name"> ${nameUserPost}  </p>
-                      <p class="post-date"> El ${element.date} 🌎 </p>
-                      <p></p>
+                      <p class="post-date"> El ${element.date}</p>
+                      <div class= "post-edit-privacy">
+                        <p>🌎</p>
+                      </div>
                     </div>
                     <div class="post-option-btn">
                       <p class="post-edit-btn"></p>
@@ -215,7 +218,7 @@ export default () => {
             <div class="img-input-file"></div>
             </div>
                 <p class="post-btn-saveimg."></p>
-              </div>
+            </div>
 <!--
               <div class = "video-post-upload">
             <label for = "video-post-update">
@@ -228,12 +231,23 @@ export default () => {
 -->
 
               <div class="post-footer">
-                <img src="">
-                <img src="">
+              <div class = "post-footer-options">
+              <div>
+                <img src="https://img.icons8.com/wired/0.4x/facebook-like.png">
+                <!-- <img src="https://img.icons8.com/dusk/0.4x/facebook-like.png">-->
+                <p class = "show-quantity-likes"> 0 </p>
               </div>
-                </section>
-          `;
+              <div>
+                <img class = "btn-add-comment" src="https://img.icons8.com/ultraviolet/0.5x/comments.png">
+                <p class = "show-quantity-comments"> ${countComments}  </p>
+              </div>
+            </div>
+            <div class = "all-comment">
 
+            </div>
+              </div>
+            </section>
+          `;
             const user = firebase.auth().currentUser;
             console.log('User:', user);
             if (user.uid === element.idUser) {
@@ -246,6 +260,7 @@ export default () => {
                 console.log('clic en edit');
                 editPostText.setAttribute('contenteditable', 'true');
                 editPostBtn.innerHTML = '';
+
                 const savetextPostBtn = post.querySelector('.post-btn-savetext');
                 savetextPostBtn.innerHTML = '<img src=https://img.icons8.com/dusk/0.5x/save.png>';
                 const inputfileBtn = post.querySelector('.img-input-file');
@@ -272,7 +287,147 @@ export default () => {
                 console.log('delete clic');
                 deleteAllPost(idPost, postImg);
               });
+              // Cambiar privacidad del post
+              const editPostPrivacy = post.querySelector('.post-edit-privacy');
+              editPostPrivacy.innerHTML = `<select class="select-privacy-post" name="select">
+              <option value="public">Público 🌎</option> 
+              <option value="private">Privado 🔒</option>
+              </select>`;
+              const selectPrivacyPost = post.querySelector('.select-privacy-post');
+              selectPrivacyPost.addEventListener('change', () => {
+                updatePrivacyPost(idPost, selectPrivacyPost.value);
+              });
             }
+            const postfooter = post.querySelector('.post-footer');
+            // Añadir comentario
+            const addCommentBtn = post.querySelector('.btn-add-comment');
+            const allComment = post.querySelector('.all-comment');
+
+            addCommentBtn.addEventListener('click', () => {
+              console.log('Aqui escribe  Comentario');
+              console.log('tu lista deComentarios');
+              allComment.classList.toggle('show');
+              allComment.innerHTML = `
+              <div class = "add-comment-container">
+                <div class="photoComment"> </div>
+                <input class = "input-comment"type = "text">
+                <img class= "btn-share-comment" src="imagenes/btn-share.png">
+              </div>
+              <div class = "${idPost}">
+                <p>La lista de Comentarios</p>
+              </div>`;
+              const photoComment = post.querySelector('.photoComment');
+              showPhotoComment(photoComment);
+              const btnShareComment = post.querySelector('.btn-share-comment');
+              btnShareComment.addEventListener('click', () => {
+                const inputComment = post.querySelector('.input-comment').value;
+                countComments += 1;
+                addComment(inputComment, idPost, countComments);
+              });
+              const commentContainer = post.querySelector(`.${idPost}`);
+              // ******* Comentarios
+              firebase.firestore().collection('comment')
+                .orderBy('date', 'desc')
+                .onSnapshot((querySnapshotComment) => {
+                  commentContainer.innerHTML = '';
+                  const postComment = [];
+                  querySnapshotComment.forEach((comment) => {
+                    postComment.push({
+                      date: comment.data().date,
+                      idComment: comment.data().idComment,
+                      idPost: comment.data().postId,
+                      idUser: comment.data().idUser,
+                      contentComment: comment.data().contentComment,
+                    });
+                  });
+                  console.log('Posts Comment: ', postComment);
+                  postComment.forEach((elementComment) => {
+                    const idComment = elementComment.idComment;
+                    const idUserComment = elementComment.idUser;
+                    const idPostComment = elementComment.idPost;
+                    console.log('idUserComment - Element: ', idUserComment);
+                    console.log('ElementComment: ', elementComment);
+
+                    showData(idUserComment).then((docComment) => {
+                      console.log('idUserComment - ShowdataElement: ', idUserComment);
+                      console.log('ShowdataElement: ', elementComment);
+                      const nameUserComment = docComment.data().name;
+                      const photoUserComment = docComment.data().photo;
+                      // Cantidad de comentarios
+                      const commentsQuantity = postComment.filter(commentIdPost => commentIdPost.idPost === idPostComment).length;
+                      // const showQuantityComments = post.querySelector('.show-quantity-comments');
+                      // showQuantityComments.innerHTML = commentsQuantity;
+                      // console.log(commentsQuantity);
+                      if (docComment.exists) {
+                        if (idPost === idPostComment) {
+                          // console.log(postComment.filter(commentIdPost => commentIdPost.idPost === idPostComment));
+                          const comment = document.createElement('div');
+                          comment.classList.add('comment');
+                          comment.innerHTML = `
+                          <section class="comment-user-wall">
+                            <div class="comment-header">
+                              <div class = "comment-header-photo">
+                                <img class="photo-user-comment" src='${photoUserComment}'> 
+                              </div>
+                              <div class="comment-header-info">
+                                <p class="comment-name"> ${nameUserComment}  </p>
+                                <p class="comment-date"> El ${elementComment.date}</p>
+                                
+                              </div>
+                              <div class="comment-option-btn">
+                                <p class="comment-edit-btn"></p>
+                                <p class="comment-delete-btn"></p>
+                              </div>
+                            </div>
+                            <div class="comment-body">
+                            <div class="comment-option-save-btn">
+                              <p class="comment-content"> ${elementComment.contentComment}</p>
+                              <p class="comment-btn-savetext"></p>
+                            </div>
+                          </section>
+                        `;
+                          // Aqui edit commmet
+                          if (user.uid === idUserComment) {
+                          // Editar Comment
+                            const editCommentBtn = comment.querySelector('.comment-edit-btn');
+                            editCommentBtn.innerHTML = '<img src = https://img.icons8.com/dusk/0.5x/edit.png>';
+                            const editCommentText = comment.querySelector('.comment-content');
+
+                            editCommentBtn.addEventListener('click', () => {
+                              console.log('clic en edit');
+                              editCommentText.setAttribute('contenteditable', 'true');
+                              editCommentBtn.innerHTML = '';
+
+                              const savetextCommentBtn = post.querySelector('.comment-btn-savetext');
+                              savetextCommentBtn.innerHTML = '<img src=https://img.icons8.com/dusk/0.5x/save.png>';
+                              // Cambiar texto del post
+                              savetextCommentBtn.addEventListener('click', (e) => {
+                                savetextCommentBtn.innerHTML = '';
+                                editCommentText.setAttribute('contenteditable', 'false');
+                                editCommentBtn.innerHTML = '<img src = https://img.icons8.com/dusk/0.5x/edit.png>';
+                                updateCommentText(idComment, editCommentText.textContent);
+                              });
+                            });
+                            // Borrar comment
+                            const deleteCommentBtn = comment.querySelector('.comment-delete-btn');
+                            deleteCommentBtn.innerHTML = '<img src= https://img.icons8.com/dusk/0.5x/delete-forever.png>';
+                            deleteCommentBtn.addEventListener('click', () => {
+                              console.log('delete clic');
+                              deleteAllComment(idComment);
+                            });
+                          }
+                          //
+                          commentContainer.appendChild(comment);
+                        }
+                      }
+                    }).catch((error) => {
+                      console.log('Error agregando comentario:', error);
+                    });
+                  });
+                });
+              // ********
+
+            });
 
             wall.appendChild(post);
           }
@@ -425,6 +580,7 @@ export default () => {
     const contentPostText = divElemt.querySelector('.content-post-text').value;
     const contentPostImg = divElemt.querySelector('#post-image-input').files[0];
     const privacityPost = divElemt.querySelector('.privacity-post').value;
+
     console.log('privacidad:', privacityPost);
     // const contentPostVideo = divElemt.querySelector('#post-video-input').files[0];
     console.log(contentPostImg);

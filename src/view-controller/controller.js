@@ -1,8 +1,8 @@
 import { elements } from '../view/all.js';
 
 export const changeView = (hash) => {
+  let homePage = '';
   let profilePage = '';
-  let editPage = '';
   //  const id = hash.split('/')[1];
   const sectionMain = document.getElementById('container');
   sectionMain.innerHTML = '';
@@ -21,27 +21,27 @@ export const changeView = (hash) => {
       firebase.auth().onAuthStateChanged((user) => {
         console.log('Hola', user);
         if (user) {
-          profilePage = sectionMain.appendChild(elements.home());
+          homePage = sectionMain.appendChild(elements.home());
         } else {
           // profilePage = sectionMain.appendChild(elements.login());
           window.location.hash = '#/';
         }
       });
 
-      return profilePage;
+      return homePage;
     }
-    case '#/edit':
+    case '#/profile':
     {
       firebase.auth().onAuthStateChanged((user) => {
-        console.log('Hola Edit', user);
+        console.log('Hola Profile', user);
         if (user) {
-          editPage = sectionMain.appendChild(elements.edit());
+          profilePage = sectionMain.appendChild(elements.profile());
         } else {
           window.location.hash = '#/';
         }
       });
 
-      return editPage;
+      return profilePage;
       // return sectionMain.appendChild(elements.edit());
     }
 

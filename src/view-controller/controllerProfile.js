@@ -1,22 +1,23 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable max-len */
 /* eslint-disable no-param-reassign */
 import {
-  showData, addPost, uploadPhotoPost, updatePost, updatePostImg, deletePost,
+  showData, updateName, updatePassword, updatePhoto, updateCover,
 } from '../configFirestore.js';
-import { filePhotoPost, deleteRef } from '../configStorage.js';
 
-export const showDataProfile = (profileName, photoUser, photoCover) => {
+import { filePhotoUser, filePhotoCover } from '../configStorage.js';
+
+export const showDataEdit = (profileName, profileEmail, photoUser, photoCover) => {
   const user = firebase.auth().currentUser.uid;
+
   showData(user).then((doc) => {
     if (doc.exists) {
       const nameUserProfile = doc.data().name;
+      const emailUserProfile = doc.data().email;
       const photoUserProfile = doc.data().photo;
-      console.log(photoUserProfile);
       const coverUserProfile = doc.data().photoCover;
-      profileName.innerHTML = `${nameUserProfile}`;
       photoUser.innerHTML = `<img  src='${photoUserProfile}'>`;
       photoCover.innerHTML = `<img  src='${coverUserProfile}'>`;
+      profileName.value = nameUserProfile;
+      profileEmail.innerHTML = `<input class='edit-form-input'value='${emailUserProfile}' disabled>`;
     } else {
       // doc.data() will be undefined in this case
       console.log('No such document!');
@@ -26,159 +27,48 @@ export const showDataProfile = (profileName, photoUser, photoCover) => {
   });
 };
 
-export const uploadProfilePost = (postImage, preview) => {
-  const filePhoto = postImage.files[0];
-  console.log(filePhoto);
-  console.log(preview);
-  const readerPost = new FileReader();
-  console.log(readerPost);
-  readerPost.onload = () => {
-    const image = document.createElement('img');
-    image.src = readerPost.result;
-    // preview.innerHTML = '';
-    preview.appendChild(image);
-    console.log(readerPost);
-  };
-  readerPost.readAsDataURL(filePhoto);
+export const updateDataName = (name, updateMessageName) => {
+  const user = firebase.auth().currentUser.uid;
+  if (name !== '') {
+    updateName(user, name).then(() => {
+      console.log('Update name');
+      updateMessageName.innerHTML = 'Nombre actualizado';
+    })
+      .catch((error) => {
+        console.log('An error happened', error);
+        updateMessageName.innerHTML = 'Ingrese un nombre válido';
+      });
+  }
 };
 
-// export const uploadProfileVideoPost = (postVideo, preview) => {
-//   const fileVideo = postVideo.files[0];
-//   console.log(fileVideo);
-//   console.log(preview);
-//   const readerPost = new FileReader();
-//   console.log(readerPost);
-//   readerPost.onload = () => {
-//     const videoContainer = document.createElement('div');
-//     videoContainer.innerHTML = `
-//     <video src= '${readerPost.result}' controls autoplay loop>
-//     `;
-//     preview.appendChild(videoContainer);
-//     console.log(readerPost);
-//   };
-//   readerPost.readAsDataURL(fileVideo);
-// };
-
-export const addPostProfile = (contentPost, postImg, postPrivacity) => {
-  const user = firebase.auth().currentUser.uid;
-  // const {uid , name} =  firebase.auth().currentUser; si se desear llamar  solo se coloca uid
-  // const firestore = firebase.firestore();
-  const idPost = user + Math.floor(Math.random() * 10000);
-  // const docRef = firestore.collection('post').doc(idPost);
-  const datePost = new Date();
-  const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-  const dateMonth = datePost.getMonth();
-  const dateYear = datePost.getFullYear();
-  const dateDay = datePost.getDate();
-  const dateHours = datePost.getHours();
-  const dateMinutes = datePost.getMinutes();
-  const dateSeconds = datePost.getSeconds();
-  const datePostUser = `${dateDay} de ${months[dateMonth]} del ${dateYear} a las ${dateHours}:${dateMinutes}:${dateSeconds}`;
-  // Aqui
-  const contentPostText = contentPost;
-  const contentPostImg = postImg;
-  const contentPostPrivacity = postPrivacity;
-  // const contentPostVideo = postVideo;
-  console.log(contentPostImg);
-  const filePhoto = contentPostImg;
-  // const fileVideo = contentPostVideo;
-  // eslint-disable-next-line no-empty
-  if (!filePhoto) {
-    addPost(user, idPost, contentPostText, datePostUser, contentPostPrivacity).then(() => {
-      console.log('Post exitoso');
-    }).catch((error) => {
-      console.log('Error:', error);
-    });
-  } else {
-    const filePhotoRef = filePhotoPost(filePhoto);
-    filePhotoRef.on('state_changed', (snapshot) => {
-      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log(`Upload is ${progress}% done`);
-      // eslint-disable-next-line default-case
-      switch (snapshot.state) {
-        case firebase.storage.TaskState.PAUSED:
-          console.log('Upload is paused');
-          break;
-        case firebase.storage.TaskState.RUNNING:
-          console.log('Upload is running');
-          break;
-      }
-    }, (error) => {
-      console.log(error);
-    }, () => {
-      filePhotoRef.snapshot.ref.getDownloadURL().then((downloadURL) => {
-        console.log('Imagen Subida a Firebase', downloadURL);
-        const photopostURL = downloadURL;
-        uploadPhotoPost(user, idPost, photopostURL, contentPostText, datePostUser, contentPostPrivacity).then(() => {
-          console.log('Update');
-        })
-          .catch((error) => {
-            console.log('An error happened', error);
-          });
-      });
+export const updateDataPassword = (editPassword, updateMessagePassword) => {
+  if (editPassword !== '') {
+    updatePassword(editPassword).then(() => {
+      console.log('Update successful password');
+      updateMessagePassword.innerHTML = 'Contraseña actualizada';
+    }).catch((err) => {
+      console.log('Error password', err);
+      updateMessagePassword.innerHTML = 'Ingrese una contraseña válida';
     });
   }
-  // else if (fileVideo) {
-  //   const fileVideoRef = fileVideoPost(fileVideo);
-  //   fileVideoRef.on('state_changed', (snapshot) => {
-  //     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-  //     console.log(`Upload is ${progress}% done`);
-  //     // eslint-disable-next-line default-case
-  //     switch (snapshot.state) {
-  //       case firebase.storage.TaskState.PAUSED:
-  //         console.log('Upload is paused');
-  //         break;
-  //       case firebase.storage.TaskState.RUNNING:
-  //         console.log('Upload is running');
-  //         break;
-  //     }
-  //   }, (error) => {
-  //     console.log(error);
-  //   }, () => {
-  //     fileVideoRef.snapshot.ref.getDownloadURL().then((downloadURL) => {
-  //       console.log('Video Subido a Firebase', downloadURL);
-  //       const videopostURL = downloadURL;
-  //       uploadVideoPost(user, idPost, videopostURL, contentPostText, datePostUser).then(() => {
-  //         console.log('Update');
-  //       })
-  //         .catch((error) => {
-  //           console.log('An error happened', error);
-  //         });
-  //     });
-  //   });
-  // }
 };
 
-export const updatePostText = (idPost, editPostText) => {
-  const post = idPost;
-  updatePost(post, editPostText).then(() => {
-    console.log('idPost', post);
-    console.log('EditPost', editPostText);
-    console.log('Update content');
-  })
-    .catch((error) => {
-      console.log('An error happened', error);
-    });
-};
-// photoUp, photoUser
-export const uploadPostImg = (idPost, postImgUp, imgPostEdit) => {
-  const filePhoto = postImgUp.files[0];
-  const post = idPost;
+export const uploadProfileImg = (photoUp, photoUser) => {
+  const filePhoto = photoUp.files[0];
   console.log(filePhoto);
   const reader = new FileReader();
   // eslint-disable-next-line func-names
   reader.onload = function () {
     const image = document.createElement('img');
     image.src = reader.result;
-    imgPostEdit.innerHTML = '';
-    imgPostEdit.append(image);
+    photoUser.innerHTML = '';
+    photoUser.append(image);
   };
   reader.readAsDataURL(filePhoto);
   // eslint-disable-next-line no-empty
   if (!filePhoto) {
   } else {
-    // filePhotoUser
-    const filePhotoRef = filePhotoPost(filePhoto);
+    const filePhotoRef = filePhotoUser(filePhoto);
     filePhotoRef.on('state_changed', (snapshot) => {
       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
       console.log(`Upload is ${progress}% done`);
@@ -197,9 +87,8 @@ export const uploadPostImg = (idPost, postImgUp, imgPostEdit) => {
       filePhotoRef.snapshot.ref.getDownloadURL().then((downloadURL) => {
         console.log('Imagen Subida a Firebase', downloadURL);
         const photoURL = downloadURL;
-        // const user = firebase.auth().currentUser.uid;
-        // updatePhoto
-        updatePostImg(post, photoURL).then(() => {
+        const user = firebase.auth().currentUser.uid;
+        updatePhoto(user, photoURL).then(() => {
           console.log('Update');
         })
           .catch((error) => {
@@ -210,16 +99,48 @@ export const uploadPostImg = (idPost, postImgUp, imgPostEdit) => {
   }
 };
 
-// Delete Post
-export const deleteAllPost = (idPost, postImg) => {
-  deletePost(idPost)
-    .then(() => {
-      deleteRef(postImg).then(() => {
-      }).catch((error) => {
-        console.log('error delete storage', error);
+export const uploadProfileCover = (coverUp, coverUser) => {
+  const user = firebase.auth().currentUser.uid;
+  const fileCover = coverUp.files[0];
+
+  const reader = new FileReader();
+  // eslint-disable-next-line func-names
+  reader.onload = function () {
+    const image = document.createElement('img');
+    image.src = reader.result;
+    coverUser.innerHTML = '';
+    coverUser.append(image);
+  };
+  reader.readAsDataURL(fileCover);
+  // eslint-disable-next-line no-empty
+  if (!fileCover) {
+  } else {
+    const filePhotoCoverRef = filePhotoCover(fileCover);
+    filePhotoCoverRef.on('state_changed', (snapshot) => {
+      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      console.log(`Upload is ${progress}% done`);
+      // eslint-disable-next-line default-case
+      switch (snapshot.state) {
+        case firebase.storage.TaskState.PAUSED:
+          console.log('Upload is paused');
+          break;
+        case firebase.storage.TaskState.RUNNING:
+          console.log('Upload is running');
+          break;
+      }
+    }, (error) => {
+      console.log(error);
+    }, () => {
+      filePhotoCoverRef.snapshot.ref.getDownloadURL().then((downloadURL) => {
+        console.log('Imagen Subida a Firebase', downloadURL);
+        const photoURL = downloadURL;
+        updateCover(user, photoURL).then(() => {
+          console.log('Update');
+        })
+          .catch((error) => {
+            console.log('An error happened', error);
+          });
       });
-    })
-    .catch((error) => {
-      console.error('Error removing document: ', error);
     });
+  }
 };
