@@ -2,7 +2,7 @@
 
 import {
   showDataEdit, updateDataName, updateDataPassword, uploadProfileImg, uploadProfileCover,
-} from '../view-controller/controllerEdit.js';
+} from '../view-controller/controllerProfile.js';
 
 export default () => {
   const viewEdit = `
@@ -62,7 +62,7 @@ export default () => {
 
   // Volver al profile
   const homeBtn = divElemt.querySelector('#profile-btn');
-  homeBtn.addEventListener('click', () => { window.location.hash = '#/profile'; });
+  homeBtn.addEventListener('click', () => { window.location.hash = '#/home'; });
 
   // Muestra los datos del user
   const profileName = divElemt.querySelector('#name-edit');
