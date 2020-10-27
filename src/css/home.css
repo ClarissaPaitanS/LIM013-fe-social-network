@@ -151,6 +151,7 @@ textarea {
 }
 .post-footer-options{
     display: flex;
+    justify-content: space-around;
 }
 .post-user-options{
     display: flex;
@@ -239,14 +240,16 @@ textarea {
 }
 .post-option-btn{
     display: flex;
-    padding-left: 60%;
+    /* padding-left: 60%; */
 }
 .post-option-save-btn{
     display: flex;
     /* padding-left: 60%; */
 }
 
-/* Oculta y muetsra comentarios */
+/* Comentarios */
+
+/* Oculta y muestra seción comentarios*/
 .all-comment{
     display:none
 }
@@ -255,6 +258,65 @@ textarea {
     display:block;
 }
 
+.photoComment > img {
+    width:40px;
+    height: 40px;
+    border-radius: 25px;
+}
+
+.btn-share-comment {
+    width:40px;
+    height: 40px;
+    border-radius: 25px;
+}
+
+.photo-user-comment {
+    width:40px;
+    height: 40px;
+    border-radius: 25px;
+    margin: 5px;
+}
+
+.add-comment-container{
+    display: flex;
+    margin: 10px;
+    justify-content: space-between;
+    background: #ccc5;
+    padding: 10px;
+    border-radius: 10px;
+}
+.comment-user-wall{
+    background: #ffffff;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.comment-header{
+    display: flex;
+    justify-content: space-between;
+}
+
+.comment-option-btn{
+    display:flex;
+    padding: 5px;
+}
+.comment-date{
+    font-size: 10px;
+}
+.comment-name{
+    font-size: 12px;
+    font-weight: bold;
+    text-align: left;
+}
+.comment-header-content{
+    display: flex;
+}
+p.comment-content {
+    text-align: left;
+    padding-left: 4%;
+    padding-right: 4%;
+    padding-bottom: 2%;
+}
 /* ---------------- 450 px------------------- */
 @media (min-width: 450px) {
     * {

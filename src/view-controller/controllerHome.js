@@ -67,14 +67,15 @@ export const addPostProfile = (contentPost, postImg, postPrivacity) => {
   const idPost = user + Math.floor(Math.random() * 10000);
   // const docRef = firestore.collection('post').doc(idPost);
   const datePost = new Date();
-  const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-  const dateMonth = datePost.getMonth();
-  const dateYear = datePost.getFullYear();
-  const dateDay = datePost.getDate();
-  const dateHours = datePost.getHours();
-  const dateMinutes = datePost.getMinutes();
-  const dateSeconds = datePost.getSeconds();
-  const datePostUser = `${dateDay} de ${months[dateMonth]} del ${dateYear} a las ${dateHours}:${dateMinutes}:${dateSeconds}`;
+  console.log(datePost);
+  // const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+  // const dateMonth = datePost.getMonth();
+  // const dateYear = datePost.getFullYear();
+  // const dateDay = datePost.getDate();
+  // const dateHours = datePost.getHours();
+  // const dateMinutes = datePost.getMinutes();
+  // const dateSeconds = datePost.getSeconds();
+  // const datePostUser = `${dateDay} de ${months[dateMonth]} del ${dateYear} a las ${dateHours}:${dateMinutes}:${dateSeconds}`;
   // Aqui
   const contentPostText = contentPost;
   const contentPostImg = postImg;
@@ -85,7 +86,7 @@ export const addPostProfile = (contentPost, postImg, postPrivacity) => {
   // const fileVideo = contentPostVideo;
   // eslint-disable-next-line no-empty
   if (!filePhoto) {
-    addPost(user, idPost, contentPostText, datePostUser, contentPostPrivacity).then(() => {
+    addPost(user, idPost, contentPostText, datePost, contentPostPrivacity).then(() => {
       console.log('Post exitoso');
     }).catch((error) => {
       console.log('Error:', error);
@@ -110,7 +111,7 @@ export const addPostProfile = (contentPost, postImg, postPrivacity) => {
       filePhotoRef.snapshot.ref.getDownloadURL().then((downloadURL) => {
         console.log('Imagen Subida a Firebase', downloadURL);
         const photopostURL = downloadURL;
-        uploadPhotoPost(user, idPost, photopostURL, contentPostText, datePostUser, contentPostPrivacity).then(() => {
+        uploadPhotoPost(user, idPost, photopostURL, contentPostText, datePost, contentPostPrivacity).then(() => {
           console.log('Update');
         })
           .catch((error) => {
@@ -256,18 +257,18 @@ export const addComment = (contentComment, idPost, countComments) => {
   const idPostComment = idPost;
   const idComment = idPostComment + Math.floor(Math.random() * 10000);
   const dateComment = new Date();
-  const months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
-  const dateMonth = dateComment.getMonth();
-  const dateYear = dateComment.getFullYear();
-  const dateDay = dateComment.getDate();
-  const dateHours = dateComment.getHours();
-  const dateMinutes = dateComment.getMinutes();
-  const dateSeconds = dateComment.getSeconds();
-  const dateCommentUser = `${dateDay} / ${months[dateMonth]} / ${dateYear}  ${dateHours}:${dateMinutes}:${dateSeconds}`;
+  // const months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+  // const dateMonth = dateComment.getMonth();
+  // const dateYear = dateComment.getFullYear();
+  // const dateDay = dateComment.getDate();
+  // const dateHours = dateComment.getHours();
+  // const dateMinutes = dateComment.getMinutes();
+  // const dateSeconds = dateComment.getSeconds();
+  // const dateCommentUser = `${dateDay} / ${months[dateMonth]} / ${dateYear}  ${dateHours}:${dateMinutes}:${dateSeconds}`;
   const contentCommentText = contentComment;
   // eslint-disable-next-line no-empty
 
-  addCommentPost(user, idComment, idPostComment, contentCommentText, dateCommentUser).then(() => {
+  addCommentPost(user, idComment, idPostComment, contentCommentText, dateComment).then(() => {
     // countPost += 1;
     updateNumberComment(idPostComment, countComments);
     console.log('Cantidad de Comentarios', countComments);
