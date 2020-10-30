@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 // export const fillPost = (photoUserPost, nameUserPost, date, content, imgPost) => {
 //   const post = document.createElement('div');
 //   post.classList.add('post');
@@ -5,7 +6,7 @@
 //                 <section class="post-user-wall">
 //                   <div class="post-header">
 //                     <div class = "post-header-photo">
-//                       <img class="photo-user-post" src='${photoUserPost}'> 
+//                       <img class="photo-user-post" src='${photoUserPost}'>
 //                     </div>
 //                     <div class="post-header-info">
 //                       <p class="post-name"> ${nameUserPost}  </p>
