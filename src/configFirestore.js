@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 export const addUser = (uid, nameUser, emailUser) => firebase.firestore().collection('user').doc(uid).set({
   name: nameUser,
   email: emailUser,
@@ -16,6 +17,7 @@ export const addPost = (uid, idPost, contentPostText, datePost, privacity) => fi
   date: datePost,
   privacyPost: privacity,
   numberComments: '0',
+  numberLikes: [],
 });
 
 export const updateName = (uid, nameUser) => firebase.firestore().collection('user').doc(uid).update({
@@ -39,6 +41,8 @@ export const uploadPhotoPost = (uid, idPost, photopostURL, contentPostText, date
   contentPost: contentPostText,
   date: datePostUser,
   privacyPost: privacity,
+  numberComments: '0',
+  numberLikes: [],
 });
 
 // eslint-disable-next-line max-len
@@ -54,8 +58,13 @@ export const updatePost = (idPost, contentPostText) => firebase.firestore().coll
   contentPost: contentPostText,
 });
 
+// Cambia cantidad de likes
 export const updateNumberComment = (idPost, numberCommentsPost) => firebase.firestore().collection('post').doc(idPost).update({
   numberComments: numberCommentsPost,
+});
+
+export const updateNumberLike = (idPost, numberPostLike) => firebase.firestore().collection('post').doc(idPost).update({
+  numberLikes: numberPostLike,
 });
 
 export const updatePostImg = (idPost, photoURL) => firebase.firestore().collection('post').doc(idPost).update({
@@ -76,8 +85,58 @@ export const addCommentPost = (user, idPostComment, idPost, contentCommentText, 
   date: dateComment,
 });
 
+export const addLikePost = (user, idPostLikes, idPost) => firebase.firestore().collection('like').doc(idPostLikes).set({
+  postId: idPost,
+  idUser: user,
+  idLike: idPostLikes,
+});
+
 export const updateComment = (idComment, contentCommentText) => firebase.firestore().collection('comment').doc(idComment).update({
   contentComment: contentCommentText,
 });
 
 export const deleteComment = idComment => firebase.firestore().collection('comment').doc(idComment).delete();
+// export const deleteLike = idPost => firebase.firestore().collection('like').where('idPost', '==', idPost).delete();
+
+export const deleteLike = idLike => firebase.firestore().collection('like').doc(idLike).delete();
+
+
+export const getPost = callback => firebase.firestore().collection('post')
+  .where('privacyPost', '==', 'public')
+  .orderBy('date', 'desc')
+  .onSnapshot((querySnapshot) => {
+    const postData = [];
+    querySnapshot.forEach((post) => {
+      postData.push({
+        date: post.data().date,
+        id: post.data().id,
+        idUser: post.data().idUser,
+        contentPost: post.data().contentPost,
+        imgPost: post.data().photoPost,
+        numberComments: post.data().numberComments,
+        numberLikes: post.data().numberLikes,
+        privacyPost: post.data().privacyPost,
+      });
+    });
+    callback(postData);
+  });
+
+export const getPostUserAll = callback => firebase.firestore().collection('post')
+  .where('idUser', '==', firebase.auth().currentUser.uid)
+  .orderBy('date', 'desc')
+  .onSnapshot((querySnapshot) => {
+    const postData = [];
+    querySnapshot.forEach((post) => {
+      postData.push({
+        date: post.data().date,
+        id: post.data().id,
+        idUser: post.data().idUser,
+        contentPost: post.data().contentPost,
+        imgPost: post.data().photoPost,
+        numberComments: post.data().numberComments,
+        numberLikes: post.data().numberLikes,
+        privacyPost: post.data().privacyPost,
+      });
+    });
+    callback(postData);
+  });

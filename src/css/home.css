@@ -247,7 +247,7 @@ textarea {
     /* padding-left: 60%; */
 }
 
-/* Comentarios */
+/******************* Comentarios ********************/
 
 /* Oculta y muestra seción comentarios*/
 .all-comment{
@@ -316,6 +316,31 @@ p.comment-content {
     padding-left: 4%;
     padding-right: 4%;
     padding-bottom: 2%;
+}
+
+/******************* Likes ********************/
+/* .btn-add-dislike{
+ display:none;   
+} */
+
+.hiden{
+    display:none;   
+}
+
+.like-off{
+    /* display:flex; */
+    width: 20px;
+    height: 20px;
+    background: url('https://img.icons8.com/wired/0.3x/facebook-like.png') no-repeat; 
+    border: none;
+}
+
+.like-on{
+    /* display:flex; */
+    width: 20px;
+    height: 20px;
+    background: url('https://img.icons8.com/dusk/0.3x/facebook-like.png') no-repeat;
+    border: none;
 }
 /* ---------------- 450 px------------------- */
 @media (min-width: 450px) {

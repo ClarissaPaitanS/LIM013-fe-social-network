@@ -70,10 +70,6 @@ export default () => {
     const nameGoogle = firebase.auth().currentUser.providerData[0].displayName;
     const photoGoogle = firebase.auth().currentUser.providerData[0].photoURL;
     const emailGoogle = firebase.auth().currentUser.providerData[0].email;
-    console.log('docref', docRef.id);
-    console.log(nameGoogle);
-    console.log(emailGoogle);
-    console.log(photoGoogle);
     docRef.set({
       name: nameGoogle,
       email: emailGoogle,
