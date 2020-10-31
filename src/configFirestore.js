@@ -85,21 +85,12 @@ export const addCommentPost = (user, idPostComment, idPost, contentCommentText, 
   date: dateComment,
 });
 
-export const addLikePost = (user, idPostLikes, idPost) => firebase.firestore().collection('like').doc(idPostLikes).set({
-  postId: idPost,
-  idUser: user,
-  idLike: idPostLikes,
-});
-
 export const updateComment = (idComment, contentCommentText) => firebase.firestore().collection('comment').doc(idComment).update({
   contentComment: contentCommentText,
 });
 
 export const deleteComment = idComment => firebase.firestore().collection('comment').doc(idComment).delete();
 // export const deleteLike = idPost => firebase.firestore().collection('like').where('idPost', '==', idPost).delete();
-
-export const deleteLike = idLike => firebase.firestore().collection('like').doc(idLike).delete();
-
 
 export const getPost = callback => firebase.firestore().collection('post')
   .where('privacyPost', '==', 'public')
@@ -123,6 +114,42 @@ export const getPost = callback => firebase.firestore().collection('post')
 
 export const getPostUserAll = callback => firebase.firestore().collection('post')
   .where('idUser', '==', firebase.auth().currentUser.uid)
+  .orderBy('date', 'desc')
+  .onSnapshot((querySnapshot) => {
+    const postData = [];
+    querySnapshot.forEach((post) => {
+      postData.push({
+        date: post.data().date,
+        id: post.data().id,
+        idUser: post.data().idUser,
+        contentPost: post.data().contentPost,
+        imgPost: post.data().photoPost,
+        numberComments: post.data().numberComments,
+        numberLikes: post.data().numberLikes,
+        privacyPost: post.data().privacyPost,
+      });
+    });
+    callback(postData);
+  });
+
+export const getComments = callback => firebase.firestore().collection('comment')
+  .orderBy('date', 'desc')
+  .onSnapshot((querySnapshot) => {
+    const postComment = [];
+    querySnapshot.forEach((comment) => {
+      postComment.push({
+        date: comment.data().date,
+        idComment: comment.data().idComment,
+        idPost: comment.data().postId,
+        idUser: comment.data().idUser,
+        contentComment: comment.data().contentComment,
+      });
+    });
+    callback(postComment);
+  });
+
+// ***************************Solo para el test********************************
+export const getEveryPost = callback => firebase.firestore().collection('post')
   .orderBy('date', 'desc')
   .onSnapshot((querySnapshot) => {
     const postData = [];

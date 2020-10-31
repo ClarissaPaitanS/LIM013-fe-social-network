@@ -135,9 +135,13 @@ textarea {
 }
 
 .post-header{
-    background-color:#bae9f9;
+   /* background-color:#bae9f9;
     padding:5px;
+    display: flex;*/
+    background-color: #bae9f9;
+    padding: 5px;
     display: flex;
+    justify-content: space-between;
 }
 
 .post-body{
@@ -148,6 +152,7 @@ textarea {
 .post-footer{
     background-color:#e7f9ff;
     padding:5px;
+    border-radius: 0px 0px 10px 10px;
 }
 .post-footer-options{
     display: flex;
@@ -251,7 +256,9 @@ textarea {
 
 /* Oculta y muestra seción comentarios*/
 .all-comment{
-    display:none
+    display:none;
+    padding-left: 5%;
+    padding-right: 5%;
 }
 
 .show{
@@ -280,7 +287,7 @@ textarea {
 .add-comment-container{
     display: flex;
     margin: 10px;
-    justify-content: space-between;
+    justify-content: space-evenly;
     background: #ccc5;
     padding: 10px;
     border-radius: 10px;
@@ -294,6 +301,7 @@ textarea {
 .comment-header{
     display: flex;
     justify-content: space-between;
+    padding: 5px;
 }
 
 .comment-option-btn{
@@ -341,6 +349,19 @@ p.comment-content {
     height: 20px;
     background: url('https://img.icons8.com/dusk/0.3x/facebook-like.png') no-repeat;
     border: none;
+}
+
+.photo-post-img {
+    width: 20%;
+    height: max-content;
+}
+
+.input-comment {
+    width: 60%;
+}
+
+.post-header-content{
+    display: flex;
 }
 /* ---------------- 450 px------------------- */
 @media (min-width: 450px) {
