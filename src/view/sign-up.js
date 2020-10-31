@@ -53,11 +53,7 @@ export default () => {
     const email = divElemt.querySelector('#email-signUp');
     signupUser(email.value, password.value)
       .then((userCredential) => {
-      // window.location.hash = '#/profile';
-        console.log('singUp');
         const user = firebase.auth().currentUser.uid;
-        console.log(user);
-
         const nameSignUp = divElemt.querySelector('#name-signUp');
         const emailSignUp = divElemt.querySelector('#email-signUp');
         const nameSave = nameSignUp.value;
@@ -65,7 +61,6 @@ export default () => {
 
         addUser(user, nameSave, emailSave)
           .then(() => {
-            console.log('datos guardados');
             window.location.hash = '#/home';
           })
           .catch((error) => {

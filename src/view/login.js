@@ -49,11 +49,7 @@ export default () => {
     loginUser(emailLogin.value, passwordLogin.value)
       .then((userCredential) => {
         window.location.hash = '#/home';
-        console.log('signIn');
       })
-      // .then((data) => {
-      //   console.log(data.message);
-      // })
       .catch((err) => {
         console.log(err);
         if (err.code === 'auth/wrong-password') {
@@ -77,7 +73,6 @@ export default () => {
       photoCover: 'imagenes/user-cover.jpg',
     })
       .then(() => {
-        console.log('datos guardados');
         window.location.hash = '#/home';
       })
       .catch((error) => {
@@ -92,37 +87,20 @@ export default () => {
     // auth.signInWithPopup(provider)
     googleLogin()
       .then((result) => {
-        // console.log(result);
-        // window.location.hash = '#/profile';
-        console.log('google sign in');
         const user = firebase.auth().currentUser.uid;
-        console.log(user);
-        console.log(firebase.auth());
-        console.log('Google ID:', user);
-
         const firestore = firebase.firestore();
         const docRef = firestore.collection('user').doc(user);
 
         docRef.get().then((doc) => {
           if (doc.exists) {
             window.location.hash = '#/home';
-            console.log('Document data:', doc.data());
           } else {
             registrarUsuariosGmail(user);
-            // doc.data() will be undefined in this case
-            console.log('No such document!');
           }
         })
           .catch((error) => {
             console.log('Error getting document:', error);
           });
-
-
-        // if (user !== '') {
-        //   window.location.hash = '#/profile';
-        // } else {
-        //   registrarUsuariosGmail(user);
-        // }
       })
       .catch((err) => {
         console.log(err);
@@ -133,12 +111,7 @@ export default () => {
     const firestore = firebase.firestore();
     const docRef = firestore.collection('user').doc(userData.uid);
     const nameFacebook = userData.displayName;
-    // const photoFacebook = userData.photoURL;
     const emailFacebook = userData.email;
-    console.log(docRef);
-    console.log(nameFacebook);
-    // console.log(photoFacebook);
-    console.log(emailFacebook);
     docRef.set({
       name: nameFacebook,
       email: emailFacebook,
@@ -146,7 +119,6 @@ export default () => {
       photoCover: 'imagenes/user-cover.jpg',
     })
       .then(() => {
-        console.log('datos guardados');
         window.location.hash = '#/home';
       })
       .catch((error) => {
@@ -160,32 +132,21 @@ export default () => {
     // auth.signInWithPopup(provider)
     facebookLogin()
       .then((result) => {
-        console.log(result);
         const user = result.user;
-        console.log(user);
-        console.log(result.additionalUserInfo.profile.picture.data.url);
         const photo = result.additionalUserInfo.profile.picture.data.url;
-        // const user = firebase.auth().currentUser.uid;
-        // console.log(firebase.auth());
-        // console.log('Facebook ID:', user);
         const firestore = firebase.firestore();
         const docRef = firestore.collection('user').doc(user.uid);
-        console.log('Yo soy doc ref', docRef);
         docRef.get().then((doc) => {
           if (doc.exists) {
             window.location.hash = '#/home';
-            console.log('Document data:', doc.data());
           } else {
             registerUserFacebook(user.uid, photo);
             // doc.data() will be undefined in this case
-            console.log('No such document!');
           }
         })
           .catch((error) => {
             console.log('Error getting document:', error);
           });
-        // window.location.hash = '#/profile';
-        console.log('facebook sign in');
       })
       .catch((err) => {
         console.log(err);

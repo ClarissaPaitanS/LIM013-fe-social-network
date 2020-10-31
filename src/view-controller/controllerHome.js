@@ -3,10 +3,10 @@
 /* eslint-disable no-param-reassign */
 import {
   showData, addPost, uploadPhotoPost, updatePost, updatePostImg, deletePost, updatePrivacy,
-  addCommentPost, updateComment, deleteComment, updateNumberComment, addLikePost, updateNumberLike, deleteLike,
+  addCommentPost, updateComment, deleteComment, updateNumberComment,
 } from '../configFirestore.js';
 import { filePhotoPost, deleteRef } from '../configStorage.js';
-// Mostrar datos de l perfil
+// Mostrar datos del perfil
 export const showDataProfile = (profileName, photoUser, photoCover) => {
   const user = firebase.auth().currentUser.uid;
   showData(user).then((doc) => {
@@ -29,45 +29,33 @@ export const showDataProfile = (profileName, photoUser, photoCover) => {
 
 export const uploadProfilePost = (postImage, preview) => {
   const filePhoto = postImage.files[0];
-  console.log(filePhoto);
-  console.log(preview);
   const readerPost = new FileReader();
-  console.log(readerPost);
   readerPost.onload = () => {
     const image = document.createElement('img');
     image.src = readerPost.result;
     // preview.innerHTML = '';
     preview.appendChild(image);
-    console.log(readerPost);
   };
   readerPost.readAsDataURL(filePhoto);
 };
 
 // export const uploadProfileVideoPost = (postVideo, preview) => {
 //   const fileVideo = postVideo.files[0];
-//   console.log(fileVideo);
-//   console.log(preview);
 //   const readerPost = new FileReader();
-//   console.log(readerPost);
 //   readerPost.onload = () => {
 //     const videoContainer = document.createElement('div');
 //     videoContainer.innerHTML = `
 //     <video src= '${readerPost.result}' controls autoplay loop>
 //     `;
 //     preview.appendChild(videoContainer);
-//     console.log(readerPost);
 //   };
 //   readerPost.readAsDataURL(fileVideo);
 // };
 
 export const addPostProfile = (contentPost, postImg, postPrivacity) => {
   const user = firebase.auth().currentUser.uid;
-  // const {uid , name} =  firebase.auth().currentUser; si se desear llamar  solo se coloca uid
-  // const firestore = firebase.firestore();
   const idPost = user + Math.floor(Math.random() * 10000);
-  // const docRef = firestore.collection('post').doc(idPost);
   const datePost = new Date();
-  console.log(datePost);
   const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
   const dateMonth = datePost.getMonth();
   const dateYear = datePost.getFullYear();
@@ -81,7 +69,6 @@ export const addPostProfile = (contentPost, postImg, postPrivacity) => {
   const contentPostImg = postImg;
   const contentPostPrivacity = postPrivacity;
   // const contentPostVideo = postVideo;
-  console.log(contentPostImg);
   const filePhoto = contentPostImg;
   // const fileVideo = contentPostVideo;
   // eslint-disable-next-line no-empty
@@ -109,7 +96,6 @@ export const addPostProfile = (contentPost, postImg, postPrivacity) => {
       console.log(error);
     }, () => {
       filePhotoRef.snapshot.ref.getDownloadURL().then((downloadURL) => {
-        console.log('Imagen Subida a Firebase', downloadURL);
         const photopostURL = downloadURL;
         uploadPhotoPost(user, idPost, photopostURL, contentPostText, datePostUser, contentPostPrivacity).then(() => {
           console.log('Update');
@@ -124,21 +110,17 @@ export const addPostProfile = (contentPost, postImg, postPrivacity) => {
   //   const fileVideoRef = fileVideoPost(fileVideo);
   //   fileVideoRef.on('state_changed', (snapshot) => {
   //     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-  //     console.log(`Upload is ${progress}% done`);
   //     // eslint-disable-next-line default-case
   //     switch (snapshot.state) {
   //       case firebase.storage.TaskState.PAUSED:
-  //         console.log('Upload is paused');
   //         break;
   //       case firebase.storage.TaskState.RUNNING:
-  //         console.log('Upload is running');
   //         break;
   //     }
   //   }, (error) => {
   //     console.log(error);
   //   }, () => {
   //     fileVideoRef.snapshot.ref.getDownloadURL().then((downloadURL) => {
-  //       console.log('Video Subido a Firebase', downloadURL);
   //       const videopostURL = downloadURL;
   //       uploadVideoPost(user, idPost, videopostURL, contentPostText, datePostUser).then(() => {
   //         console.log('Update');
@@ -154,8 +136,6 @@ export const addPostProfile = (contentPost, postImg, postPrivacity) => {
 export const updatePostText = (idPost, editPostText) => {
   const post = idPost;
   updatePost(post, editPostText).then(() => {
-    console.log('idPost', post);
-    console.log('EditPost', editPostText);
     console.log('Update content');
   })
     .catch((error) => {
@@ -300,32 +280,3 @@ export const deleteAllComment = (idPost, idComment, countComments) => {
       console.error('Error removing document: ', error);
     });
 };
-
-// export const deleteAllLike = (idPost, idLike, countLikes) => {
-//   deleteLike(idLike)
-//     .then(() => {
-//       updateNumberLike(idPost, countLikes);
-//       console.log('Cantidad de Likes', countLikes);
-//       console.log('Like Eliminado');
-//     })
-//     .catch((error) => {
-//       console.error('Error removing document: ', error);
-//     });
-// };
-
-// export const addLike = (idPost, countLikes) => { // async
-//   console.log('cargando addLike');
-//   const user = firebase.auth().currentUser.uid; // await
-//   const idPostLikes = idPost;
-//   const idLike = idPostLikes + Math.floor(Math.random() * 10000);
-//   // eslint-disable-next-line no-empty
-//   console.log('user addLike:', user);
-//   addLikePost(user, idLike, idPostLikes)
-//     .then(() => {
-//       updateNumberLike(idPost, countLikes);
-//       console.log('Cantidad de Likes', countLikes);
-//       console.log('Like exitoso');
-//     }).catch((error) => {
-//       console.log('Error:', error);
-//     });
-// };

@@ -186,6 +186,7 @@ export default () => {
       post.innerHTML = `
               <section class="post-user-wall">
                 <div class="post-header">
+                <div class="post-header-content">
                   <div class = "post-header-photo">
                   </div>
                   <div class="post-header-info">
@@ -194,6 +195,7 @@ export default () => {
                     <div class= "post-edit-privacy">
                       <p></p>
                     </div>
+                  </div>
                   </div>
                   <div class="post-option-btn">
                     <p class="post-edit-btn"></p>
