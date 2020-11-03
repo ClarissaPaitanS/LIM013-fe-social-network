@@ -1,5 +1,6 @@
 import MockFirebase from 'mock-cloud-firestore';
 
+
 import {
   addPost,
   // showData,
@@ -13,7 +14,6 @@ import {
   getEveryPost,
   deletePost,
 } from '../src/configFirestore';
-
 
 const fixturePost = {
   __collection__: {
@@ -45,7 +45,9 @@ describe('addPost', () => {
     addPost('abc1d', 'post002d', 'Mi nuevo Post', '23 de Octubre del 2020 a las 1:00', 'public')
       .then(() => getPost((data) => {
         // console.log(data);
-        expect(data[0].contentPost).toBe('Mi nuevo Post');
+        // expect(data[0].contentPost).toBe('Mi nuevo Post');
+        expect(data.find(post => post.contentPost === 'Mi nuevo Post').contentPost)
+          .toBe('Mi nuevo Post');
         done();
       }));
   });
@@ -60,7 +62,7 @@ describe('uploadPhotoPost', () => {
     uploadPhotoPost('abc1d', 'post003d', 'photopost.jpg', 'Mi segundo Post con imagen', '23 de Octubre del 2020 a las 1:00', 'public')
       .then(() => getPost((data) => {
         // console.log(data);
-        expect(data[1].contentPost).toBe('Mi segundo Post con imagen');
+        expect(data.find(post => post.contentPost === 'Mi segundo Post con imagen').contentPost).toBe('Mi segundo Post con imagen');
         done();
       }));
   });
@@ -75,7 +77,7 @@ describe('updatePost', () => {
     updatePost('post001d', 'chau')
       .then(() => getPost((data) => {
         // console.log(data);
-        expect(data[2].contentPost).toBe('chau');
+        expect(data.find(post => post.contentPost === 'chau').contentPost).toBe('chau');
         done();
       }));
   });
@@ -90,7 +92,7 @@ describe('updateNumberComment', () => {
     updateNumberComment('post001d', 5)
       .then(() => getPost((data) => {
         // console.log(data);
-        expect(data[2].numberComments).toBe(5);
+        expect(data.find(post => post.numberComments === 5).numberComments).toBe(5);
         done();
       }));
   });
@@ -120,7 +122,7 @@ describe('updatePostImg ', () => {
     updatePostImg('post001d', 'UpdateImagen.jpg')
       .then(() => getPost((data) => {
         // console.log(data);
-        expect(data[2].imgPost).toBe('UpdateImagen.jpg');
+        expect(data.find(post => post.imgPost === 'UpdateImagen.jpg').imgPost).toBe('UpdateImagen.jpg');
         done();
       }));
   });
@@ -135,7 +137,7 @@ describe('updatePrivacy', () => {
     updatePrivacy('post001d', 'private')
       .then(() => getEveryPost((data) => {
         // console.log(data);
-        expect(data[2].privacyPost).toBe('private');
+        expect(data.find(post => post.privacyPost === 'private').privacyPost).toBe('private');
         done();
       }));
   });
@@ -150,7 +152,7 @@ describe('deletePost', () => {
     deletePost('post002d')
       .then(() => getPost((data) => {
         console.log(data);
-        expect(data[0].id).toBe('post003d'); // El siguiente post toma la posicion del post eliminado (publicos). Poscion de 1 pasa a 0.
+        expect(data.find(post => post.id === 'post002d')).toBe(undefined); // El siguiente post toma la posicion del post eliminado (publicos). Poscion de 1 pasa a 0.
         done();
       }));
   });

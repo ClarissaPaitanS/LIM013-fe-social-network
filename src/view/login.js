@@ -140,7 +140,7 @@ export default () => {
           if (doc.exists) {
             window.location.hash = '#/home';
           } else {
-            registerUserFacebook(user.uid, photo);
+            registerUserFacebook(user, photo);
             // doc.data() will be undefined in this case
           }
         })

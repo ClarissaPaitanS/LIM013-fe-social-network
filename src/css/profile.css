@@ -13,6 +13,10 @@
     padding:5px;
 }
 
+.fa-house-user:before{
+    color:#f8f8f8;
+}
+
 .div-view-edit{
     display: flex;
     justify-content: center;
@@ -22,6 +26,10 @@
 
 .profile-user-edit{
     width: 100%;
+}
+
+main{
+    background-color: #ececec;;
 }
 
 .form-edit{
@@ -119,6 +127,16 @@
 .login-form-btn:hover {
     background-color: rgb(243, 139, 21);
 }
+
+.view-profile {
+    display:inline-block;
+    justify-content:center;
+    /* padding-left: 15%;
+    padding-right: 15%; */
+    /* height: auto; */
+    width: 70%;
+    background-color: #ececec;
+    }
 /* ----450----*/
 @media (min-width: 450px) {
     .photo-upload img {

@@ -23,6 +23,10 @@ body{
     padding:5px;
 }
 
+main{
+    background-color:#ececec;
+}
+
 .div-view-profile{
     display: flex;
     justify-content: center;
@@ -51,19 +55,18 @@ li{
     padding: 5px;
 }
 
+.fa-user{
+    color:#f8f8f8;
+}
+
+.fa-sign-out-alt:before{
+    color: #f8f8f8;
+}
+
 .icon-user-min{
     width: 50px;
     height: 50px;
     border-radius:100px;
-}
-
-.hamburguer-menu-img{
-    width: 30px;
-    margin-right:10px;
-}
-
-.hamburguer-menu{
-    display: none;
 }
 
 .close-btn-img{
@@ -71,7 +74,7 @@ li{
     width: 30px;
 }
 
-main {
+.view-home {
     width:100%;
     display: flex;
     flex-direction: column;
@@ -81,13 +84,16 @@ main {
 }
 
 .info-user{
+    height: max-content;
     margin-top: 5%;
-    margin-left: 5%;
-    margin-right: 5%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
     background-image: linear-gradient(-225deg, #fbfffd 0%, #ffffff 100%);
-    padding: 10px 10px 50px 10px;
+    padding: 10px 10px;
     border-radius: 10px;
     box-shadow: -1px 1px 5px #888888;
+    margin-bottom: 10px;
 }
 
 .profileName{
@@ -138,7 +144,8 @@ textarea {
    /* background-color:#bae9f9;
     padding:5px;
     display: flex;*/
-    background-color: #bae9f9;
+    /* background-color: #bae9f9; */
+    background-image: linear-gradient(-225deg, #B7F8DB 0%, #50A7C2 100%);
     padding: 5px;
     display: flex;
     justify-content: space-between;
@@ -150,9 +157,10 @@ textarea {
 }
 
 .post-footer{
-    background-color:#e7f9ff;
+    /* background-color:#e7f9ff; */
     padding:5px;
     border-radius: 0px 0px 10px 10px;
+    border-style: groove;
 }
 .post-footer-options{
     display: flex;
@@ -176,6 +184,9 @@ textarea {
     display: none;
 }
 
+.fa-camera:before{
+   color: #4db6ac;
+}
 .post-user-video {
     text-align: left;
     margin-left: 5%;
@@ -197,11 +208,16 @@ textarea {
     text-align: right;
     margin-left: 5%;
 }
-.post-user-btn img {
+/* .post-user-btn img {
     width: 32px;
     height: 32px;
     cursor: pointer;
+} */
+
+.fa-paper-plane:before{
+    color: #4db6ac;
 }
+
 .photo-icon-profile img {
     position: absolute;
     margin-top: 150px;
@@ -251,7 +267,12 @@ textarea {
     display: flex;
     /* padding-left: 60%; */
 }
-
+li.menu-item {
+    padding: 15px;
+}
+div#close-btn {
+    margin: 15px;
+}
 /******************* Comentarios ********************/
 
 /* Oculta y muestra seción comentarios*/
@@ -353,7 +374,7 @@ p.comment-content {
 
 .photo-post-img {
     width: 20%;
-    height: max-content;
+    /* height: max-content; */
 }
 
 .input-comment {
@@ -363,12 +384,36 @@ p.comment-content {
 .post-header-content{
     display: flex;
 }
+
+div#preview-post-img img {
+    width: 50%;
+}
+
+.privacity-post {
+    margin: 10px;
+    border-style: groove;
+}
+.fas.fa-camera{
+    padding: 10px;
+}
+.fas.fa-paper-plane {
+    padding: 10px;
+}
+.fas.fa-trash-alt {
+    margin: 5px;
+}
+.fas.fa-edit {
+    margin: 5px;
+}
+.post-delete-btn {
+    padding: 5px;
+}
 /* ---------------- 450 px------------------- */
 @media (min-width: 450px) {
     * {
         height: auto;
     }
-    main {
+    .view-home {
         display:flex;
         justify-content:center;
         /* padding-left: 15%;
@@ -398,12 +443,17 @@ p.comment-content {
     height: auto;
 }
 
-    main {
-    display:flex;
+    .view-home {
+    /* display:flex;
     justify-content:center;
     padding-left: 15%;
     padding-right: 15%;
     /* width: 70%; */
+   /* flex-direction: inherit; */
+   display: flex;
+   justify-content: center;
+   width: 90%;
+   flex-direction: row;
     }
 
    
@@ -420,7 +470,9 @@ p.comment-content {
     .post-user{
     margin-top: 0%;
     }
-
+    .view-home .post-user {
+        width: 100%;
+    }
     .post-text {
     width:100%;
 }
@@ -452,17 +504,14 @@ p.comment-content {
         height: auto;
     }
         
-        main {
+        .view-home {
         display:flex;
-        /* flex-direction:row;
-        align-items:center; */
         justify-content:center;
         padding-left: 20%;
         padding-right: 20%; 
         width: 100%;
-        }
-    
-           
+        } 
+
         .post-user-publish {
             background-color: #ffffff;
             padding:3% 0% 5% 0%;

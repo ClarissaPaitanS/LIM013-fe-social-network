@@ -20,25 +20,18 @@ export default () => {
        <li class="menu-item">
           <img class="menu-logo-bio" src="imagenes/logo-bio.png" alt="">
         </li>
-        <!-- <li class="menu-item">
-          <a href="#/profile">
-            <div>
-             <img class="icon-user-min"src="imagenes/logo-bio.png">
-              <p id="profileName"></p>
-            </div>
-          </a>
-        </li> -->
         <li class="menu-item">      
             <div id="close-btn" class="close-btn">
-              <p>Cerrar sesión</p>
+              <i class="fas fa-sign-out-alt fa-2x"></i>
             </div>
             <div id="edit-btn" class="edit-btn">
-            <p>Editar perfil</p>
-          </div>
+              <i class="fas fa-user fa-2x"></i>
+            </div>
         </li>
       </nav>
     </header>
     <main>
+      <div class = "view-home">
        <section class="info-user">
         <div class="photo-cover">
           <div class="cover-upload">
@@ -53,8 +46,7 @@ export default () => {
       <section class="post-user">
         <section class="post-user-publish">        
           <div class="post-text">
-            <textarea class="content-post-text" type="text">              
-            </textarea>  
+            <textarea class="content-post-text" placeholder="¿Qué estás pensando?" type="text"></textarea>  
             <div id="preview-post-img">
             </div>
             <div id="preview-post-video">
@@ -64,7 +56,7 @@ export default () => {
           <div class="post-user-options">
               <div class="post-user-image">
                 <label for="post-image-input">
-                <img src="https://img.icons8.com/color/48/000000/image.png">
+                  <i class="fas fa-camera"></i>
                 </label>
                 <input type="file" id="post-image-input">
               </div>
@@ -83,7 +75,8 @@ export default () => {
               </div>
               -->
               <div class="post-user-btn">
-                <img src="imagenes/btn-share.png">
+               <!-- <img src="imagenes/btn-share.png"> -->
+                <i class="fas fa-paper-plane"></i>
               </div>
           </div>
 
@@ -91,7 +84,7 @@ export default () => {
         <section class="post-profile-wall">          
         </section>
       </section>
-    
+    </div>
   </main>
   </section>
     `;
@@ -148,7 +141,8 @@ export default () => {
       if (postImg === undefined) {
         postShowImg = '';
       } else {
-        postShowImg = postImg;
+        // postShowImg = postImg;
+        postShowImg = `<img class="photo-post-img" src='${postImg}'></img>`;
       }
       post.innerHTML = `
               <section class="post-user-wall">
@@ -177,7 +171,7 @@ export default () => {
 
           <div class = "img-post-upload">
           <label for = "img-post-update">
-            <p id = "img-post-edit">  <img class="photo-post-img" src='${postShowImg}'></p>
+            <div id = "img-post-edit"> ${postShowImg}</div>
           </label>
           <div class="img-input-file"></div>
           </div>
@@ -197,14 +191,15 @@ export default () => {
             <div class = "post-footer-options">
             <div>
              <div class= "like-container">
-             <img  id="like" class = "${(element.numberLikes.indexOf(user.uid) === -1) ? 'like-off' : 'like-on'}"> 
+             <!--<img  id="like" class = "${(element.numberLikes.indexOf(user.uid) === -1) ? 'like-off' : 'like-on'}">  -->
+              <i  id="like" class = "${(element.numberLikes.indexOf(user.uid) === -1) ? 'far fa-thumbs-up' : 'fas fa-thumbs-up'}"></i>
              <p class = "show-quantity-likes"> ${countLikes} </p>
 
              </div>
 
             </div>
             <div>
-              <img class = "btn-add-comment" src="https://img.icons8.com/ultraviolet/0.5x/comments.png">
+              <i class="far fa-comment-dots btn-add-comment"></i>
               <p class = "show-quantity-comments"> ${countComments}  </p>
             </div>
           </div>
@@ -217,14 +212,14 @@ export default () => {
       if (user.uid === element.idUser) {
         // *********************************Editar post*******************************
         const editPostBtn = post.querySelector('.post-edit-btn');
-        editPostBtn.innerHTML = '<img src = https://img.icons8.com/dusk/0.3x/edit.png>';
+        editPostBtn.innerHTML = '<i class="fas fa-edit"></i>';
         const editPostText = post.querySelector('.post-content');
 
         editPostBtn.addEventListener('click', () => {
           editPostText.setAttribute('contenteditable', 'true');
           editPostBtn.innerHTML = '';
           const savetextPostBtn = post.querySelector('.post-btn-savetext');
-          savetextPostBtn.innerHTML = '<img src=https://img.icons8.com/dusk/0.3x/save.png>';
+          savetextPostBtn.innerHTML = '<i class="far fa-save"></i>';
           const inputfileBtn = post.querySelector('.img-input-file');
           inputfileBtn.innerHTML = '<input class = "img-post-edit-input" value = "" type="file" id = "img-post-update">';
           const imgPostEditBtn = post.querySelector('#img-post-update');
@@ -244,7 +239,7 @@ export default () => {
         });
         // ***************Borrar post******************************
         const deletePostBtn = post.querySelector('.post-delete-btn');
-        deletePostBtn.innerHTML = '<img src= https://img.icons8.com/dusk/0.3x/delete-forever.png>';
+        deletePostBtn.innerHTML = '<i class="far fa-trash-alt"></i>';
         deletePostBtn.addEventListener('click', () => {
           deleteAllPost(idPost, postImg);
         });
@@ -338,7 +333,7 @@ export default () => {
               if (user.uid === idUserComment) {
                 // *********************************Editar Comment***************
                 const editCommentBtn = comment.querySelector('.comment-edit-btn');
-                editCommentBtn.innerHTML = '<img src = https://img.icons8.com/dusk/0.3x/edit.png>';
+                editCommentBtn.innerHTML = '<i class="fas fa-edit"></i>';
                 const editCommentText = comment.querySelector('.comment-content');
 
                 editCommentBtn.addEventListener('click', () => {
@@ -346,18 +341,18 @@ export default () => {
                   editCommentBtn.innerHTML = '';
 
                   const savetextCommentBtn = post.querySelector('.comment-btn-savetext');
-                  savetextCommentBtn.innerHTML = '<img src=https://img.icons8.com/dusk/0.3x/save.png>';
+                  savetextCommentBtn.innerHTML = '<i class="far fa-save"></i>';
                   // *******************Cambiar texto del comment*******************
                   savetextCommentBtn.addEventListener('click', (e) => {
                     savetextCommentBtn.innerHTML = '';
                     editCommentText.setAttribute('contenteditable', 'false');
-                    editCommentBtn.innerHTML = '<img src = https://img.icons8.com/dusk/0.3x/edit.png>';
+                    editCommentBtn.innerHTML = '<i class="fas fa-edit"></i>';
                     updateCommentText(idComment, editCommentText.textContent);
                   });
                 });
                 // ***********************************Borrar comment**************************
                 const deleteCommentBtn = comment.querySelector('.comment-delete-btn');
-                deleteCommentBtn.innerHTML = '<img src= https://img.icons8.com/dusk/0.3x/delete-forever.png>';
+                deleteCommentBtn.innerHTML = '<i class="far fa-trash-alt"></i>';
                 deleteCommentBtn.addEventListener('click', () => {
                   countComments -= 1;
                   deleteAllComment(idPost, idComment, countComments);
