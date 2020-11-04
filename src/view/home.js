@@ -20,7 +20,10 @@ export default () => {
        <li class="menu-item">
           <img class="menu-logo-bio" src="imagenes/logo-bio.png" alt="">
         </li>
-        <li class="menu-item">      
+        <li>
+          <img class= "title-bio" src="imagenes/title-bio.png">
+        </li>
+        <li class="menu-options">      
             <div id="close-btn" class="close-btn">
               <i class="fas fa-sign-out-alt fa-2x"></i>
             </div>
@@ -34,7 +37,7 @@ export default () => {
       <div class = "view-home">
        <section class="info-user">
         <div class="photo-cover">
-          <div class="cover-upload">
+          <div class="cover-show">
               <p id="photoCover"><img src="imagenes/user-cover.jpg"></p>
           </div>
           <div class="photo-icon-profile"> 
@@ -52,7 +55,7 @@ export default () => {
             <div id="preview-post-video">
             </div>     
           </div>
- 
+
           <div class="post-user-options">
               <div class="post-user-image">
                 <label for="post-image-input">
@@ -132,7 +135,7 @@ export default () => {
       const idUserPost = element.idUser;
       let countComments = parseInt(element.numberComments, 0);
       const countLikes = element.numberLikes.length;
-      // console.log(countLikes);
+      const postDate = element.date;
       console.log('idPost:', idPost);
       // *************Crea template vacío de post **************
       const post = document.createElement('div');
@@ -152,7 +155,7 @@ export default () => {
                   </div>
                   <div class="post-header-info">
                     <p class="post-name">   </p>
-                    <p class="post-date"> ${element.date}</p>
+                    <p class="post-date"> ${postDate}</p>
                     <div class= "post-edit-privacy">
                       <p>🌎</p>
                     </div>
@@ -191,16 +194,13 @@ export default () => {
             <div class = "post-footer-options">
             <div>
              <div class= "like-container">
-             <!--<img  id="like" class = "${(element.numberLikes.indexOf(user.uid) === -1) ? 'like-off' : 'like-on'}">  -->
+              <p class = "show-quantity-likes"> ${countLikes} </p>
               <i  id="like" class = "${(element.numberLikes.indexOf(user.uid) === -1) ? 'far fa-thumbs-up' : 'fas fa-thumbs-up'}"></i>
-             <p class = "show-quantity-likes"> ${countLikes} </p>
-
              </div>
-
             </div>
-            <div>
-              <i class="far fa-comment-dots btn-add-comment"></i>
+            <div class= "comment-container">
               <p class = "show-quantity-comments"> ${countComments}  </p>
+              <i class="far fa-comment-dots btn-add-comment"></i>
             </div>
           </div>
           <div class = "all-comment">

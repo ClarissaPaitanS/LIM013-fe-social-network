@@ -32,11 +32,11 @@ export const updateDataName = (name, updateMessageName) => {
   if (name !== '') {
     updateName(user, name).then(() => {
       console.log('Update name');
-      updateMessageName.innerHTML = 'Nombre actualizado';
+      updateMessageName.innerHTML = '<i class="fas fa-check"></i>';
     })
       .catch((error) => {
         console.log('An error happened', error);
-        updateMessageName.innerHTML = 'Ingrese un nombre válido';
+        updateMessageName.innerHTML = '<i class="fas fa-times"> Ingrese un nombre válido</i>';
       });
   }
 };
@@ -45,10 +45,10 @@ export const updateDataPassword = (editPassword, updateMessagePassword) => {
   if (editPassword !== '') {
     updatePassword(editPassword).then(() => {
       console.log('Update successful password');
-      updateMessagePassword.innerHTML = 'Contraseña actualizada';
+      updateMessagePassword.innerHTML = '<i class="fas fa-check"> Contraseña actualizada</i>';
     }).catch((err) => {
       console.log('Error password', err);
-      updateMessagePassword.innerHTML = 'Ingrese una contraseña válida';
+      updateMessagePassword.innerHTML = '<i class="fas fa-times"> Ingrese una contraseña válida</i>';
     });
   }
 };
