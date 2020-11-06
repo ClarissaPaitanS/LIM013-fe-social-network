@@ -16,97 +16,97 @@ import { showData, updateNumberLike, getPostUserAll } from '../configFirestore.j
 export default () => {
   const viewEdit = `
   <section class="profile-user-edit">
-    <header class="header-profile-edit">
-      <nav>
-        <li class="menu-item">
-          <img class="menu-logo-bio" src="imagenes/logo-bio.png" alt="">
-        </li>
-        <li class="menu-item">
-          <div id="profile-btn" class="profile-btn">
-            <i class="fas fa-house-user fa-2x"></i>
-          </div>
-       </li>
-      </nav>
-    </header>
-   <main>
-   <div class= "view-profile">
-   <section >
-     <section class="form-edit">
-       <div class = "photo-cover">
-          <div class = "cover-upload">
-
-            <label for = "cover-up">
-              <p id = "cover-edit"> <img  src="imagenes/user-cover.jpg"  alt ="Click aquí para cambiar tu foto de portada" title ="Click aquí para cambiar tu foto de portada"></p>
-            </label>
-            <input class = "edit-form-input" value = "" type="file" id = "cover-up">
-
-          </div>
-          <div class = "photo-upload"> 
-          <label for = "photo-up">
-            <p id = "photo-edit"> <img  src="imagenes/user-perfil.jpg"  alt ="Click aquí para subir tu foto" title ="Click aquí para subir tu foto"></p>
-          </label>
-          <input class = "edit-form-input" value = "" type="file" id = "photo-up">
-          </div>
-       </div>
-
-        <form class="edit-form">
-          <input class="edit-form-input" value= "" type="text" id="name-edit"  >
-          <p id = "update-message-name"></p>
-          <!--<input id="email-edit" disabled> -->
-          <div id="email-edit"> </div> 
-          <input class="edit-form-input" placeholder= "Contraseña" value= "" type="password" id="password-edit">
-          <p id = "update-message-password"></p>
-          <button type="submit" id="" class="edit-form-btn">Actualizar</button>
-        </form>
-      </section>
-    </section>
-    <section class="post-user">
-        <section class="post-user-publish">        
-          <div class="post-text">
-            <textarea class="content-post-text" type="text">              
-            </textarea>  
-            <div id="preview-post-img">
+      <header class="header-profile-edit">
+        <nav>
+          <li class="menu-item">
+            <img class="menu-logo-bio" src="imagenes/logo-bio.png" alt="">
+          </li>
+          <li>
+            <img class="title-bio" src="imagenes/title-bio.png">
+          </li>
+          <li class="menu-item">
+            <div id="profile-btn" class="profile-btn">
+              <i class="fas fa-house-user fa-2x"></i>
             </div>
-            <div id="preview-post-video">
-            </div>     
-          </div>
-    
-          <div class="post-user-options">
-              <div class="post-user-image">
-                <label for="post-image-input">
-                  <i class="fas fa-camera"></i>
-                </label>
-                <input type="file" id="post-image-input">
+          </li>
+        </nav>
+      </header>
+      <main>
+        <div class="view-profile">
+          <section class="edit-container">
+            <section class="form-edit">
+              <div class="photo-cover">
+                <div class="cover-upload">
+                  <label for="cover-up">
+                    <p id="cover-edit"> <img src="imagenes/user-cover.jpg"
+                        alt="Click aquí para cambiar tu foto de portada"
+                        title="Click aquí para cambiar tu foto de portada"></p>
+                  </label>
+                  <input class="edit-form-input" value="" type="file" id="cover-up">
+                </div>
+                <div class="photo-upload">
+                  <label for="photo-up">
+                    <p id="photo-edit"> <img src="imagenes/user-perfil.jpg" alt="Click aquí para subir tu foto"
+                        title="Click aquí para subir tu foto"></p>
+                  </label>
+                  <input class="edit-form-input" value="" type="file" id="photo-up">
+                </div>
               </div>
-              <div class="post-privacity">
-                <select class="privacity-post" name="select">
-                  <option value="public">Público 🌎</option> 
-                  <option value="private">Privado 🔒</option>
-                </select>
+              <form class="edit-form">
+                <div class= "update-container">
+                  <input class="edit-form-input" value="" type="text" id="name-edit">
+                  <p id="update-message-name"></p>
+                </div>
+                <div id="email-edit"> </div>
+                <div class= "update-container">
+                  <input class="edit-form-input" placeholder="Contraseña" value="" type="password" id="password-edit">
+                  <p id="update-message-password"></p>
+                </div>
+                <button type="submit" id="" class="edit-form-btn">Actualizar</button>
+              </form>
+            </section>
+          </section>
+          <section class="post-user-profile">
+            <section class="post-user-publish">
+              <div class="post-text">
+                <textarea class="content-post-text" type="text"></textarea>
+                <div id="preview-post-img">
+                </div>
+                <div id="preview-post-video">
+                </div>
               </div>
-            <!--
-              <div class="post-user-video">
-                <label for="post-video-input">
-                  <img src="https://img.icons8.com/fluent/344/video.png"> 
-                </label>
-                <input type="file" id="post-video-input">
+              <div class="post-user-options">
+                <div class="post-user-image">
+                  <label for="post-image-input">
+                    <i class="fas fa-camera"></i>
+                  </label>
+                  <input type="file" id="post-image-input">
+                </div>
+                <div class="post-privacity">
+                  <select class="privacity-post" name="select">
+                    <option value="public">Público 🌎</option>
+                    <option value="private">Privado 🔒</option>
+                  </select>
+                </div>
+                <!--
+                  <div class="post-user-video">
+                    <label for="post-video-input">
+                      <img src="https://img.icons8.com/fluent/344/video.png"> 
+                    </label>
+                    <input type="file" id="post-video-input">
+                  </div>
+                  -->
+                <div class="post-user-btn">
+                  <i class="fas fa-paper-plane"></i>
+                </div>
               </div>
-              -->
-              <div class="post-user-btn">
-                <i class="fas fa-paper-plane"></i>
-              </div>
-          </div>
-    
-        </section>
-        <section class="post-profile-wall">          
-        </section>
-      </div>
-    </main>
 
-    
-
-  </section>
-
+            </section>
+            <section class="post-profile-wall">
+            </section>
+        </div>
+      </main>
+    </section>
 `;
 
   const divElemt = document.createElement('div');
@@ -156,6 +156,18 @@ export default () => {
     uploadProfileCover(coverUp, coverUser);
   });
 
+  // Quitar Mensaje
+  const inputNameEditForm = divElemt.querySelector('#name-edit');
+  inputNameEditForm.addEventListener('click', (e) => {
+    const updateMessageName = divElemt.querySelector('#update-message-name');
+    updateMessageName.innerHTML = '';
+  });
+
+  const inputPasswordEditForm = divElemt.querySelector('#password-edit');
+  inputPasswordEditForm.addEventListener('click', (e) => {
+    const updateMessagePassword = divElemt.querySelector('#update-message-password');
+    updateMessagePassword.innerHTML = '';
+  });
 
   // **************************** Mostrar post ******************
   const wall = divElemt.querySelector('.post-profile-wall');
@@ -230,15 +242,13 @@ export default () => {
             <div class = "post-footer-options">
             <div>
              <div class= "like-container">
-             <i  id="like" class = "${(element.numberLikes.indexOf(user.uid) === -1) ? 'far fa-thumbs-up' : 'fas fa-thumbs-up'}"></i>
-             <p class = "show-quantity-likes"> ${countLikes} </p>
-
+              <p class = "show-quantity-likes"> ${countLikes} </p>
+              <i  id="like" class = "${(element.numberLikes.indexOf(user.uid) === -1) ? 'far fa-thumbs-up' : 'fas fa-thumbs-up'}"></i>
              </div>
-
             </div>
-            <div>
-            <i class="far fa-comment-dots btn-add-comment"></i>
+            <div class="comment-container">
               <p class = "show-quantity-comments"> ${countComments}  </p>
+              <i class="far fa-comment-dots btn-add-comment"></i>
             </div>
           </div>
           <div class = "all-comment">

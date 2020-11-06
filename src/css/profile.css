@@ -4,6 +4,13 @@
     margin: 0;
     font-family: sans-serif;
 }
+
+main{
+    display: flex;
+    justify-content: center;
+    background-color:#ececec;
+}
+
 .header-profile-edit {
     background-image: linear-gradient(-225deg, #B7F8DB 0%, #50A7C2 100%);
     background-color: #bae9f9;
@@ -28,14 +35,15 @@
     width: 100%;
 }
 
-main{
-    background-color: #ececec;;
+.view-profile {
+    justify-content:center;
+    background-color: #ececec;
 }
 
 .form-edit{
     margin-top:5%;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 5%;
+    margin-right: 5%;
     /* margin-left:5%;
     margin-right:5%; */
     width: 90%;
@@ -44,6 +52,12 @@ main{
     border-radius:10px;
     box-shadow: -1px 1px 5px #888888;
     margin-bottom: 10px;
+}
+
+.post-user-profile{
+    margin-left: 5%;
+    margin-right: 5%; 
+    width: 90%;
 }
 
 .photo-cover{
@@ -128,25 +142,36 @@ main{
     background-color: rgb(243, 139, 21);
 }
 
-.view-profile {
-    display:inline-block;
-    justify-content:center;
-    /* padding-left: 15%;
-    padding-right: 15%; */
-    /* height: auto; */
-    width: 70%;
-    background-color: #ececec;
-    }
+.update-container{
+    display: flex;
+}
+
+#update-message-name{
+    margin-left: 5px;
+    margin-top: 15px;
+}
+
+#update-message-password{
+    margin-left: 5px;
+    margin-top: 15px;
+}
+
 /* ----450----*/
 @media (min-width: 450px) {
     .photo-upload img {
         margin-left: 35%;
     }
     .form-edit {
-        /* margin-left: 10%;
-        margin-right: 10%; */
+        margin-left: 5%;
+        margin-right: 5%; 
         width: 90%;
     } 
+
+    .post-user-profile{
+        margin-left: 5%;
+        margin-right: 5%; 
+        width: 90%;
+    }
 }
 /* ----600----*/
 @media (min-width: 600px) {
@@ -156,8 +181,12 @@ main{
     .form-edit {
         /* margin-left: 15%;
         margin-right: 15%; */
-        width: 70%;
+        width: 90%;
     } 
+
+    .post-user-profile{
+        width: 90%;
+    }
 }
 
 /* ----800----*/
@@ -168,28 +197,62 @@ main{
     .form-edit {
          /* margin-left: 15%;
         margin-right: 15%;  */
-        width: 70%;
+        width: 90%;
        
     } 
+
+    .post-user-profile{
+        width: 90%;
+    }
 }
 
 /* ----1000----*/
 @media (min-width: 1000px) {
-    .form-edit {
-        /* margin-left: 15%;
-        margin-right: 15%; */
+
+    .view-profile {
+        display: flex;
+        justify-content: center;
+        width: 80%;
+    }
+    .edit-container{
         width: 70%;
+    }
+    .form-edit {
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
     } 
     .photo-upload img {
-        margin-left: 45%;
+        margin-left: 39%;
     }
+
+    .post-user-profile{
+        width: 70%;
+        margin-left: 5%;
+    }
+    
 }
 
 /* ----1600----*/
 @media (min-width: 1600px) {
+    .view-profile {
+        display: flex;
+        justify-content: center;
+        width: 80%;
+    }
+
+    .edit-container{
+        width: 70%;
+    }
     .form-edit {
         margin-left: auto;
         margin-right: auto;
-        width: 80%;
+        width: 100%;
     } 
+    
+    .post-user-profile{
+        width: 70%;
+        margin-left: 5%;
+    }
+    
 }

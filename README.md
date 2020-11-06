@@ -1,29 +1,52 @@
-# Creando una Red Social
+# Bio Thani 💚
+
+Team:  Clarissa Paitan + Francesca Tiravantti
+
+Visitanos en: [Bio Thani]()
 
 ## Índice
 
-* [1. Preámbulo](#1-preámbulo)
-* [2. Resumen del proyecto](#2-resumen-del-proyecto)
-* [3. Objetivos de aprendizaje](#3-objetivos-de-aprendizaje)
-* [4. Consideraciones generales](#4-consideraciones-generales)
-* [5. Criterios de aceptación mínimos del proyecto](#5-criterios-de-aceptación-mínimos-del-proyecto)
-* [6. Entrega](#6-entrega)
-* [7. Pistas, tips y lecturas complementarias](#7-pistas-tips-y-lecturas-complementarias)
+* [1. Presentación](#1-presentación)
+* [2. Resumen del producto](#2-resumen-del-producto)
+* [3. Resumen del proyecto](#3-resumen-del-proyecto)
+* [4. Objetivos de aprendizaje](#4-objetivos-de-aprendizaje)
+* [5. Consideraciones generales](#5-consideraciones-generales)
+* [6. Criterios de aceptación mínimos del proyecto](#6-criterios-de-aceptación-mínimos-del-proyecto)
+* [7. Entrega](#7-entrega)
+* [8. Pistas, tips y lecturas complementarias](#8-pistas-tips-y-lecturas-complementarias)
 
-## 1. Preámbulo
+## 1. Presentación  
+Bio Thani es un una red social que fomenta la vida saludable. El proyecto está enfocado principalmente en hombres y mujeres que lleven o deseen llevar un estilo de vida saludable y deseen formar parte de una comunidadEn ella los usarios podrán intercambiar ideas, tips y consejos de salud (alimentación sana, ejercicio, meditación, etc.)
 
-Instagram, Snapchat, Twitter, Facebook, Twitch, Linkedin, etc. Las redes
-sociales han invadido nuestras vidas. Las amamos u odiamos, y muchos no podemos
-vivir sin ellas.
+### Vista Desktop
 
-Hay redes sociales de todo tipo y para todo tipo de intereses. Por ejemplo,
-en una ronda de financiamiento con inversionistas, se presentó una red social
-para químicos en la que los usuarios podían publicar artículos sobre sus
-investigaciones, comentar en los artículos de sus colegas, y filtrar artículos
-de acuerdo a determinadas etiquetas o su popularidad, lo más reciente, o lo
-más comentado.
+[![](http://img.youtube.com/vi/rHbLwCbqCfM/0.jpg)](http://www.youtube.com/watch?v=rHbLwCbqCfM "View desktop")
 
-## 2. Resumen del proyecto
+### Vista Mobile
+
+[![](http://img.youtube.com/vi/Yg9ls7LV0HE/0.jpg)](http://www.youtube.com/watch?v=Yg9ls7LV0HE "View mobile")
+
+
+
+## 2. Resumen del producto:
+
+En la red social se podrá encontrar las siguientes vistas
+
+1-. **Inicio de Sesión**: Donde el usuario podra ingresar a su cuenta con usuario y contraseña. De igual modo también puede ingresar directamente con la opción Google o Facebook. De no contar con una cuenta el usuario podrá ingresar a la seeción de registro
+
+2-. **Creación de cuenta**: Aquí el usuario podrá registrarse colocando su nombre, correo y contraseña.
+
+3-. **Inicio**: En esta sección el usuario podrá visualizar su nombre, perfil y portada. Tambien  podrá publicar un texto o imagen como un post, el cual podrá ser público o privado. De igual modo el usuario podrá visualizar todos los post públicos de los demás miembros de la comunidad, así como añadir comentarios, editarlos o eliminarlos. También podrá añadir o remover likes a las publicaciones
+
+4-. **Perfil**: Aquí el usuario podrá modificar sus datos personale como foto de perfil, portada, nombre, contraseña. De igual modo también en esta sección podrá publicar post y posrá visualizar solo los post propios.
+
+
+Se desarrolló el proyecto en 8 historias de usuarios, las cuales fueron desarrolladas en 6 sprints. Del mismo modo no contempla el uso de frameworks de Css y se empleó Vanilla Js. 
+
+En el proyecto se empleo SPA, Firebase de google como backend y toda la web cumple con los lineamientos de nombile first.
+
+
+## 3. Resumen del proyecto
 
 En este proyecto construirás una Red Social sobre lo que decidan tú y tu equipo.
 Podría ser, por ejemplo, sobre alimentación saludable, feminismo, educación,
@@ -34,7 +57,7 @@ o de los [Tacos de Canasta](https://es.wikipedia.org/wiki/Taco), de la
 Tu Red Social tendrá que permitir a cualquier usuario crear una cuenta de
 acceso y loguearse con ella; crear, editar, borrar y _"likear"_ publicacciones.
 
-## 3. Objetivos de aprendizaje
+## 4. Objetivos de aprendizaje
 
 El objetivo principal de aprendizaje de este proyecto es construir una
 [Single-page Application (SPA)](https://es.wikipedia.org/wiki/Single-page_application) que se adapte 
@@ -108,7 +131,7 @@ y que sea [_responsive_](https://github.com/Laboratoria/curricula-js/tree/master
 * [ ] Aplicar los principios de diseño visual (contraste, alineación, jerarquía)
 * [ ] Planear y ejecutar tests de usabilidad.
 
-## 4. Consideraciones generales
+## 5. Consideraciones generales
 
 * Este proyecto se debe trabajar en equipos de tres.
 
@@ -136,7 +159,7 @@ y que sea [_responsive_](https://github.com/Laboratoria/curricula-js/tree/master
 
 Para comenzar tendrás que hacer un _fork_ y _clonar_ este repositorio.
 
-## 5. Criterios de aceptación mínimos del proyecto
+## 6. Criterios de aceptación mínimos del proyecto
 
 ### 5.1 Definición del producto
 
@@ -253,7 +276,7 @@ al final). De igual manera no está permitido el uso de frameworks de CCS (boots
   diseño.
 * Hacer sesiones de _testing de usabilidad_ con el producto en HTML.
 
-## 6. Entrega
+## 7. Entrega
 
 El proyecto será _entregado_ subiendo tu código a GitHub (`commit`/`push`) y la
 interfaz será desplegada usando GitHub pages u otro servicio de hosting que
@@ -261,7 +284,7 @@ puedas haber encontrado en el camino.
 
 ***
 
-## 7. Pistas, tips y Lecturas complementarias
+## 8. Pistas, tips y Lecturas complementarias
 
 ### Mobile first
 

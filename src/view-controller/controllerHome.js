@@ -31,10 +31,32 @@ export const uploadProfilePost = (postImage, preview) => {
   const filePhoto = postImage.files[0];
   const readerPost = new FileReader();
   readerPost.onload = () => {
-    const image = document.createElement('img');
-    image.src = readerPost.result;
+    // // here.
+    const previewContainer = document.createElement('div');
+    previewContainer.innerHTML = `
+      <div>
+        <div>
+          <i class="far fa-times-circle"></i>
+        </div>
+        <div>
+          <img src=${readerPost.result}>
+        </div>
+      </div>
+    `;
+    preview.appendChild(previewContainer);
+    // here
+
+    // const image = document.createElement('img');
+    // image.src = readerPost.result;
     // preview.innerHTML = '';
-    preview.appendChild(image);
+    // preview.appendChild(image);
+
+    // here
+    const retireImage = previewContainer.querySelector('.fa-times-circle');
+    retireImage.addEventListener('click', () => {
+      console.log('clic en retire');
+      previewContainer.innerHTML = '';
+    });
   };
   readerPost.readAsDataURL(filePhoto);
 };
@@ -56,6 +78,7 @@ export const addPostProfile = (contentPost, postImg, postPrivacity) => {
   const user = firebase.auth().currentUser.uid;
   const idPost = user + Math.floor(Math.random() * 10000);
   const datePost = new Date();
+  console.log(datePost);
   const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
   const dateMonth = datePost.getMonth();
   const dateYear = datePost.getFullYear();

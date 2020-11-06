@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import { addUserProvider } from '../configFirestore.js';
 
 import { loginUser, googleLogin, facebookLogin } from '../configFirebase.js';
 
@@ -61,17 +62,18 @@ export default () => {
   });
 
   function registrarUsuariosGmail(id) {
-    const firestore = firebase.firestore();
-    const docRef = firestore.collection('user').doc(id);
+    // const firestore = firebase.firestore();
+    // const docRef = firestore.collection('user').doc(id);
     const nameGoogle = firebase.auth().currentUser.providerData[0].displayName;
     const photoGoogle = firebase.auth().currentUser.providerData[0].photoURL;
     const emailGoogle = firebase.auth().currentUser.providerData[0].email;
-    docRef.set({
-      name: nameGoogle,
-      email: emailGoogle,
-      photo: photoGoogle,
-      photoCover: 'imagenes/user-cover.jpg',
-    })
+    // docRef.set({
+    //   name: nameGoogle,
+    //   email: emailGoogle,
+    //   photo: photoGoogle,
+    //   photoCover: 'imagenes/user-cover.jpg',
+    // })
+    addUserProvider(id, nameGoogle, emailGoogle, photoGoogle)
       .then(() => {
         window.location.hash = '#/home';
       })
@@ -90,7 +92,6 @@ export default () => {
         const user = firebase.auth().currentUser.uid;
         const firestore = firebase.firestore();
         const docRef = firestore.collection('user').doc(user);
-
         docRef.get().then((doc) => {
           if (doc.exists) {
             window.location.hash = '#/home';
@@ -108,16 +109,17 @@ export default () => {
   });
 
   function registerUserFacebook(userData, photoData) {
-    const firestore = firebase.firestore();
-    const docRef = firestore.collection('user').doc(userData.uid);
+    // const firestore = firebase.firestore();
+    // const docRef = firestore.collection('user').doc(userData.uid);
     const nameFacebook = userData.displayName;
     const emailFacebook = userData.email;
-    docRef.set({
-      name: nameFacebook,
-      email: emailFacebook,
-      photo: photoData,
-      photoCover: 'imagenes/user-cover.jpg',
-    })
+    // docRef.set({
+    //   name: nameFacebook,
+    //   email: emailFacebook,
+    //   photo: photoData,
+    //   photoCover: 'imagenes/user-cover.jpg',
+    // })
+    addUserProvider(userData.uid, nameFacebook, emailFacebook, photoData)
       .then(() => {
         window.location.hash = '#/home';
       })

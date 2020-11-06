@@ -6,6 +6,14 @@ export const addUser = (uid, nameUser, emailUser) => firebase.firestore().collec
   photoCover: 'imagenes/user-cover.jpg',
 });
 
+export const addUserProvider = (uid, nameUser, emailUser, photoUser) => firebase.firestore().collection('user').doc(uid).set({
+  name: nameUser,
+  email: emailUser,
+  photo: photoUser,
+  photoCover: 'imagenes/user-cover.jpg',
+});
+
+
 export const showData = uid => firebase.firestore().collection('user').doc(uid).get();
 
 // export const showDataHome = uid => firebase.firestore().collection('user').doc(uid);
