@@ -31,13 +31,3 @@
 //             </div>
 //                 <p class="post-btn-saveimg."></p>
 //               </div>
-// <!--
-//               <div class = "video-post-upload">
-//             <label for = "video-post-update">
-//               // <p id = "video-post-edit">  <video class="photo-post-video" src=  controls autoplay loop></p>
-//             </label>
-//             <div class="video-input-file"></div>
-//             </div>
-//                 <p class="post-btn-savevideo."></p>
-//               </div>
-// -->
