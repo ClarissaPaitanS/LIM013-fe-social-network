@@ -109,13 +109,14 @@ export default () => {
         console.log(error);
       });
   });
-
+  // **************************** Ir al perfil  ******************
   const editBtn = divElemt.querySelector('#edit-btn');
 
   editBtn.addEventListener('click', () => {
     window.location.hash = '#/profile';
   });
 
+  // **************************** Muestra información del usuario  ******************
   const profileName = divElemt.querySelector('#profileName');
   const photoUser = divElemt.querySelector('#photoUser');
   const photoCover = divElemt.querySelector('#photoCover');
@@ -286,7 +287,9 @@ export default () => {
             <div class = "${idPost}">
             </div>`;
         const photoComment = post.querySelector('.photoComment');
+        // -------------------Muetra foto del current user que va a comentar-------
         showPhotoComment(photoComment);
+        // ------------------- Añadir commentario -------------------
         const btnShareComment = post.querySelector('.btn-share-comment');
         btnShareComment.addEventListener('click', () => {
           const inputComment = post.querySelector('.input-comment').value;
@@ -395,7 +398,7 @@ export default () => {
     });
     console.log(postData);
   });
-
+  // -------------------------- Añadir post --------------------
   const btnAddPost = divElemt.querySelector('.post-user-btn');
   btnAddPost.addEventListener('click', (e) => {
     // wall.innerHTML = '';
@@ -410,7 +413,7 @@ export default () => {
     e.preventDefault();
   });
 
-
+  // ------------ Preview de imagen del post ---------------------------
   const postImageInput = divElemt.querySelector('#post-image-input');
   postImageInput.addEventListener('change', (e) => {
     uploadProfilePost(postImageInput, previewPostImg);

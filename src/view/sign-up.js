@@ -52,7 +52,7 @@ export default () => {
     const password = divElemt.querySelector('#password-signUp');
     const email = divElemt.querySelector('#email-signUp');
     signupUser(email.value, password.value)
-      .then((userCredential) => {
+      .then(() => {
         const user = firebase.auth().currentUser.uid;
         const nameSignUp = divElemt.querySelector('#name-signUp');
         const emailSignUp = divElemt.querySelector('#email-signUp');
