@@ -41,13 +41,3 @@
 //                 <p class="post-btn-savevideo."></p>
 //               </div>
 // -->
-
-//               <div class="post-footer">
-//                 <img src="">
-//                 <img src="">
-//               </div>
-//                 </section>
-//           `;
-//   post.innerHtml = containerPost;
-//   return post;
-// };

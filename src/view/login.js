@@ -48,7 +48,7 @@ export default () => {
     const emailLogin = divElemt.querySelector('#email-login');
 
     loginUser(emailLogin.value, passwordLogin.value)
-      .then((userCredential) => {
+      .then(() => {
         window.location.hash = '#/home';
       })
       .catch((err) => {
