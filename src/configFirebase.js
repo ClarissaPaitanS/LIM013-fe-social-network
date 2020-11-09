@@ -9,6 +9,7 @@ export const signupUser = (email, password) => (
   firebase.auth().createUserWithEmailAndPassword(email, password)
 );
 
+
 // Login User:
 export const loginUser = (email, password) => (
   firebase.auth().signInWithEmailAndPassword(email, password)

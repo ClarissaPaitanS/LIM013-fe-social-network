@@ -11,9 +11,6 @@ import {
   loginUser, googleLogin, signupUser, facebookLogin, closeSesion,
 } from '../src/configFirebase.js';
 
-// import {
-//   updatePassword,
-// } from '../src/configFirebase.js';
 
 const firebasemock = require('firebase-mock');
 

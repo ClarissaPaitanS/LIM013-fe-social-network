@@ -145,7 +145,7 @@ export default () => {
   const photoUp = divElemt.querySelector('#photo-up');
   console.log(photoUp);
   photoUp.addEventListener('change', (e) => {
-    console.log(photoUp.files[0]);
+    // console.log(photoUp.files[0]);
     uploadProfileImg(photoUp, photoUser);
   });
 
