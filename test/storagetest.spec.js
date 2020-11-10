@@ -1,3 +1,21 @@
+/* eslint-disable arrow-body-style */
+import myMockStorage from '../src/mock/mockstorage.js';
+import { filePhotoUser } from '../src/configStorage.js';
+
+global.firebase = myMockStorage();
+
+const filePhoto = {
+  name: 'love.jpg',
+};
+
+describe('filePhotoUser', () => {
+  it('añadir love.jpg', () => {
+    return filePhotoUser(filePhoto).then((file) => {
+      expect(file).toBe(`el archivo ${filePhoto.name} fue agregado a /userProfileImgs/${filePhoto.name}`);
+    });
+  });
+});
+
 // /* eslint-disable max-len */
 // // /* eslint-disable max-len */
 // import { filePhotoUser } from '../src/configStorage';
