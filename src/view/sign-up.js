@@ -59,13 +59,11 @@ export default () => {
         const nameSave = nameSignUp.value;
         const emailSave = emailSignUp.value;
 
-        addUser(user, nameSave, emailSave)
-          .then(() => {
-            window.location.hash = '#/home';
-          })
-          .catch((error) => {
-            console.error('Error: ', error);
-          });
+        return addUser(user, nameSave, emailSave);
+
+      })
+      .then(() => {
+        window.location.hash = '#/home';
       })
       .catch((err) => {
         console.log(err);
